@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #050505;
+  --foreground: #ededed;
+
+  /* Ancient Tones */
+  --ancient-rust: #8B4513;
+  --ancient-blood: #3B1E1E;
+
+  /* Future Tones */
+  --cyber-blue: #00F0FF;
+  --cyber-chrome: #E0E0E0;
+
+  /* Bridge */
+  --gold-primary: #D4AF37;
+}
+
+body {
+  color: var(--foreground);
+  background: black;
+  font-family: var(--font-space-grotesk), monospace;
+  overflow-x: hidden;
+}
+
+/* Cinematic Grain Effect */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity: 0.3;
+}
+
+/* Glitch Animation Keyframes */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+.glitch-text {
+  animation: glitch 3s infinite;
+  animation-timing-function: steps(2, end);
+}
