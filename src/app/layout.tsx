@@ -1,22 +1,9 @@
 import type { Metadata } from "next";
-import { Cinzel, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["300", "500", "700"],
-});
-
 export const metadata: Metadata = {
-  title: "SWASTIKA '26 | The Portal Opens",
-  description: "Official portal for Swastika 2026. The countdown begins.",
+  title: "Swastika '26 – The Arena Awaits",
+  description: "National Level Techno-Cultural Fest | Mar Baselios Christian College of Engineering and Technology, Peermade | February 20-21, 2026",
 };
 
 export default function RootLayout({
@@ -26,12 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${cinzel.variable} ${spaceGrotesk.variable} antialiased`}
-      >
-        <div className="grain-overlay" />
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
