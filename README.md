@@ -1,36 +1,177 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SWASTIKA '26
 
-## Getting Started
+**National Level Techno-Cultural Fest**  
+Mar Baselios Christian College of Engineering and Technology (MBCCET), Peermade
 
-First, run the development server:
+---
+
+## 📅 Event Details
+
+- **Event Name:** Swastika '26
+- **Dates:** February 20-21, 2026
+- **Venue:** MBCCET, Peermade, Idukki
+- **Type:** National Level Techno-Cultural Fest
+
+---
+
+## 🎯 Theme: Ancient Arena, Future Fighters
+
+> *Battles never stopped—only weapons changed. From swords to skills, from warriors to innovators.*
+
+This year's theme blends:
+- **Ancient Arena** → Colosseum warriors, competition, honor
+- **Future Fighters** → AI, tech, innovation, digital mastery
+
+Swastika '26 is where coders become warriors, designers become creators, gamers become champions, and performers become legends.
+
+---
+
+## 🚀 About This Website
+
+A sophisticated countdown page built with:
+
+### **Tech Stack**
+- **Framework:** Next.js 16.1.2 with Turbopack
+- **Language:** TypeScript
+- **Styling:** Pure CSS (no frameworks)
+- **Animations:** CSS Keyframes
+- **Fonts:** Google Fonts (Cinzel, Playfair Display, Orbitron, Space Grotesk)
+
+### **Design Features**
+✨ Royal typography with serif fonts for ancient elegance  
+⚡ Futuristic Orbitron for tech elements  
+🎨 Gradient mesh background with pulse animation  
+🔲 Grid overlay and vignette effects  
+✨ Shimmer animation on theme statement  
+🎭 Floating particle system  
+📱 Fully responsive design  
+⏱️ Real-time countdown timer  
+
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+- Node.js 20+ installed
+- npm or yarn
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/arroward/Swastika26.git
+
+# Navigate to project
+cd Swastika26
+
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📂 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+Swastika26/
+├── public/
+│   └── logo.png              # Event logo
+├── src/
+│   └── app/
+│       ├── globals.css       # Global styles & animations
+│       ├── layout.tsx        # Root layout
+│       └── page.tsx          # Main countdown page
+├── package.json
+├── next.config.ts
+├── tsconfig.json
+└── README.md
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🎨 Design System
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Typography
+- **Titles:** Cinzel (Royal serif)
+- **Subtitles:** Playfair Display (Elegant serif)
+- **Tech Elements:** Orbitron (Futuristic)
+- **Body:** Space Grotesk (Modern sans-serif)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Color Palette
+- **Primary:** `#ff6b4a` (Warm red-orange)
+- **Background:** `#0d0d0d` (Deep black)
+- **Accents:** Gradient meshes with red tones
+- **Text:** `#fff`, `#999`, `#666` (White to gray scale)
+
+---
+
+## ⚙️ Scripts
+
+- `npm run dev` - Start development server (Turbopack)
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint
+
+---
+
+## 🌟 Features
+
+### Live Countdown
+Dynamic countdown showing:
+- Days
+- Hours
+- Minutes
+- Seconds
+
+Until the event begins on **February 20, 2026 at 9:00 AM**
+
+### Animations
+- **Mesh Pulse:** 8s infinite background animation
+- **Shimmer:** 3s infinite on theme box
+- **Status Pulse:** 2s infinite on status text
+- **Particle Float:** 6s linear floating particles
+- **Hover Effects:** Smooth transitions on countdown cards
+
+### Responsive Design
+- Mobile: 2-column countdown grid
+- Tablet/Desktop: 4-column countdown grid
+- Fluid typography with `clamp()`
+- Adaptive spacing
+
+---
+
+## 📝 Important Note
+
+**The name "Swastika" has no connection to any ancient, religious, or cultural symbol.**  
+It is simply the official name of our college tech fest.
+
+---
+
+## 👥 Contact
+
+**Mar Baselios Christian College of Engineering and Technology**  
+Peermade, Idukki, Kerala
+
+For inquiries about Swastika '26, please contact the college administration.
+
+---
+
+## 📄 License
+
+This project is for MBCCET's official tech fest. All rights reserved.
+
+---
+
+**Built with 💜 for Swastika '26 by the MBCCET Tech Team**
