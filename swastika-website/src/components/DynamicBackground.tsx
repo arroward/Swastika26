@@ -27,15 +27,15 @@ export default function DynamicBackground() {
         <div className="fixed inset-0 z-0 bg-black overflow-hidden">
             <motion.div
                 className="relative w-full h-full"
-                initial={{ scale: 1.2, opacity: 0 }}
-                animate={{ scale: 1.05, opacity: 1 }} // Keep slightly zoomed for parallax room
+                initial={{ scale: 1.1, opacity: 0 }}
+                animate={{ scale: 1.05, opacity: 1 }} // Slight zoom for parallax room
                 transition={{ duration: 2.5, ease: "easeOut" }}
                 style={{ x, y }}
             >
                 <img
-                    src="/websitebackgroundimg1.png"
+                    src="/swas2.png"
                     alt="Swastika 26 Dynamic Background"
-                    className="w-full h-full object-cover opacity-60"
+                    className="w-full h-full object-cover opacity-80"
                     style={{ objectPosition: 'center', objectFit: 'cover' }}
                 />
 
