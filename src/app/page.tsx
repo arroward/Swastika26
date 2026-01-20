@@ -1,318 +1,186 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { Calendar, MapPin, Users, Trophy, Code, Palette, Music, Clock, Mail, Phone, Facebook, Instagram, Twitter } from "lucide-react";
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { events } from '@/data/events';
+import Link from 'next/link';
+import { ArrowUpRight, Monitor, Users, Wallet, Code, Rocket } from 'lucide-react';
+import Countdown from '@/components/Countdown';
 
-const TARGET_DATE = new Date("2026-02-20T09:00:00").getTime();
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-  const [activeDay, setActiveDay] = useState<'day1' | 'day2'>('day1');
+  const container = useRef(null);
 
-  useEffect(() => {
-    const updateCountdown = () => {
-      const now = new Date().getTime();
-      const diff = TARGET_DATE - now;
+  useGSAP(() => {
+    // Hero Text Reveal
+    gsap.from('.hero-char', {
+      y: 100,
+      opacity: 0,
+      duration: 2,
+      stagger: 0.1,
+      ease: 'power4.out',
+      delay: 0.5
+    });
 
-      if (diff > 0) {
-        setTimeLeft({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((diff % (1000 * 60)) / 1000),
-        });
-      }
-    };
+    // Subtitle Reveal
+    gsap.from('.hero-sub', {
+      y: 20,
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power3.out',
+      delay: 1.5
+    });
 
-    updateCountdown();
-    const timer = setInterval(updateCountdown, 1000);
-    return () => clearInterval(timer);
-  }, []);
+    // Glass objects float
+    gsap.to('.glass-object', {
+      y: -20,
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: 'sine.inOut',
+      stagger: 1
+    });
+
+    // Infinite Marquee
+    // (CSS handles this, but GSAP could enhance it. Sticking to CSS for perf)
+
+  }, { scope: container });
 
   return (
-    <main className="arena-site">
+    <main ref={container} className="bg-[var(--bg-main)] min-h-screen text-white overflow-x-hidden selection:bg-[var(--accent-blue)] selection:text-white">
+
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 flex items-center justify-between">
+        <div className="font-display font-bold text-2xl tracking-tighter">Swastika<span className="text-[var(--accent-blue)]">.</span></div>
+        <div className="hidden md:flex items-center gap-8 bg-white/5 backdrop-blur-md px-8 py-3 rounded-full border border-white/10">
+          <a href="#speakers" className="text-sm font-medium hover:text-[var(--accent-blue)] transition-colors">Speakers</a>
+          <a href="#agenda" className="text-sm font-medium hover:text-[var(--accent-blue)] transition-colors">Agenda</a>
+          <a href="#venue" className="text-sm font-medium hover:text-[var(--accent-blue)] transition-colors">Venue</a>
+          <a href="#contact" className="text-sm font-medium hover:text-[var(--accent-blue)] transition-colors">Contact</a>
+        </div>
+        <button className="bg-white text-black px-6 py-2 rounded-full font-bold text-sm hover:scale-105 transition-transform flex items-center gap-2">
+          Get Ticket <div className="bg-blue-600 rounded-full p-1 text-white"><ArrowUpRight size={14} /></div>
+        </button>
+      </nav>
+
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-grid"></div>
-        <div className="hero-content">
-          <div className="arena-visual">
-            <svg viewBox="0 0 400 400" className="arena-icon">
-              {/* Colosseum arches */}
-              <circle cx="200" cy="200" r="150" fill="none" stroke="#ff0000" strokeWidth="2" opacity="0.6" />
-              <circle cx="200" cy="200" r="120" fill="none" stroke="#ff0000" strokeWidth="1" opacity="0.4" />
-              {/* Tech circuits */}
-              <path d="M 200 50 L 200 100" stroke="#ff0000" strokeWidth="2" />
-              <path d="M 200 300 L 200 350" stroke="#ff0000" strokeWidth="2" />
-              <path d="M 50 200 L 100 200" stroke="#ff0000" strokeWidth="2" />
-              <path d="M 300 200 L 350 200" stroke="#ff0000" strokeWidth="2" />
-              <circle cx="200" cy="100" r="5" fill="#ff0000" />
-              <circle cx="200" cy="300" r="5" fill="#ff0000" />
-              <circle cx="100" cy="200" r="5" fill="#ff0000" />
-              <circle cx="300" cy="200" r="5" fill="#ff0000" />
-            </svg>
-          </div>
+      <section className="relative h-screen flex flex-col items-center justify-center pt-20">
 
-          <h1 className="hero-title glitch" data-text="SWASTIKA '26">
-            SWASTIKA '26
+        {/* Background Glows */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none" />
+
+        <div className="z-10 text-center relative max-w-[90vw]">
+          <h1 className="text-[12vw] leading-[0.85] font-black font-display tracking-tighter mix-blend-screen flex justify-center overflow-hidden">
+            {"SWASTIKA".split('').map((c, i) => (
+              <span key={i} className="hero-char inline-block transform origin-bottom">{c}</span>
+            ))}
           </h1>
-          <p className="hero-subtitle">NATIONAL TECHNO-CULTURAL FEST</p>
-          <p className="hero-date">FEBRUARY 20 & 21, 2026</p>
-
-          <div className="hero-countdown">
-            <div className="countdown-item">
-              <span className="countdown-value">{String(timeLeft.days).padStart(2, '0')}</span>
-              <span className="countdown-label">DAYS</span>
-            </div>
-            <div className="countdown-item">
-              <span className="countdown-value">{String(timeLeft.hours).padStart(2, '0')}</span>
-              <span className="countdown-label">HOURS</span>
-            </div>
-            <div className="countdown-item">
-              <span className="countdown-value">{String(timeLeft.minutes).padStart(2, '0')}</span>
-              <span className="countdown-label">MINS</span>
-            </div>
-            <div className="countdown-item">
-              <span className="countdown-value">{String(timeLeft.seconds).padStart(2, '0')}</span>
-              <span className="countdown-label">SECS</span>
-            </div>
-          </div>
-
-          <div className="hero-buttons">
-            <button className="btn-primary">ENTER THE ARENA</button>
-            <button className="btn-secondary">VIEW EVENTS</button>
-          </div>
         </div>
-        <div className="scan-line"></div>
-      </section>
 
-      {/* About Section */}
-      <section className="about-section section-padding">
-        <div className="container-grid">
-          <div className="about-content">
-            <h2 className="section-title">ABOUT SWASTIKA</h2>
-            <p className="about-text">
-              Swastika '26 is the National Level Techno-Cultural Fest of Mar Baselios Christian College of
-              Engineering and Technology, Peermade. This is where coders become warriors, designers become
-              creators, gamers become champions, and performers become legends.
-            </p>
-            <div className="stats-grid">
-              <div className="stat-box">
-                <div className="stat-value">50+</div>
-                <div className="stat-label">Colleges</div>
-              </div>
-              <div className="stat-box">
-                <div className="stat-value">30+</div>
-                <div className="stat-label">Events</div>
-              </div>
-              <div className="stat-box">
-                <div className="stat-value">2000+</div>
-                <div className="stat-label">Participants</div>
-              </div>
-              <div className="stat-box">
-                <div className="stat-value">5</div>
-                <div className="stat-label">Years Running</div>
-              </div>
-            </div>
-          </div>
-          <div className="about-visual">
-            <div className="logo-glow"></div>
-          </div>
-        </div>
-      </section>
+        <Countdown />
 
-      {/* Theme Section */}
-      <section className="theme-section section-padding">
-        <div className="container">
-          <h2 className="section-title center">ANCIENT ARENA, FUTURE FIGHTERS</h2>
-          <div className="theme-visual-wrapper">
-            <div className="theme-visual left">
-              <div className="colosseum-outline"></div>
-              <span className="theme-label">FROM SWORDS</span>
-            </div>
-            <div className="circuit-connector"></div>
-            <div className="theme-visual right">
-              <div className="robot-outline"></div>
-              <span className="theme-label">TO SKILLS</span>
-            </div>
-          </div>
-          <p className="theme-description">
-            Battles never stopped—only weapons changed. From warriors to innovators,
-            the arena is digital, and you fight with brains.
+        <div className="hero-sub mt-4 text-center max-w-xl mx-auto px-4 z-20">
+          <p className="text-xl md:text-2xl text-[var(--text-secondary)] font-normal">
+            NexGen Tech Summit for <span className="text-white font-bold">Innovators</span>
           </p>
         </div>
       </section>
 
-      {/* Events Section */}
-      <section className="events-section section-padding">
-        <div className="container">
-          <h2 className="section-title center">BATTLEGROUNDS</h2>
-          <div className="events-grid">
-            <div className="event-card">
-              <div className="card-side-text">TECHNICAL</div>
-              <Code className="card-icon" />
-              <h3 className="card-title">Technical Events</h3>
-              <p className="card-desc">Coding, Hackathons, AI Challenges</p>
-            </div>
-            <div className="event-card">
-              <div className="card-side-text">CULTURAL</div>
-              <Music className="card-icon" />
-              <h3 className="card-title">Cultural Events</h3>
-              <p className="card-desc">Music, Dance, Drama, Fashion</p>
-            </div>
-            <div className="event-card">
-              <div className="card-side-text">GAMING</div>
-              <Trophy className="card-icon" />
-              <h3 className="card-title">Gaming Arena</h3>
-              <p className="card-desc">Esports, Tournaments, Competitions</p>
-            </div>
+      {/* Marquee */}
+      <div className="py-12 border-y border-white/5 bg-black/50 backdrop-blur-sm z-20 relative">
+        <div className="marquee-container font-display text-4xl md:text-6xl font-bold text-transparent stroke-text opacity-50">
+          <div className="marquee-content flex gap-12 text-white/20">
+            <span>INNOVATION</span><span>•</span><span>NETWORKING</span><span>•</span><span>MARKETING</span><span>•</span><span>LEADERSHIP</span><span>•</span>
+            <span>INNOVATION</span><span>•</span><span>NETWORKING</span><span>•</span><span>MARKETING</span><span>•</span><span>LEADERSHIP</span><span>•</span>
           </div>
+        </div>
+      </div>
+
+      {/* Why Attend Section (Crystal Cards) */}
+      <section className="py-32 px-6 md:px-24">
+        <div className="flex flex-col md:flex-row items-end gap-6 mb-20">
+          <div className="h-[2px] w-12 bg-white/50 mb-4" />
+          <h2 className="text-4xl md:text-6xl font-display font-bold max-w-3xl">
+            Why You Absolutely Should Attend <span className="text-[var(--text-secondary)]">Swastika Tech Summit</span>
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Abstract 3D representations using gradients */}
+          {[1, 2, 3].map((item) => (
+            <div key={item} className="glass-object aspect-square rounded-3xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 p-1 relative overflow-hidden group">
+              {/* Inner Glow */}
+              <div className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              {/* Fake 3D Shape */}
+              <div className="absolute inset-4 md:inset-12 rounded-2xl bg-gradient-to-tr from-white/5 to-white/0 border-t border-l border-white/20 backdrop-blur-md shadow-2xl flex items-center justify-center">
+                <div className={`w-24 h-24 rounded-full bg-gradient-to-r ${item === 1 ? 'from-blue-500 to-purple-500' : item === 2 ? 'from-cyan-400 to-blue-600' : 'from-purple-500 to-pink-500'} blur-xl opacity-60`} />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-20 text-[var(--text-secondary)] text-lg leading-relaxed">
+          <p>The Swastika Tech Summit is the ultimate gathering for tech enthusiasts, industry leaders, and innovators to delve into the world of AI, machine learning, and the future of emerging technologies.</p>
+          <p>You'll have the chance to explore real-world use cases, witness cutting-edge demos, and connect with others who are driving change in the tech world.</p>
         </div>
       </section>
 
-      {/* Schedule Section */}
-      <section className="schedule-section section-padding">
-        <div className="container">
-          <h2 className="section-title center">ARENA SCHEDULE</h2>
-          <div className="schedule-tabs">
-            <button
-              className={`tab ${activeDay === 'day1' ? 'active' : ''}`}
-              onClick={() => setActiveDay('day1')}
-            >
-              DAY 1 - FEB 20
-            </button>
-            <button
-              className={`tab ${activeDay === 'day2' ? 'active' : ''}`}
-              onClick={() => setActiveDay('day2')}
-            >
-              DAY 2 - FEB 21
-            </button>
-          </div>
-          <div className="timeline">
-            {activeDay === 'day1' ? (
-              <>
-                <div className="timeline-item">
-                  <div className="timeline-time">09:00 AM</div>
-                  <div className="timeline-content">
-                    <h4>Inauguration Ceremony</h4>
-                    <p>Main Arena</p>
-                  </div>
-                </div>
-                <div className="timeline-item">
-                  <div className="timeline-time">11:00 AM</div>
-                  <div className="timeline-content">
-                    <h4>Technical Events Begin</h4>
-                    <p>Tech Arena</p>
-                  </div>
-                </div>
-                <div className="timeline-item">
-                  <div className="timeline-time">02:00 PM</div>
-                  <div className="timeline-content">
-                    <h4>Cultural Performances</h4>
-                    <p>Main Stage</p>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="timeline-item">
-                  <div className="timeline-time">10:00 AM</div>
-                  <div className="timeline-content">
-                    <h4>Finals & Competitions</h4>
-                    <p>All Arenas</p>
-                  </div>
-                </div>
-                <div className="timeline-item">
-                  <div className="timeline-time">04:00 PM</div>
-                  <div className="timeline-content">
-                    <h4>Prize Distribution</h4>
-                    <p>Main Arena</p>
-                  </div>
-                </div>
-                <div className="timeline-item">
-                  <div className="timeline-time">06:00 PM</div>
-                  <div className="timeline-content">
-                    <h4>Closing Ceremony</h4>
-                    <p>Main Arena</p>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+      {/* Who Should Attend */}
+      <section className="py-32 px-6 md:px-24 bg-[#050505]">
+        <h2 className="text-4xl md:text-5xl font-display font-bold mb-20 text-center">
+          Who Should Definitely Attend
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {[
+            { icon: <Wallet size={40} />, label: "Investors" },
+            { icon: <Rocket size={40} />, label: "Founders" },
+            { icon: <Code size={40} />, label: "Developers" },
+            { icon: <Users size={40} />, label: "Students" },
+          ].map((role, i) => (
+            <div key={i} className="hover-card-glow h-[350px] rounded-[3rem] border border-white/10 flex flex-col items-center justify-center gap-6 bg-black group hover:bg-white/5 cursor-pointer relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-b from-blue-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative z-10 text-[var(--text-secondary)] group-hover:text-white transition-colors">
+                {role.icon}
+              </div>
+              <span className="relative z-10 font-display text-xl font-bold">{role.label}</span>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* Registration Section */}
-      <section className="registration-section section-padding">
-        <div className="container">
-          <div className="terminal-box">
-            <div className="terminal-header">
-              <span className="terminal-title">ENTER THE ARENA</span>
+      {/* Speakers Preview */}
+      <section id="speakers" className="py-32 px-6 md:px-24">
+        <div className="flex items-center justify-between mb-16">
+          <h2 className="text-4xl font-display font-bold">Industry Leaders</h2>
+          <button className="text-sm font-bold uppercase tracking-widest hover:text-[var(--accent-blue)]">View All</button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {['Dr. Emma Parker', 'John Mitchell', 'Samantha Hayes'].map((name, i) => (
+            <div key={i} className="group relative rounded-3xl overflow-hidden aspect-[4/5] bg-gray-900 border border-white/10">
+              {/* Placeholder for speaker image */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
+              <div className="absolute bottom-0 left-0 p-8 z-20 w-full">
+                <h3 className="text-2xl font-display font-bold mb-1">{name}</h3>
+                <p className="text-sm text-[var(--text-secondary)] mb-4">Chief AI Scientist</p>
+                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0 duration-300">
+                  <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center">in</div>
+                  <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center">x</div>
+                </div>
+              </div>
             </div>
-            <form className="terminal-form">
-              <div className="form-group">
-                <label>&gt; NAME:</label>
-                <input type="text" placeholder="YOUR NAME" />
-              </div>
-              <div className="form-group">
-                <label>&gt; EMAIL:</label>
-                <input type="email" placeholder="YOUR EMAIL" />
-              </div>
-              <div className="form-group">
-                <label>&gt; COLLEGE:</label>
-                <input type="text" placeholder="YOUR COLLEGE" />
-              </div>
-              <div className="form-group">
-                <label>&gt; PHONE:</label>
-                <input type="tel" placeholder="YOUR PHONE" />
-              </div>
-              <button type="submit" className="btn-submit">JOIN THE BATTLE</button>
-            </form>
-          </div>
+          ))}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer-section">
-        <div className="container footer-grid">
-          <div className="footer-col">
-            <h3 className="footer-title">SWASTIKA '26</h3>
-            <p className="footer-text">
-              Mar Baselios Christian College of<br />
-              Engineering and Technology<br />
-              Peermade, Idukki, Kerala
-            </p>
-            <div className="footer-social">
-              <a href="#" className="social-icon"><Facebook size={20} /></a>
-              <a href="#" className="social-icon"><Instagram size={20} /></a>
-              <a href="#" className="social-icon"><Twitter size={20} /></a>
-            </div>
-          </div>
-          <div className="footer-col">
-            <h4 className="footer-subtitle">QUICK LINKS</h4>
-            <ul className="footer-links">
-              <li><a href="#about">About</a></li>
-              <li><a href="#events">Events</a></li>
-              <li><a href="#schedule">Schedule</a></li>
-              <li><a href="#register">Register</a></li>
-            </ul>
-          </div>
-          <div className="footer-col">
-            <h4 className="footer-subtitle">CONTACT</h4>
-            <div className="footer-contact">
-              <div className="contact-item">
-                <Mail size={16} />
-                <span>swastika@mbccet.ac.in</span>
-              </div>
-              <div className="contact-item">
-                <Phone size={16} />
-                <span>+91 XXXX XXXXXX</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>&copy; 2026 Swastika. All rights reserved. Built for the Arena.</p>
-        </div>
+      <footer className="py-12 border-t border-white/10 text-center text-white/30 text-sm">
+        <p>© 2026 Swastika. All rights reserved.</p>
       </footer>
     </main>
   );
