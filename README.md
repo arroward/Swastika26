@@ -175,3 +175,105 @@ This project is for MBCCET's official tech fest. All rights reserved.
 ---
 
 **Built with 💜 for Swastika '26 by the MBCCET Tech Team**
+
+---
+
+## 🔗 Proposed App Structure
+
+```text
+┌──────────────────────────────────────────────────────────┐
+│                   INTRO / ENTRY SECTION                  │
+│                                                          │
+│                      [ LOGO MARK ]                       │
+│                                                          │
+│        Animated background (lines / noise / gradient)    │
+│                                                          │
+│               “Entering the Experience”                  │
+│                                                          │
+│           Progress bar / pulse / countdown               │
+│                                                          │
+│     (Scroll or auto-transition to next section)          │
+└──────────────────────────────────────────────────────────┘
+
+
+      ↓ User starts scrolling ↓
+      ↓ Floating Navbar appears ↓
+
+
+┌──────────────────────────────────────────────────────────┐
+│                 FLOATING / STICKY NAVBAR                 │
+│  Logo     About     Proshow     Events     Gallery       │
+│  (Glass / Blur / Shadow | stays on top while scrolling)  │
+└──────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────┐
+│                       ABOUT SECTION                      │
+│                                                          │
+│   ┌──────────────────────┐   ┌──────────────────────┐  │
+│   │   About Content      │   │   Visual / Motion     │  │
+│   │   Event story        │   │   Graphic / Animation │  │
+│   │   Highlights         │   │                      │  │
+│   └──────────────────────┘   └──────────────────────┘  │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────┐
+│                     PROSHOW SECTION                      │
+│                                                          │
+│   ┌──────────────────────────────────────────────────┐  │
+│   │                                                  │  │
+│   │                 PROSHOW TITLE                    │  │
+│   │           Artist / Band / DJ Name                │  │
+│   │           Date • Time • Venue                    │  │
+│   │                                                  │  │
+│   │                [ Know More ]                     │  │
+│   │                                                  │  │
+│   └──────────────────────────────────────────────────┘  │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────┐
+│                      EVENTS SECTION                      │
+│                                                          │
+│   ┌──────────────┐   ┌──────────────┐   ┌────────────┐ │
+│   │   Event 1    │   │   Event 2    │   │  Event 3   │ │
+│   │   Brief info │   │   Brief info │   │ Brief info │ │
+│   │   Date/time  │   │   Date/time  │   │ Date/time  │ │
+│   │  [ View → ]  │   │  [ View → ]  │   │ [ View → ] │ │
+│   └──────────────┘   └──────────────┘   └────────────┘ │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────┐
+│                     GALLERY SECTION                     │
+│                                                          │
+│   ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐              │
+│   │ Img   │ │ Img   │ │ Img   │ │ Img   │              │
+│   └───────┘ └───────┘ └───────┘ └───────┘              │
+│                                                          │
+│   (Hover zoom / Lightbox / Horizontal scroll)            │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────┐
+│                    FINAL CTA SECTION                     │
+│                                                          │
+│              “Ready to be part of it?”                   │
+│                                                          │
+│                  [ Register Now ]                        │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+
+
+┌──────────────────────────────────────────────────────────┐
+│                          FOOTER                          │
+│   Event Name | Social Links | Contact Info                │
+│   © Year Event Name                                       │
+└──────────────────────────────────────────────────────────┘
+```
+
