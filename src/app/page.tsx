@@ -55,9 +55,7 @@ export default function Home() {
 
         <div className="z-20 text-center relative max-w-[90vw]">
           <h1 className="text-[12vw] leading-none font-black font-cinzel tracking-normal flex justify-center drop-shadow-2xl">
-            {"SWASTIKA".split('').map((c, i) => (
-              <span key={i} className="hero-char inline-block transforn origin-bottom text-shimmer">{c}</span>
-            ))}
+            SWASTIKA
           </h1>
         </div>
 
