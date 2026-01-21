@@ -6,7 +6,7 @@ import Hero from '@/components/sections/Hero';
 
 export default function Home() {
   return (
-    <main className="bg-transparent min-h-screen text-white overflow-hidden selection:bg-[var(--accent-main)] selection:text-white relative cursor-default">
+    <main className="bg-transparent h-screen w-screen text-white overflow-hidden selection:bg-[var(--accent-main)] selection:text-white relative cursor-default">
 
       {/* Premium Cursor Lighting */}
       <CursorSpotlight />

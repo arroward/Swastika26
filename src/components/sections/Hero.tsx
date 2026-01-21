@@ -54,7 +54,7 @@ export default function Hero() {
             </div>
 
             <div className="hero-sub mt-4 w-full text-center px-4 z-20">
-                <p className="text-sm md:text-lg text-white/80 font-cinzel tracking-widest font-light whitespace-nowrap">
+                <p className="text-[10px] md:text-lg text-white/80 font-jost tracking-[0.2em] font-light uppercase whitespace-nowrap">
                     National Level Techno Cultural Fest
                 </p>
             </div>

@@ -31,7 +31,7 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  title: "Swastika '26 | The Future of Tech",
+  title: "Swastika'26",
   description: "Join the revolution. National Level Techno-Cultural Fest.",
 };
 
