@@ -7,7 +7,7 @@ export default function Sponsors() {
         <section className="py-24 border-y border-white/5 bg-black/50 backdrop-blur-sm relative overflow-hidden">
 
             <div className="text-center mb-12">
-                <span className="text-[var(--accent-blue)] text-xs font-bold uppercase tracking-[0.3em] glow-text">Supported By</span>
+                <span className="text-[var(--accent-main)] text-xs font-bold uppercase tracking-[0.3em] glow-text">Supported By</span>
             </div>
 
             {/* Infinite Scroll Marquee Left */}

@@ -1,73 +1,64 @@
 'use client';
+
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import Countdown from '../Countdown';
+import Countdown from '@/components/Countdown';
 
 export default function Hero() {
     const container = useRef(null);
 
     useGSAP(() => {
-        // Hero Text Stagger
+        // Hero Text Reveal
         gsap.from('.hero-char', {
-            yPercent: 120,
+            y: 100,
             opacity: 0,
-            duration: 1.5,
-            stagger: 0.04,
+            duration: 2,
+            stagger: 0.1,
             ease: 'power4.out',
-            delay: 0.2
+            delay: 0.5
         });
 
-        // Subtitle Fade
-        gsap.from('.hero-content', {
-            y: 30,
+        // Subtitle Reveal
+        gsap.from('.hero-sub', {
+            y: 20,
             opacity: 0,
             duration: 1.5,
             ease: 'power3.out',
-            delay: 1.2
+            delay: 1.5
         });
 
     }, { scope: container });
 
     return (
-        <section ref={container} className="relative min-h-screen flex flex-col items-center justify-center pt-24 overflow-hidden bg-grid">
+        <section ref={container} className="relative h-screen flex flex-col items-center justify-center pt-20">
 
-            {/* Background Elements */}
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-[-20%] left-[20%] w-[800px] h-[800px] bg-blue-600/10 rounded-full blur-[150px]" />
-                <div className="absolute bottom-[-10%] right-[10%] w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[150px]" />
+            {/* Dynamic Background Glows */}
+            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none opacity-50" />
+            <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-red-900/10 rounded-full blur-[120px] pointer-events-none opacity-50" />
+
+            <div className="z-20 text-center relative max-w-[90vw]">
+                <h1 className="text-[12vw] leading-none font-black font-cinzel tracking-normal flex justify-center drop-shadow-2xl">
+                    <span className="hero-char">SWASTIKA</span>
+                </h1>
             </div>
 
-            {/* Main Heading */}
-            <div className="z-10 text-center relative w-full px-4">
-                <div className="flex justify-center overflow-hidden mb-8 md:mb-12">
-                    <h1 className="text-[13vw] md:text-[14vw] leading-[0.8] font-black font-display tracking-tighter text-white mix-blend-difference selection:bg-white selection:text-black">
-                        {"SWASTIKA".split('').map((c, i) => (
-                            <span key={i} className="hero-char inline-block transform origin-bottom">{c}</span>
-                        ))}
-                    </h1>
-                </div>
-
-                {/* Massive Countdown */}
-                <div className="hero-content">
-                    <Countdown />
-                </div>
-
-                {/* Subtext */}
-                <div className="hero-content mt-12 md:mt-16 flex flex-col items-center gap-4">
-                    <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-white/50 to-transparent" />
-                    <p className="text-xl md:text-2xl text-[var(--text-secondary)] font-light max-w-md text-center leading-relaxed">
-                        The <span className="text-white font-medium">NexGen</span> Tech Summit <br />
-                        Where <span className="text-[var(--accent-blue)]">Innovation</span> Meets <span className="text-[var(--accent-purple)]">Reality</span>.
-                    </p>
-                </div>
+            <div className="w-full max-w-[90vw] md:max-w-[70vw] mx-auto">
+                <Countdown />
             </div>
 
-            {/* Scroll Indicator */}
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 animate-bounce">
-                <span className="text-[10px] uppercase tracking-widest text-white/50">Scroll</span>
-                <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
+            <div className="mt-12 text-center z-20 relative">
+                <p className="text-2xl md:text-3xl font-cinzel font-bold tracking-widest text-white/90 drop-shadow-lg">
+                    FEB 20 | 21
+                </p>
             </div>
+
+            <div className="hero-sub mt-4 w-full text-center px-4 z-20">
+                <p className="text-sm md:text-lg text-white/80 font-cinzel tracking-widest font-light whitespace-nowrap">
+                    National Level Techno Cultural Fest
+                </p>
+            </div>
+
         </section>
     );
 }
