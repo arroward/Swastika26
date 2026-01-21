@@ -7,12 +7,25 @@
   --text-primary: #ffffff;
   --text-secondary: #a1a1aa;
 
-  --accent-blue: #3b82f6;
-  --accent-blue-glow: #2563eb;
-  --accent-purple: #7c3aed;
+  --accent-main: #dc2626;
+  /* red-600 */
+  --accent-glow: #ef4444;
+  /* red-500 */
+  --accent-secondary: #991b1b;
+  /* red-800 */
 
   --font-display: var(--font-syne);
   --font-body: var(--font-inter);
+
+  /* Utility mapping for Tailwind manually if needed, or just standard CSS class */
+}
+
+.font-cinzel {
+  font-family: var(--font-cinzel) !important;
+}
+
+.font-jost {
+  font-family: var(--font-jost) !important;
 }
 
 @layer base {
@@ -93,12 +106,18 @@
   }
 }
 
-/* Decorative Orbs */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.4;
-  z-index: 0;
+/* Noise Filter */
+.bg-noise::before {
+  content: "";
+  position: fixed;
+  /* Fixed to cover view regardless of scroll */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
+  z-index: 50;
+  /* Above most things, below navbar potentially */
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }

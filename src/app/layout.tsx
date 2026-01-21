@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Syne, Inter } from "next/font/google"; // Syne has a nice wide/geometric feel
+import { Syne, Inter, Cinzel_Decorative, Jost } from "next/font/google";
 import "./globals.css";
 import LenisScroll from "@/components/LenisScroll";
 import Preloader from "@/components/Preloader";
+import GradientBackground from "@/components/GradientBackground";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -13,6 +14,19 @@ const syne = Syne({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const cinzel = Cinzel_Decorative({
+  weight: ["400", "700", "900"],
+  subsets: ["latin"],
+  variable: "--font-cinzel",
+  display: "swap",
+});
+
+const jost = Jost({
+  subsets: ["latin"],
+  variable: "--font-jost",
   display: "swap",
 });
 
@@ -27,9 +41,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${inter.variable}`}>
+    <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`}>
       <LenisScroll />
-      <body>
+      <body className="bg-noise">
+        <GradientBackground /> {/* Global Background added here to persist */}
         <Preloader />
         {children}
       </body>

@@ -34,7 +34,7 @@ export default function Countdown() {
 
     const TimeBox = ({ value, label }: { value: number, label: string }) => (
         <div className="flex flex-col items-center group">
-            <div className="relative bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl w-24 h-24 md:w-40 md:h-40 flex items-center justify-center overflow-hidden transition-all duration-500 group-hover:border-[var(--accent-blue)]/50 group-hover:bg-white/10">
+            <div className="relative bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl w-24 h-24 md:h-40 md:w-40 flex items-center justify-center overflow-hidden transition-all duration-500 group-hover:border-[var(--accent-main)]/50 group-hover:bg-white/10">
                 {/* Inner sheen */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent skew-x-12 opacity-0 group-hover:opacity-100 transition-opacity" />
 
