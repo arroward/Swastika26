@@ -9,23 +9,26 @@ import Events from '@/components/sections/Events';
 import Gallery from '@/components/sections/Gallery';
 import CTA from '@/components/sections/CTA';
 import Footer from '@/components/sections/Footer';
-
+import ScrollNav from '@/components/ScrollNav';
+import { SmoothCursor } from '@/components/lightswind/smooth-cursor'
 export default function Home() {
   return (
-    <main className="bg-transparent min-h-screen w-full text-white overflow-x-hidden selection:bg-[var(--accent-main)] selection:text-white relative cursor-default">
+    <main className="bg-transparent min-h-screen w-full text-white overflow-x-hidden selection:bg-[var(--accent-main)] selection:text-white relative cursor-none">
 
       {/* Premium Cursor Lighting */}
-      <CursorSpotlight />
+      {/* <CursorSpotlight /> */}
+      <SmoothCursor size={15} color="#dc2626" />
 
       <Navbar />
+      <ScrollNav />
 
-      <Hero />
-      <About />
-      <Proshow />
-      <Events />
-      <Gallery />
+      <div id="home"><Hero /></div>
+      <div id="about"><About /></div>
+      <div id="proshow"><Proshow /></div>
+      <div id="events"><Events /></div>
+      <div id="gallery"><Gallery /></div>
       <CTA />
-      <Footer />
+      <div id="footer"><Footer /></div>
 
     </main>
   );

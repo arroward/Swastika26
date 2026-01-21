@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, Inter, Cinzel_Decorative, Jost } from "next/font/google";
 import "./globals.css";
+import "./tw-animate.css";
 import LenisScroll from "@/components/LenisScroll";
 import Preloader from "@/components/Preloader";
 import GradientBackground from "@/components/GradientBackground";
