@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const FeatureCard = ({ title, desc, index }: { title: string, desc: string, index: number }) => (
-    <div className="glass-panel p-8 md:p-12 rounded-3xl relative overflow-hidden group hover:border-[var(--accent-blue)]/30 transition-colors duration-500">
+    <div className="glass-panel p-8 md:p-12 rounded-3xl relative overflow-hidden group hover:border-[var(--accent-main)]/30 transition-colors duration-500">
         <div className="absolute top-0 right-0 p-6 md:p-8 opacity-20 text-6xl md:text-8xl font-black font-display text-white group-hover:opacity-10 transition-opacity">
             0{index}
         </div>
@@ -22,7 +22,7 @@ const FeatureCard = ({ title, desc, index }: { title: string, desc: string, inde
         </div>
 
         {/* Hover Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--accent-blue)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--accent-main)]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
     </div>
 );
 

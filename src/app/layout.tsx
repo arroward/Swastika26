@@ -41,9 +41,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`}>
-      <LenisScroll />
+    <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`} suppressHydrationWarning>
       <body className="bg-noise">
+        <LenisScroll />
         <GradientBackground /> {/* Global Background added here to persist */}
         <Preloader />
         {children}

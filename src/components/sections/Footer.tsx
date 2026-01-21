@@ -11,13 +11,13 @@ export default function Footer() {
                 {/* Top Row: Brand & CTA */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                     <div className="flex flex-col gap-2">
-                        <h2 className="text-4xl font-display font-bold tracking-tighter text-white">Swastika<span className="text-[var(--accent-blue)]">.</span></h2>
+                        <h2 className="text-4xl font-display font-bold tracking-tighter text-white">Swastika<span className="text-[var(--accent-main)]">.</span></h2>
                         <p className="text-[var(--text-secondary)] text-sm">Refining the Future.</p>
                     </div>
 
                     <button className="bg-white text-black px-8 py-3 rounded-full font-bold hover:scale-105 transition-transform flex items-center gap-2">
                         Get Your Ticket
-                        <div className="bg-[var(--accent-blue)] rounded-full p-1 text-white">
+                        <div className="bg-[var(--accent-main)] rounded-full p-1 text-white">
                             <ArrowUpRight size={16} />
                         </div>
                     </button>
@@ -38,7 +38,7 @@ export default function Footer() {
 
                     <div className="flex flex-wrap gap-4 md:gap-8">
                         {['Speakers', 'Agenda', 'Venue', 'Contact'].map((item) => (
-                            <a key={item} href={`#${item.toLowerCase()}`} className="px-6 py-2 rounded-full border border-white/10 hover:border-[var(--accent-blue)] hover:text-white text-[var(--text-secondary)] transition-colors">
+                            <a key={item} href={`#${item.toLowerCase()}`} className="px-6 py-2 rounded-full border border-white/10 hover:border-[var(--accent-main)] hover:text-white text-[var(--text-secondary)] transition-colors">
                                 {item}
                             </a>
                         ))}
