@@ -66,13 +66,13 @@ export default function Home() {
                 <Countdown />
 
                 <div className="mt-8 text-center z-20 relative">
-                    <p className="text-2xl md:text-3xl font-display font-bold tracking-widest text-white">
+                    <p className="text-2xl md:text-3xl font-cinzel font-bold tracking-widest text-white">
                         FEB 20 | 21
                     </p>
                 </div>
 
                 <div className="hero-sub mt-4 text-center max-w-xl mx-auto px-4 z-20">
-                    <p className="text-xl md:text-2xl text-[var(--text-secondary)] font-normal font-jost tracking-wide">
+                    <p className="text-xl md:text-2xl text-white font-cinzel tracking-wide">
                         National Level Techno Cultural Fest
                     </p>
                 </div>
