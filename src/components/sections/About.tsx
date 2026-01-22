@@ -1,13 +1,15 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Terminal, Cpu, Zap, Globe } from 'lucide-react';
 import VariableProximity from '@/components/VariableProximity';
+import { SkeletonImage } from '@/components/Skeleton';
 
 export default function About() {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+    const [imageLoaded, setImageLoaded] = useState(false);
 
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -95,10 +97,13 @@ export default function About() {
                     <div className="absolute inset-0 flex items-center justify-center">
                         <div className="relative w-80 h-96 bg-gradient-to-tr from-accent-main to-purple-900 rounded-[2rem] rotate-6 group">
                             <div className="absolute inset-0 bg-black/10 backdrop-blur-xl border border-white/10 rounded-[2rem]" />
+                            {!imageLoaded && <SkeletonImage className="w-full h-full rounded-[2rem]" />}
                             <img
                                 src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop"
                                 alt="Tech Festival"
-                                className="w-full h-full object-cover rounded-[2rem] opacity-60 mix-blend-overlay group-hover:opacity-100 transition-opacity duration-500"
+                                loading="lazy"
+                                onLoad={() => setImageLoaded(true)}
+                                className={`w-full h-full object-cover rounded-[2rem] opacity-60 mix-blend-overlay group-hover:opacity-100 transition-opacity duration-500 ${imageLoaded ? 'block' : 'hidden'}`}
                             />
                         </div>
 

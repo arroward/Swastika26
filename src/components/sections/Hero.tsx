@@ -3,13 +3,20 @@
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import { motion } from 'framer-motion';
+import { useLoading } from '@/components/LoadingProvider';
 import Countdown from '@/components/Countdown';
 import VariableProximity from '@/components/VariableProximity';
 
 export default function Hero() {
     const container = useRef(null);
+    const { isLoading } = useLoading();
+
 
     useGSAP(() => {
+        // Logo Reveal code removed to allow Framer Motion layoutId transition
+
+
         // Hero Text Reveal
         gsap.from('.hero-char', {
             y: 100,
@@ -35,6 +42,19 @@ export default function Hero() {
         <section ref={container} className="relative min-h-screen flex flex-col items-center justify-center pt-32 md:pt-40 pb-16 md:pb-20 px-4 overflow-hidden">
 
             <div className="z-20 text-center relative max-w-[95vw] md:max-w-[90vw] flex flex-col items-center">
+
+                {/* Logo from Splash Screen */}
+                <div className="hero-logo mb-8 md:mb-10 w-24 h-24 md:w-32 md:h-32 relative z-50">
+                    {!isLoading && (
+                        <motion.img
+                            layoutId="shared-logo"
+                            src="/logo/WH_LOGO.svg"
+                            alt="Swastika Logo"
+                            className="w-full h-full drop-shadow-[0_0_25px_rgba(220,38,38,0.6)] animate-pulse-slow"
+                            transition={{ duration: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }}
+                        />
+                    )}
+                </div>
 
                 {/* Overhead Label */}
                 <div className="hero-sub mb-6 md:mb-8 overflow-hidden">

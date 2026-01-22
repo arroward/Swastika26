@@ -36,11 +36,11 @@ export default function GridMotion({ items, gradientColor = 'black' }: GridMotio
     const distributedColumns = distributeItems();
 
     return (
-        <div className="relative w-full h-full overflow-hidden bg-black flex items-center justify-center">
+        <div className="relative w-full h-full overflow-hidden flex items-center justify-center">
 
             {/* Slanted Container - Rotated Grid matching reference */}
             <div
-                className="flex gap-8 items-center -rotate-12 scale-150 origin-center bg-black"
+                className="flex gap-8 items-center -rotate-12 scale-150 origin-center"
                 style={{ height: '150vh' }}
             >
                 {distributedColumns.map((colItems, colIndex) => (
@@ -60,7 +60,7 @@ export default function GridMotion({ items, gradientColor = 'black' }: GridMotio
                             {[...colItems, ...colItems, ...colItems, ...colItems].map((item, itemIndex) => (
                                 <div
                                     key={`col-${colIndex}-item-${itemIndex}`}
-                                    className="relative rounded-[2rem] overflow-hidden aspect-square w-full bg-neutral-900 border-[8px] border-black box-border shadow-2xl"
+                                    className="relative rounded-[2rem] overflow-hidden aspect-square w-full bg-neutral-900 border-[8px] border-transparent box-border shadow-2xl"
                                 >
                                     {typeof item === 'string' && (item.startsWith('http') || item.startsWith('/')) ? (
                                         <img

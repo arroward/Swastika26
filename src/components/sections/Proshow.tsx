@@ -1,9 +1,10 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import VariableProximity from '@/components/VariableProximity';
 import { ShaderAnimation } from '@/components/shader-animation';
+import { SkeletonCard } from '@/components/Skeleton';
 
 const artists = [
     {
@@ -74,6 +75,8 @@ export default function Proshow() {
 
 function Card({ artist, index }: { artist: any, index: number }) {
     const cardRef = useRef(null);
+    const [imageLoaded, setImageLoaded] = useState(false);
+
     const { scrollYProgress } = useScroll({
         target: cardRef,
         offset: ["start end", "end center"]
@@ -88,12 +91,16 @@ function Card({ artist, index }: { artist: any, index: number }) {
             style={{ y, scale, opacity: scale }}
             className="group relative h-[400px] md:h-[500px] lg:h-[600px] w-full overflow-hidden rounded-2xl md:rounded-[2rem] border border-white/10"
         >
+            {!imageLoaded && <SkeletonCard />}
+
             <div className={`absolute inset-0 bg-gradient-to-t ${artist.color} opacity-20 group-hover:opacity-40 transition-opacity duration-500`} />
 
             <img
                 src={artist.image}
                 alt={artist.name}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                loading="lazy"
+                onLoad={() => setImageLoaded(true)}
+                className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
 
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-90" />

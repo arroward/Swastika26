@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useState, MouseEvent } from 'react';
-import { motion, useInView, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Code, Music, Gamepad2, Wrench, Palette, Mic2, ArrowUpRight } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { Code, Music, Gamepad2, Wrench, Palette, Mic2 } from 'lucide-react';
+import CircularGallery from '@/components/CircularGallery';
 
 const categories = [
     {
@@ -55,95 +56,26 @@ const categories = [
     }
 ];
 
-function TiltCard({ cat, index }: { cat: typeof categories[0], index: number }) {
-    const ref = useRef<HTMLDivElement>(null);
 
-    // Mouse position relative to card center
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    // Smooth physics values for rotation
-    const rotateX = useSpring(useTransform(y, [-100, 100], [30, -30]), { damping: 15, stiffness: 200 });
-    const rotateY = useSpring(useTransform(x, [-100, 100], [-30, 30]), { damping: 15, stiffness: 200 });
-
-    function handleMouseMove(e: MouseEvent<HTMLDivElement>) {
-        if (!ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-
-        x.set(xPct * 200); // 200 = Sensitivity factor
-        y.set(yPct * 200);
-    }
-
-    function handleMouseLeave() {
-        x.set(0);
-        y.set(0);
-    }
-
-    return (
-        <motion.div
-            style={{
-                perspective: 1000,
-            }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1, duration: 0.5 }}
-        >
-            <motion.div
-                ref={ref}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                style={{
-                    rotateX: rotateX,
-                    rotateY: rotateY,
-                    transformStyle: "preserve-3d",
-                }}
-                className={`relative h-full min-h-[300px] w-full rounded-3xl bg-black/40 border border-white/10 p-8 flex flex-col justify-between group overflow-hidden hover:border-white/20 transition-colors ${cat.shadow} hover:shadow-2xl`}
-            >
-                {/* Spotlight Gradient using absolute positioning and opacity */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${cat.accent} opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none mix-blend-soft-light`} />
-
-                {/* Content Layer (elevated) */}
-                <div style={{ transform: "translateZ(50px)" }} className="relative z-10 flex flex-col gap-4">
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cat.accent} flex items-center justify-center text-white shadow-lg`}>
-                        <cat.icon size={28} />
-                    </div>
-
-                    <div>
-                        <h3 className="text-3xl font-black font-syne text-white mb-2">{cat.title}</h3>
-                        <p className="text-white/60 font-jost text-sm leading-relaxed">{cat.desc}</p>
-                    </div>
-                </div>
-
-                {/* Bottom Action (elevated same or less) */}
-                <div style={{ transform: "translateZ(30px)" }} className="relative z-10 flex justify-between items-end mt-8 border-t border-white/5 pt-6">
-                    <span className="text-xs font-mono uppercase tracking-widest text-white/40 group-hover:text-white/80 transition-colors">Explore Category</span>
-                    <button className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-white group-hover:text-black transition-all">
-                        <ArrowUpRight size={18} />
-                    </button>
-                </div>
-            </motion.div>
-        </motion.div>
-    );
-}
 
 import { ShaderAnimation } from '@/components/shader-animation';
+
+const galleryConfig = {
+    bend: 0,
+    textColor: "#ffffff",
+    borderRadius: 0.05,
+    scrollSpeed: 2,
+    scrollEase: 0.05
+};
 
 export default function Events() {
     const containerRef = useRef(null);
 
     return (
-        <section ref={containerRef} className="relative py-16 md:py-24 lg:py-32 overflow-hidden">
+        <section ref={containerRef} className="relative py-4 md:py-4 lg:py-16 overflow-hidden">
 
             <div className="container mx-auto px-4 md:px-6 z-10 relative">
-                <div className="text-center mb-12 md:mb-16 lg:mb-20 space-y-4 md:space-y-6">
+                <div className="text-center mb-6 md:mb-8 lg:mb-10 space-y-4 md:space-y-6">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -172,10 +104,18 @@ export default function Events() {
                     </motion.h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                    {categories.map((cat, i) => (
-                        <TiltCard key={cat.id} cat={cat} index={i} />
-                    ))}
+                <div style={{ height: '600px', position: 'relative' }}>
+                    <CircularGallery
+                        {...galleryConfig}
+                        items={[
+                            { image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop', text: 'Technical' },
+                            { image: 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', text: 'Cultural' },
+                            { image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop', text: 'Esports' },
+                            { image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop', text: 'Workshops' },
+                            { image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800&auto=format&fit=crop', text: 'Arts' },
+                            { image: 'https://images.unsplash.com/photo-1590402494682-cd3fb5321c5e?q=80&w=800&auto=format&fit=crop', text: 'Open Mic' }
+                        ]}
+                    />
                 </div>
             </div>
         </section>

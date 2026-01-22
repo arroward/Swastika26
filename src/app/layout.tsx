@@ -5,6 +5,7 @@ import "./tw-animate.css";
 import LenisScroll from "@/components/LenisScroll";
 import Preloader from "@/components/Preloader";
 import GradientBackground from "@/components/GradientBackground";
+import { LoadingProvider } from "@/components/LoadingProvider";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -40,10 +41,24 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: "Swastika.26",
   },
+  icons: {
+    icon: "/logo/wh_sw.png",
+    apple: "/logo/wh_sw.png",
+  },
+  openGraph: {
+    title: "Swastika 2026 - Techno Cultural Fest",
+    description: "National Level Techno-Cultural Fest - Join the revolution",
+    type: "website",
+    images: ["/logo/wh_sw.png"],
+  },
 };
 
 export const viewport = {
-  themeColor: "#000000",
+  themeColor: "#dc2626",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({
@@ -54,12 +69,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`} suppressHydrationWarning>
       <body className="bg-noise bg-black">
-        <LenisScroll />
-        <GradientBackground />
-        <Preloader />
-        <div className="relative z-10">
-          {children}
-        </div>
+        <LoadingProvider>
+          <LenisScroll />
+          <GradientBackground />
+          <Preloader />
+          <div className="relative z-10">
+            {children}
+          </div>
+        </LoadingProvider>
       </body>
     </html>
   );

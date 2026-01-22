@@ -33,7 +33,7 @@ export default function Gallery() {
                 <p className="text-white/50 mt-2 tracking-widest uppercase text-sm">Highlights of 2025</p>
             </div>
 
-            <GridMotion items={galleryItems} gradientColor="black" />
+            <GridMotion items={galleryItems} gradientColor="transparent" />
         </section>
     );
 }
