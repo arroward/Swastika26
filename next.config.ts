@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 import withPWA from "@ducanh2912/next-pwa";
 
 const nextConfig: NextConfig = {
-  // @ts-expect-error - Turbopack config is required at root level for Next.js 16
   turbopack: {}
 };
 
