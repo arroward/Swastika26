@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import Countdown from '@/components/Countdown';
+import VariableProximity from '@/components/VariableProximity';
 
 export default function Hero() {
     const container = useRef(null);
@@ -31,32 +32,34 @@ export default function Hero() {
     }, { scope: container });
 
     return (
-        <section ref={container} className="relative h-screen flex flex-col items-center justify-center pt-20">
+        <section ref={container} className="relative min-h-screen flex flex-col items-center justify-center pt-32 md:pt-40 pb-16 md:pb-20 px-4 overflow-hidden">
 
-            {/* Dynamic Background Glows */}
-            <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none opacity-50" />
-            <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-red-900/10 rounded-full blur-[120px] pointer-events-none opacity-50" />
+            <div className="z-20 text-center relative max-w-[95vw] md:max-w-[90vw] flex flex-col items-center">
 
-            <div className="z-20 text-center relative max-w-[90vw]">
-                <h1 className="text-[12vw] leading-none font-black font-cinzel tracking-normal flex justify-center drop-shadow-2xl">
-                    <span className="hero-char">SWASTIKA</span>
+                {/* Overhead Label */}
+                <div className="hero-sub mb-6 md:mb-8 overflow-hidden">
+                    <p className="text-xs md:text-sm lg:text-base text-accent-main font-mono tracking-[0.3em] md:tracking-[0.5em] uppercase border border-accent-main/30 px-3 py-2 md:px-4 md:py-2 rounded-full backdrop-blur-md bg-black/30">
+                        Techno Cultural Fest
+                    </p>
+                </div>
+
+                {/* Main Title - Stacked for Impact */}
+                <h1 className="flex flex-col items-center leading-none font-black font-cinzel tracking-tight drop-shadow-2xl mix-blend-difference">
+                    <span className="hero-char text-[18vw] md:text-[15vw] lg:text-[12vw] text-transparent stroke-text-lg hover:text-white transition-colors duration-700 select-none">SWASTIKA</span>
+                    <span className="hero-char text-[10vw] md:text-[8vw] lg:text-[6vw] text-white -mt-[3vw] md:-mt-[2vw] z-10 relative">2026</span>
                 </h1>
             </div>
 
-            <div className="w-full max-w-[90vw] md:max-w-[70vw] mx-auto">
+            <div className="w-full max-w-full md:max-w-[80vw] lg:max-w-[70vw] mx-auto mt-6 md:mt-8 lg:mt-12 mb-6 md:mb-8 scale-[0.65] md:scale-75 lg:scale-100 origin-center z-30 relative">
                 <Countdown />
             </div>
 
-            <div className="mt-12 text-center z-20 relative">
-                <p className="text-2xl md:text-3xl font-cinzel font-bold tracking-widest text-white/90 drop-shadow-lg">
-                    FEB 20 | 21
-                </p>
-            </div>
-
-            <div className="hero-sub mt-4 w-full text-center px-4 z-20">
-                <p className="text-[10px] md:text-lg text-white/80 font-jost tracking-[0.2em] font-light uppercase whitespace-nowrap">
-                    National Level Techno Cultural Fest
-                </p>
+            <div className="mt-6 md:mt-8 text-center z-20 relative">
+                <div className="hero-sub flex items-center gap-3 md:gap-4 text-white/60 font-jost text-xs md:text-sm lg:text-lg tracking-widest uppercase">
+                    <span className="w-8 md:w-12 h-[1px] bg-white/20"></span>
+                    Feb 20 • 21
+                    <span className="w-8 md:w-12 h-[1px] bg-white/20"></span>
+                </div>
             </div>
 
         </section>

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 const defaultItems = [
-    "SWASTIKA",
+    "SWASTIKA.26",
     "2026",
     "FEB",
     "20",

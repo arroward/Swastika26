@@ -100,16 +100,16 @@
     color: var(--text-primary);
     font-family: var(--font-body);
     overflow-x: hidden;
-    cursor: none !important;
+    /* cursor: none !important; */
   }
 
   /* Force hide cursor on everything */
-  * {
+  /* * {
     cursor: none !important;
-  }
+  } */
 
   /* Specific elements that might override */
-  a,
+  /* a,
   button,
   [role="button"],
   input,
@@ -117,7 +117,7 @@
   textarea,
   label {
     cursor: none !important;
-  }
+  } */
 }
 
 /* --- Utilities --- */
@@ -161,6 +161,11 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.1));
+}
+
+.stroke-text-lg {
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.5);
+  color: transparent;
 }
 
 /* Buttons */
@@ -295,22 +300,29 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-    cursor: none !important;
-  }
-
-  a,
-  button,
-  [role="button"],
-  input,
-  select,
-  textarea,
-  label {
-    cursor: none !important;
-  }
-
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Only hide cursor on non-touch/desktop devices where SmoothCursor is visible */
+  @media (min-width: 768px) {
+    /* * {
+      @apply border-border outline-ring/50;
+      cursor: none !important;
+    }
+
+    a,
+    button,
+    [role="button"],
+    input,
+    select,
+    textarea,
+    label {
+      cursor: none !important;
+    }
+
+    body {
+      cursor: none !important;
+    } */
   }
 }

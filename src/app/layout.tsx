@@ -32,8 +32,18 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  title: "Swastika'26",
+  title: "Swastika.26",
   description: "Join the revolution. National Level Techno-Cultural Fest.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Swastika.26",
+  },
+};
+
+export const viewport = {
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -43,11 +53,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`} suppressHydrationWarning>
-      <body className="bg-noise">
+      <body className="bg-noise bg-black">
         <LenisScroll />
-        <GradientBackground /> {/* Global Background added here to persist */}
+        <GradientBackground />
         <Preloader />
-        {children}
+        <div className="relative z-10">
+          {children}
+        </div>
       </body>
     </html>
   );
