@@ -8,7 +8,8 @@ const defaultItems = [
     "FEB",
     "20",
     "21",
-    "NATIONAL LEVEL TECH FEST"
+    "NATIONAL LEVEL TECH FEST",
+    "MBCCET"
 ];
 
 interface MarqueeRowProps {
