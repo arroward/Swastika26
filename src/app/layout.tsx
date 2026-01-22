@@ -5,6 +5,7 @@ import "./tw-animate.css";
 import LenisScroll from "@/components/LenisScroll";
 import Preloader from "@/components/Preloader";
 import GradientBackground from "@/components/GradientBackground";
+import NoiseOverlay from "@/components/NoiseOverlay";
 import { LoadingProvider } from "@/components/LoadingProvider";
 
 const syne = Syne({
@@ -68,10 +69,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`} suppressHydrationWarning>
-      <body className="bg-noise bg-black">
+      <body className="bg-black">
         <LoadingProvider>
           <LenisScroll />
           <GradientBackground />
+          <NoiseOverlay />
           <Preloader />
           <div className="relative z-10">
             {children}

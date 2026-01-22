@@ -28,7 +28,11 @@ export default function Home() {
       <MarqueeSection />
       <div id="proshow"><Proshow /></div>
       <div id="events"><Events /></div>
-      <div id="gallery"><Gallery /></div>
+      <div id="gallery" className="relative w-full overflow-hidden my-20">
+        <div className="-rotate-3 scale-105">
+          <Gallery />
+        </div>
+      </div>
       <CTA />
       <div id="footer"><Footer /></div>
 
