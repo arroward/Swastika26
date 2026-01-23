@@ -13,18 +13,18 @@ import Footer from '@/components/sections/Footer';
 
 export default function Home() {
   return (
-    <main className="bg-transparent min-h-screen w-full text-white overflow-x-hidden selection:bg-[var(--accent-main)] selection:text-white relative">
+    <main className="bg-transparent w-full text-white relative">
       {/* Premium Cursor Lighting */}
 
-      <div id="home"><Hero /></div>
-      <div id="about"><AboutEvent /></div>
-      <AboutCollege />
-      <MarqueeSection />
-      <div id="proshow"><Proshow /></div>
-      <div id="events"><Events /></div>
-      <Gallery />
-      <CTA />
-      <div id="footer"><Footer /></div>
+      <section id="home" className="snap-start w-full h-auto"><Hero /></section>
+      <section id="about" className="snap-start w-full h-auto"><AboutEvent /></section>
+      <section className="snap-start w-full h-auto"><AboutCollege /></section>
+      <section className="snap-start w-full h-auto"><MarqueeSection /></section>
+      <section id="proshow" className="snap-start w-full h-auto"><Proshow /></section>
+      <section id="events" className="snap-start w-full h-auto"><Events /></section>
+      <section id="gallery" className="snap-start w-full h-auto"><Gallery /></section>
+      <section className="snap-start w-full h-auto"><CTA /></section>
+      <section id="footer" className="snap-start w-full h-auto"><Footer /></section>
 
     </main>
   );
