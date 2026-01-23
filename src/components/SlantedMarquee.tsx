@@ -35,7 +35,7 @@ const MarqueeRow = ({ items, direction = 1, speed = 20 }: MarqueeRowProps) => {
                 {items.map((item, idx) => (
                     <div
                         key={`mq-1-${idx}`}
-                        className="text-7xl md:text-9xl font-bold text-white/10 font-cinzel tracking-tighter hover:text-[var(--accent-main)] transition-colors duration-300"
+                        className="text-7xl md:text-9xl font-bold text-white/20 font-cinzel tracking-tighter hover:text-[var(--accent-main)] transition-colors duration-300"
                     >
                         {item}
                     </div>
@@ -55,7 +55,7 @@ const MarqueeRow = ({ items, direction = 1, speed = 20 }: MarqueeRowProps) => {
                 {items.map((item, idx) => (
                     <div
                         key={`mq-2-${idx}`}
-                        className="text-7xl md:text-9xl font-bold text-white/10 font-cinzel tracking-tighter hover:text-[var(--accent-main)] transition-colors duration-300"
+                        className="text-7xl md:text-9xl font-bold text-white/20 font-cinzel tracking-tighter hover:text-[var(--accent-main)] transition-colors duration-300"
                     >
                         {item}
                     </div>
@@ -67,7 +67,7 @@ const MarqueeRow = ({ items, direction = 1, speed = 20 }: MarqueeRowProps) => {
 
 export default function SlantedMarquee() {
     return (
-        <div className="w-full h-full flex items-center justify-center overflow-hidden relative bg-black/20">
+        <div className="w-full h-full min-h-[600px] flex items-center justify-center overflow-hidden relative bg-black/20">
             {/* Background enhancement */}
             <div className="absolute inset-0 z-0 pointer-events-none" />
 
