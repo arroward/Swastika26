@@ -8,6 +8,8 @@ import InteractiveRedGradient from "@/components/InteractiveRedGradient";
 import GradientBackground from "@/components/GradientBackground";
 import NoiseOverlay from "@/components/NoiseOverlay";
 import { LoadingProvider } from "@/components/LoadingProvider";
+import Navbar from "@/components/Navbar";
+import MainContainer from "@/components/MainContainer";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -70,15 +72,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`} suppressHydrationWarning>
-      <body className="bg-black h-screen w-screen overflow-hidden p-2 md:p-4 lg:p-6 flex flex-col">
+      <body className="bg-transparent h-[100dvh] w-full overflow-hidden p-2 md:p-4 lg:p-6 flex flex-col gap-2 md:gap-4">
         <LoadingProvider>
+          <GradientBackground />
           <LenisScroll />
           {/* <InteractiveRedGradient /> */}
           <NoiseOverlay />
           <Preloader />
-          <div className="relative z-10 w-full h-full bg-transparent rounded-[2rem] border border-white/5 overflow-y-auto overflow-x-hidden shadow-2xl relative scrollbar-hide" id="main-container">
+          <Navbar />
+          <MainContainer>
             {children}
-          </div>
+          </MainContainer>
         </LoadingProvider>
       </body>
     </html>
