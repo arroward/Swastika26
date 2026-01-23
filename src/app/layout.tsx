@@ -4,7 +4,6 @@ import "./globals.css";
 import "./tw-animate.css";
 import LenisScroll from "@/components/LenisScroll";
 import Preloader from "@/components/Preloader";
-import InteractiveRedGradient from "@/components/InteractiveRedGradient";
 import GradientBackground from "@/components/GradientBackground";
 import NoiseOverlay from "@/components/NoiseOverlay";
 import { LoadingProvider } from "@/components/LoadingProvider";
