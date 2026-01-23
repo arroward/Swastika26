@@ -307,9 +307,27 @@ class App {
         this.onResize();
         this.createGeometry();
         this.createMedias(items, bend, textColor, borderRadius, font);
+
+        // Start playing by default, but wait for explicit call or next frame
+        this.isPlaying = true;
         this.update();
         this.addEventListeners();
     }
+
+    play() {
+        if (!this.isPlaying) {
+            this.isPlaying = true;
+            this.update();
+        }
+    }
+
+    pause() {
+        this.isPlaying = false;
+        if (this.raf) {
+            window.cancelAnimationFrame(this.raf);
+        }
+    }
+
     createRenderer() {
         this.renderer = new Renderer({
             alpha: true,
@@ -415,6 +433,8 @@ class App {
         }
     }
     update() {
+        if (!this.isPlaying) return;
+
         this.scroll.current = lerp(this.scroll.current, this.scroll.target, this.scroll.ease);
         const direction = this.scroll.current > this.scroll.last ? 'right' : 'left';
         if (this.medias) {
@@ -441,7 +461,7 @@ class App {
         window.addEventListener('touchend', this.boundOnTouchUp);
     }
     destroy() {
-        window.cancelAnimationFrame(this.raf);
+        this.pause();
         window.removeEventListener('resize', this.boundOnResize);
         window.removeEventListener('mousewheel', this.boundOnWheel);
         window.removeEventListener('wheel', this.boundOnWheel);
@@ -469,7 +489,24 @@ export default function CircularGallery({
     const containerRef = useRef(null);
     useEffect(() => {
         const app = new App(containerRef.current, { items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase });
+
+        // Performance optimization: Only play when intersecting
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    app.play();
+                } else {
+                    app.pause();
+                }
+            });
+        }, { threshold: 0 });
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
+        }
+
         return () => {
+            observer.disconnect();
             app.destroy();
         };
     }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);

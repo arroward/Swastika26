@@ -11,7 +11,7 @@ export default function NoiseOverlay() {
             style={{
                 opacity: siteConfig.effects.noise.opacity,
                 backgroundImage: `url("${siteConfig.effects.noise.pattern}")`,
-                animation: 'noise-move 0.2s infinite'
+                animation: 'noise-move 0.5s infinite'
             }}
         />
     );

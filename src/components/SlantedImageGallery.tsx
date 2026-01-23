@@ -34,6 +34,7 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
         <div className="flex overflow-hidden whitespace-nowrap gap-4 select-none">
             <motion.div
                 className="flex gap-4 min-w-full shrink-0 items-center"
+                style={{ willChange: "transform" }}
                 initial={{ x: direction === 1 ? "0%" : "-100%" }}
                 animate={{ x: direction === 1 ? "-100%" : "0%" }}
                 transition={{
@@ -58,6 +59,7 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
             </motion.div>
             <motion.div
                 className="flex gap-4 min-w-full shrink-0 items-center"
+                style={{ willChange: "transform" }}
                 initial={{ x: direction === 1 ? "0%" : "-100%" }}
                 animate={{ x: direction === 1 ? "-100%" : "0%" }}
                 transition={{

@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Code, Music, Gamepad2, Wrench, Palette, Mic2 } from 'lucide-react';
 import CircularGallery from '@/components/CircularGallery';
+import Event3DCarousel from '@/components/Event3DCarousel';
 
 const categories = [
     {
@@ -104,9 +105,8 @@ export default function Events() {
                     </motion.h2>
                 </div>
 
-                <div style={{ height: '600px', position: 'relative' }}>
-                    <CircularGallery
-                        {...galleryConfig}
+                <div className="w-full relative z-20">
+                    <Event3DCarousel
                         items={[
                             { image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop', text: 'Technical' },
                             { image: 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', text: 'Cultural' },

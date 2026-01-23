@@ -42,7 +42,7 @@ export default function Proshow() {
                 animate={{ opacity: [0.2, 0.5, 0.2] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             >
-                <ShaderAnimation />
+                {/* <ShaderAnimation /> */}
             </motion.div>
 
             <div className="container mx-auto px-4 md:px-6 z-10 relative">
@@ -88,7 +88,7 @@ function Card({ artist, index }: { artist: any, index: number }) {
     return (
         <motion.div
             ref={cardRef}
-            style={{ y, scale, opacity: scale }}
+            style={{ y, scale, opacity: scale, willChange: 'transform' }}
             className="group relative h-[400px] md:h-[500px] lg:h-[600px] w-full overflow-hidden rounded-2xl md:rounded-[2rem] border border-white/10"
         >
             {!imageLoaded && <SkeletonCard />}

@@ -42,9 +42,18 @@ export default function Preloader() {
             });
         });
 
-        // Wait for all resources and minimum display time
+        const windowLoad = new Promise((resolve) => {
+            if (document.readyState === 'complete') {
+                resolve(true);
+            } else {
+                window.addEventListener('load', () => resolve(true));
+            }
+        });
+
+        // Wait for all resources, window load, and minimum display time
         Promise.all([
             Promise.all(preloadImages),
+            windowLoad,
             new Promise(resolve => setTimeout(resolve, 2500)) // Minimum 2.5s display
         ]).then(() => {
             setTimeout(() => {
