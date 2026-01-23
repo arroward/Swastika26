@@ -6,15 +6,27 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 export default function Navbar() {
-    const [scrolled, setScrolled] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
+        const container = document.getElementById('main-container');
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            if (container) {
+                // Check if scrolled past the Hero section (height roughly 100vh)
+                // Using window.innerHeight as proxy for Hero height
+                const heroHeight = window.innerHeight * 0.9;
+                setIsScrolled(container.scrollTop > heroHeight);
+            }
         };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        handleScroll(); // Initial check
+        container?.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll); // Check on resize too
+        return () => {
+            container?.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleScroll);
+        };
     }, []);
 
     // Menu Items
@@ -33,7 +45,10 @@ export default function Navbar() {
                 initial={{ y: -100 }}
                 animate={{ y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className={`fixed top-0 left-0 w-full z-50 px-6 py-4 flex items-center justify-between pointer-events-none transition-all duration-300 ${scrolled ? 'bg-black/50 backdrop-blur-md border-b border-white/5 py-4' : 'py-6 mix-blend-difference'}`}
+                className={`fixed top-2 md:top-4 lg:top-6 left-2 md:left-4 lg:left-6 right-2 md:right-4 lg:right-6 z-[100] px-6 py-4 flex items-center justify-between transition-all duration-500 rounded-[2rem] ${isScrolled
+                        ? 'bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50'
+                        : 'bg-transparent border-transparent mix-blend-difference'
+                    }`}
             >
                 {/* LOGO */}
                 <Link href="/" className="pointer-events-auto group flex items-center gap-3">
@@ -47,8 +62,8 @@ export default function Navbar() {
                     </span>
                 </Link>
 
-                {/* DESKTOP MENU - Hidden on Mobile */}
-                <div className="hidden md:flex items-center pointer-events-auto border border-white/10 rounded-full px-2 py-2 bg-black/20 backdrop-blur-md">
+                {/* DESKTOP MENU - Visible ONLY when Scrolled */}
+                <div className={`hidden ${isScrolled ? 'md:flex' : 'hidden'} items-center pointer-events-auto border border-white/10 rounded-full px-2 py-1 bg-black/20 backdrop-blur-md transition-all duration-500`}>
                     {menuItems.slice(0, 4).map((item, i) => (
                         <Link
                             key={i}
@@ -66,10 +81,11 @@ export default function Navbar() {
                     </Link>
                 </div>
 
-                {/* MOBILE HAMBURGER */}
+                {/* HAMBURGER - Visible on Mobile OR when in Hero Section (Desktop) */}
                 <button
                     onClick={() => setIsOpen(true)}
-                    className="md:hidden pointer-events-auto text-white p-2"
+                    className={`pointer-events-auto text-white p-2 hover:bg-white/10 rounded-full transition-colors ${isScrolled ? 'md:hidden' : 'block'
+                        }`}
                 >
                     <Menu size={32} />
                 </button>

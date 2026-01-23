@@ -69,13 +69,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`} suppressHydrationWarning>
-      <body className="bg-black">
+      <body className="bg-black h-screen w-screen overflow-hidden p-2 md:p-4 lg:p-6 flex flex-col">
         <LoadingProvider>
-          <LenisScroll />
+          {/* <LenisScroll /> */}
           <GradientBackground />
           <NoiseOverlay />
           <Preloader />
-          <div className="relative z-10">
+          <div className="relative z-10 w-full h-full bg-[#050505] rounded-[2rem] border border-white/5 overflow-y-auto overflow-x-hidden shadow-2xl relative scrollbar-hide" id="main-container">
             {children}
           </div>
         </LoadingProvider>

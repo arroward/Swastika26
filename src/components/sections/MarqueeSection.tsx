@@ -4,7 +4,7 @@ import SlantedMarquee from '@/components/SlantedMarquee';
 
 export default function MarqueeSection() {
     return (
-        <section className="h-screen w-full relative overflow-hidden backdrop-blur-sm">
+        <section className="relative w-full overflow-hidden py-10 md:py-20 backdrop-blur-sm">
             <SlantedMarquee />
         </section>
     );

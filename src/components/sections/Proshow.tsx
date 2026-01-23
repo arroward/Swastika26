@@ -34,7 +34,7 @@ export default function Proshow() {
     const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
     return (
-        <section ref={containerRef} className="relative min-h-screen py-16 md:py-24 overflow-hidden">
+        <section ref={containerRef} className="relative w-full py-16 md:py-24 overflow-hidden">
 
             {/* Shader Background with Loop & Delay */}
             <motion.div

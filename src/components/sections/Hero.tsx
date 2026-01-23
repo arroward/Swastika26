@@ -43,7 +43,7 @@ export default function Hero() {
     }, { scope: container });
 
     return (
-        <section ref={container} className="relative min-h-screen flex flex-col items-center justify-center pt-20 md:pt-32 pb-12 md:pb-16 px-4 overflow-hidden">
+        <section ref={container} className="relative h-[calc(100vh-1rem)] md:h-[calc(100vh-2rem)] lg:h-[calc(100vh-3rem)] flex flex-col items-center justify-center pt-20 pb-8 px-4 overflow-hidden rounded-[2rem]">
             <BackgroundGlows />
 
             <div className="z-20 text-center relative max-w-[95vw] md:max-w-[90vw] flex flex-col items-center">

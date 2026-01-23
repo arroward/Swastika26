@@ -18,11 +18,11 @@ export default function CTA() {
                     transition={{ duration: 0.8 }}
                     className="space-y-8"
                 >
-                    <h2 className="text-5xl md:text-6xl lg:text-9xl font-black font-syne text-white tracking-tighter mix-blend-difference cursor-default flex flex-col items-center">
+                    <h2 className="text-5xl md:text-6xl lg:text-8xl font-black font-syne text-white tracking-tighter mix-blend-difference cursor-default flex flex-col items-center">
                         <div className="mb-4">
-                            <VariableProximity label="BE PART OF" className="font-syne" fromFontVariationSettings="'wght' 400" toFontVariationSettings="'wght' 900" radius={200} />
+                            <VariableProximity label="DON'T MISS OUT" className="font-syne" fromFontVariationSettings="'wght' 400" toFontVariationSettings="'wght' 900" radius={200} />
                         </div>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50">HISTORY</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50 text-center">BE PART OF SWASTIKA</span>
                     </h2>
 
                     <p className="max-w-xl mx-auto text-xl text-white/70 font-display font-light">
