@@ -67,7 +67,7 @@ const MarqueeRow = ({ items, direction = 1, speed = 20 }: MarqueeRowProps) => {
 
 export default function SlantedMarquee() {
     return (
-        <div className="w-full h-full min-h-[600px] flex items-center justify-center overflow-hidden relative bg-black/20">
+        <div className="w-full h-full flex items-center justify-center overflow-hidden relative bg-black/20">
             {/* Background enhancement */}
             <div className="absolute inset-0 z-0 pointer-events-none" />
 
