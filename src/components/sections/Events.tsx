@@ -73,10 +73,10 @@ export default function Events() {
     const containerRef = useRef(null);
 
     return (
-        <section ref={containerRef} className="relative py-4 md:py-4 lg:py-16 overflow-hidden">
+        <section ref={containerRef} className="relative py-0 overflow-hidden h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] flex flex-col justify-center">
 
-            <div className="container mx-auto px-4 md:px-6 z-10 relative">
-                <div className="text-center mb-6 md:mb-8 lg:mb-10 space-y-4 md:space-y-6">
+            <div className="container mx-auto px-4 md:px-6 z-10 relative h-full flex flex-col">
+                <div className="text-center pt-4 md:pt-6 mb-2 md:mb-4 lg:mb-6 space-y-2 shrink-0">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -99,23 +99,26 @@ export default function Events() {
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
-                        className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-cinzel text-white"
+                        className="text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-cinzel text-white drop-shadow-2xl"
                     >
-                        DISCOVER <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/40">EVENTS</span>
+                        DISCOVER <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">EVENTS</span>
                     </motion.h2>
                 </div>
 
-                <div className="w-full relative z-20">
-                    <Event3DCarousel
-                        items={[
-                            { image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop', text: 'Technical' },
-                            { image: 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', text: 'Cultural' },
-                            { image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop', text: 'Esports' },
-                            { image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop', text: 'Workshops' },
-                            { image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800&auto=format&fit=crop', text: 'Arts' },
-                            { image: 'https://images.unsplash.com/photo-1590402494682-cd3fb5321c5e?q=80&w=800&auto=format&fit=crop', text: 'Open Mic' }
-                        ]}
-                    />
+                <div className="w-full relative z-20 flex-1 min-h-0 flex items-center justify-center pb-4">
+                    <div className="w-full h-full flex items-center justify-center">
+                        {/* Linear Carousel */}
+                        <Event3DCarousel
+                            items={[
+                                { image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop', text: 'Technical' },
+                                { image: 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', text: 'Cultural' },
+                                { image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop', text: 'Esports' },
+                                { image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop', text: 'Workshops' },
+                                { image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800&auto=format&fit=crop', text: 'Arts' },
+                                { image: 'https://images.unsplash.com/photo-1590402494682-cd3fb5321c5e?q=80&w=800&auto=format&fit=crop', text: 'Open Mic' }
+                            ]}
+                        />
+                    </div>
                 </div>
             </div>
         </section>

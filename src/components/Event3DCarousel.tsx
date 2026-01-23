@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef, useEffect, useState, useMemo } from 'react';
-import { motion, useMotionValue, useSpring, useTransform, PanInfo, AnimatePresence } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface CarouselItem {
     image: string;
@@ -13,170 +13,135 @@ interface Event3DCarouselProps {
 }
 
 export default function Event3DCarousel({ items }: Event3DCarouselProps) {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [width, setWidth] = useState(1000); // Default to desktop width to avoid hydration mismatch
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [isMobile, setIsMobile] = useState(false);
 
-    // Rotation state
-    const rotation = useMotionValue(0);
-    const springConfig = { damping: 20, stiffness: 100, mass: 1 };
-    const smoothRotation = useSpring(rotation, springConfig);
+    // Create 3 sets of items for true infinite scrolling illusion
+    // Set 1 (Prefix), Set 2 (Main), Set 3 (Suffix)
+    const extendedItems = [...items, ...items, ...items];
+    const totalItemsCount = items.length;
 
     useEffect(() => {
-        if (containerRef.current) {
-            setWidth(containerRef.current.offsetWidth);
-            setIsMobile(window.innerWidth < 768);
-        }
-        const handleResize = () => {
-            if (containerRef.current) {
-                setWidth(containerRef.current.offsetWidth);
-                setIsMobile(window.innerWidth < 768);
-            }
-        };
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
-    // Responsive Calculations
-    const cardWidth = isMobile ? 220 : 280;
-    const cardHeight = isMobile ? 320 : 400;
-    const gap = isMobile ? 20 : 40;
+    // Initial center scroll position
+    useEffect(() => {
+        if (scrollContainerRef.current) {
+            const container = scrollContainerRef.current;
+            // Calculate width of one set.
+            // Best determined by total scroll width / 3, but initially we might need to wait for render.
+            // A simple timeout helps ensure layout is ready.
+            setTimeout(() => {
+                const singleSetWidth = container.scrollWidth / 3;
+                container.scrollLeft = singleSetWidth;
+            }, 100);
+        }
+    }, [items]);
 
-    // Calculate radius based on number of items to form a circle
-    const count = items.length;
-    const circumference = count * (cardWidth + gap);
-    const rawRadius = circumference / (2 * Math.PI);
+    const handleScroll = () => {
+        if (!scrollContainerRef.current) return;
+        const container = scrollContainerRef.current;
+        const scrollLeft = container.scrollLeft;
+        const scrollWidth = container.scrollWidth;
+        const singleSetWidth = scrollWidth / 3;
 
-    // Ensure minimum radius prevents overlapping too much, but adapts to screen
-    const radius = Math.max(rawRadius, isMobile ? 200 : 350);
-    const anglePerItem = 360 / count;
+        // Tolerance for floating point/pixel variations
+        const padding = 50;
 
-    const handleDrag = (_: any, info: PanInfo) => {
-        const moveScale = isMobile ? 0.4 : 0.2; // More sensitive on mobile
-        const currentRotation = rotation.get();
-        rotation.set(currentRotation + info.delta.x * moveScale);
+        // If we scrolled past the 2nd set (into the 3rd), jump back to 2nd start
+        if (scrollLeft >= singleSetWidth * 2 - padding) {
+            container.scrollLeft = scrollLeft - singleSetWidth;
+        }
+        // If we scrolled back into the 1st set, jump forward to 2nd set
+        else if (scrollLeft <= padding) {
+            container.scrollLeft = scrollLeft + singleSetWidth;
+        }
     };
 
-    const handleDragEnd = (_: any, info: PanInfo) => {
-        const currentRotation = rotation.get();
-        const velocity = info.velocity.x * (isMobile ? 0.2 : 0.1);
+    const scrollNext = () => {
+        if (!scrollContainerRef.current) return;
+        const container = scrollContainerRef.current;
+        // Roughly width of one card + margin
+        // Using scrollBy with behavior smooth snaps to the nearest snap point
+        const cardWidth = isMobile ? window.innerWidth * 0.8 : 350;
+        // Add approx margin (Mobile 24px total, Desktop 48px)
+        const scrollAmount = cardWidth + (isMobile ? 24 : 48);
 
-        const snapAngle = anglePerItem;
-        const predictedRotation = currentRotation + velocity;
-        const nearestSnap = Math.round(predictedRotation / snapAngle) * snapAngle;
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    };
 
-        rotation.set(nearestSnap);
+    const scrollPrev = () => {
+        if (!scrollContainerRef.current) return;
+        const container = scrollContainerRef.current;
+        const cardWidth = isMobile ? window.innerWidth * 0.8 : 350;
+        const scrollAmount = cardWidth + (isMobile ? 24 : 48);
+
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
     };
 
     return (
-        <div
-            ref={containerRef}
-            className="relative w-full h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden perspective-[1000px] cursor-grab active:cursor-grabbing"
-            style={{ perspective: isMobile ? '800px' : '1200px' }}
-        >
-            {/* Background enhancement */}
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-900/5 to-transparent pointer-events-none" />
-
-            <motion.div
-                className="relative preserve-3d"
-                style={{
-                    width: cardWidth,
-                    height: cardHeight,
-                    rotateY: smoothRotation,
-                    transformStyle: 'preserve-3d',
-                }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.01}
-                onDrag={handleDrag}
-                onDragEnd={handleDragEnd}
+        <div className="relative w-full h-full flex items-center group/nav">
+            {/* Scroll Container */}
+            <div
+                ref={scrollContainerRef}
+                onScroll={handleScroll}
+                className="relative w-full h-full flex items-center overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide px-4 md:px-[30vw] space-x-0"
             >
-                {items.map((item, index) => {
-                    const angle = index * anglePerItem;
-
-                    return (
-                        <CarouselItemCard
-                            key={index}
-                            item={item}
-                            index={index}
-                            angle={angle}
-                            radius={radius}
-                            width={cardWidth}
-                            height={cardHeight}
-                        />
-                    );
-                })}
-            </motion.div>
-
-            {/* Drag Hint */}
-            <div className="absolute bottom-6 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 pointer-events-none">
-                <div className="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
-                    <motion.div
-                        className="w-1/3 h-full bg-white rounded-full"
-                        animate={{ x: [-10, 30, -10] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                    />
-                </div>
-                <span className="text-[10px] uppercase tracking-widest font-mono">
-                    {isMobile ? 'Swipe to Explore' : 'Drag to Rotate'}
-                </span>
+                {extendedItems.map((item, index) => (
+                    <CarouselCard key={`${index}-${item.text}`} item={item} index={index % totalItemsCount} />
+                ))}
             </div>
+
+            {/* Navigation Arrows - Left */}
+            <button
+                onClick={scrollPrev}
+                className="absolute left-2 md:left-8 z-30 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:scale-110 active:scale-95 transition-all flex"
+            >
+                <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+
+            {/* Navigation Arrows - Right */}
+            <button
+                onClick={scrollNext}
+                className="absolute right-2 md:right-8 z-30 p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:scale-110 active:scale-95 transition-all flex"
+            >
+                <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+
+            {/* Mobile Nav Overlay Hints (Optional, can just rely on swipe) */}
+            <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-black/50 to-transparent pointer-events-none md:hidden" />
+            <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-black/50 to-transparent pointer-events-none md:hidden" />
         </div>
     );
 }
 
-function CarouselItemCard({
-    item,
-    index,
-    angle,
-    radius,
-    width,
-    height
-}: {
-    item: CarouselItem,
-    index: number,
-    angle: number,
-    radius: number,
-    width: number,
-    height: number
-}) {
+function CarouselCard({ item, index }: { item: CarouselItem; index: number }) {
     return (
-        <motion.div
-            className="absolute top-0 left-0 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm overflow-hidden group shadow-2xl"
-            style={{
-                width: width,
-                height: height,
-                transform: `rotateY(${angle}deg) translateZ(${radius}px)`,
-                backfaceVisibility: 'hidden',
-            }}
-        >
-            {/* Image Layer */}
-            <div className="absolute inset-0">
-                <img
-                    src={item.image}
-                    alt={item.text}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+        <div className="snap-center shrink-0 w-[80vw] md:w-[350px] h-full mx-3 md:mx-6 relative group rounded-[2rem] overflow-hidden border border-white/10 bg-black/50">
+            {/* Image */}
+            <img
+                src={item.image}
+                alt={item.text}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-100"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
+
+            {/* Content */}
+            <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+                <span className="text-[10px] md:text-xs font-mono text-accent-main tracking-widest uppercase mb-2">
+                    Event 0{index + 1}
+                </span>
+                <h3 className="text-3xl md:text-5xl font-black font-cinzel text-white leading-none">
+                    {item.text}
+                </h3>
             </div>
 
-            {/* Poster Content */}
-            <div className="absolute inset-0 p-4 md:p-6 flex flex-col justify-end">
-                <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <h3 className="text-2xl md:text-3xl font-black font-cinzel text-white mb-1 md:mb-2 leading-none">
-                        {item.text}
-                    </h3>
-                    <p className="text-[10px] md:text-xs font-mono text-red-500 tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                        Event Category 0{index + 1}
-                    </p>
-                </div>
-            </div>
-
-            {/* Reflection / Shine */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-
-            {/* Border Glow */}
-            <div className="absolute inset-0 border border-white/10 group-hover:border-red-500/50 transition-colors duration-500 rounded-2xl pointer-events-none" />
-        </motion.div>
+            {/* Interactive Border */}
+            <div className="absolute inset-0 border border-white/10 group-hover:border-accent-main/50 transition-colors duration-500 rounded-[2rem] pointer-events-none" />
+        </div>
     );
 }
