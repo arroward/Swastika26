@@ -46,7 +46,7 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
                 {images.map((src, idx) => (
                     <div
                         key={`img-1-${idx}`}
-                        className="relative w-[300px] h-[200px] md:w-[450px] md:h-[300px] rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105 border border-white/10"
+                        className="relative w-[180px] h-[120px] md:w-[280px] md:h-[180px] rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105 border border-white/10"
                     >
                         <img
                             src={src}
@@ -71,7 +71,7 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
                 {images.map((src, idx) => (
                     <div
                         key={`img-2-${idx}`}
-                        className="relative w-[300px] h-[200px] md:w-[450px] md:h-[300px] rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105 border border-white/10"
+                        className="relative w-[180px] h-[120px] md:w-[280px] md:h-[180px] rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 hover:scale-105 border border-white/10"
                     >
                         <img
                             src={src}
