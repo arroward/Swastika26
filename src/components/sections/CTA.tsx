@@ -9,7 +9,7 @@ export default function CTA() {
     const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
     return (
-        <section ref={containerRef} className="relative py-32 flex items-center justify-center overflow-hidden">
+        <section ref={containerRef} className="relative flex items-center justify-center overflow-hidden h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] py-4">
 
             <div className="container mx-auto px-4 z-10 text-center relative">
                 <motion.div
@@ -18,11 +18,11 @@ export default function CTA() {
                     transition={{ duration: 0.8 }}
                     className="space-y-8"
                 >
-                    <h2 className="text-5xl md:text-6xl lg:text-8xl font-black font-syne text-white tracking-tighter mix-blend-difference cursor-default flex flex-col items-center">
-                        <div className="mb-4">
+                    <h2 className="text-3xl md:text-6xl lg:text-8xl font-black font-syne text-white tracking-tighter mix-blend-difference cursor-default flex flex-col items-center">
+                        <div className="mb-2 md:mb-4 scale-75 md:scale-100">
                             <VariableProximity label="DON'T MISS OUT" className="font-syne" fromFontVariationSettings="'wght' 400" toFontVariationSettings="'wght' 900" radius={200} />
                         </div>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50 text-center">BE PART OF SWASTIKA</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/50 text-center text-2xl md:text-6xl">BE PART OF SWASTIKA</span>
                     </h2>
 
                     <p className="max-w-xl mx-auto text-xl text-white/70 font-display font-light">

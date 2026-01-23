@@ -6,9 +6,12 @@ import { Terminal, Cpu, Zap, Globe, GraduationCap, Users, Trophy, BookOpen } fro
 import VariableProximity from '@/components/VariableProximity';
 import { SkeletonImage } from '@/components/Skeleton';
 
+// About component acts as a wrapper. If we want it to be ONE full screen section, we'd need to condense. 
+// Assuming user wants the "About Section" to be full height.
+// About component wrapped to fill the calculated view height
 export default function About() {
     return (
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] justify-center">
             <AboutEvent />
             <AboutCollege />
         </div>
@@ -17,7 +20,7 @@ export default function About() {
 
 function AboutEvent() {
     const containerRef = useRef(null);
-    const isInView = useInView(containerRef, { once: true, margin: "-20%" });
+    const isInView = useInView(containerRef, { once: true, margin: "-10%" });
     const [imageLoaded, setImageLoaded] = useState(false);
 
     const stats = [
@@ -30,7 +33,7 @@ function AboutEvent() {
     return (
         <section
             ref={containerRef}
-            className="relative w-full py-16 md:py-24 flex items-center justify-center overflow-hidden"
+            className="relative w-full flex items-center justify-center overflow-hidden flex-1 min-h-0"
         >
             <div className="container mx-auto px-4 md:px-6 z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
@@ -51,14 +54,14 @@ function AboutEvent() {
                             About The Fest
                         </motion.span>
 
-                        <h2 className="text-4xl md:text-5xl lg:text-7xl font-black font-syne leading-none cursor-default">
+                        <h2 className="text-4xl md:text-5xl lg:text-7xl font-black font-syne leading-none cursor-default drop-shadow-2xl">
                             <span className="block text-white">THE ULTIMATE</span>
-                            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-accent-main to-purple-600">TECH SAGA</span>
+                            <span className="block text-white drop-shadow-[0_0_15px_rgba(220,38,38,0.5)]">TECH SAGA</span>
                         </h2>
 
-                        <p className="text-sm md:text-base lg:text-lg text-white/70 leading-relaxed font-light font-jost max-w-xl">
-                            Swastika is the National Level Techno-Cultural Fest of Mar Baselios Christian College of Engineering and Technology, Peermade — a high-octane celebration of technology, creativity, and culture. It brings together passionate students from across the country to compete, collaborate, and push the limits of innovation while showcasing their talents on a national stage.
-                            With participants from diverse engineering streams and cultural backgrounds, Swastika becomes a melting pot of fresh ideas, brilliant minds, and unstoppable energy. From intense technical challenges to electrifying cultural performances, the fest is designed to inspire, engage, and ignite young innovators.
+
+                        <p className="text-xs md:text-base lg:text-lg text-white/70 leading-normal font-light font-jost max-w-xl line-clamp-3 md:line-clamp-none">
+                            Swastika is the National Level Techno-Cultural Fest of Mar Baselios Christian College of Engineering and Technology, Peermade. A high-octane celebration of technology, creativity, and culture.
                         </p>
                     </div>
 
@@ -85,7 +88,7 @@ function AboutEvent() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={isInView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 1 }}
-                    className="relative h-[35vh] lg:h-[65vh] w-full order-1 lg:order-2 flex items-center justify-center p-2 lg:p-0"
+                    className="relative h-[20vh] md:h-auto lg:h-[65vh] w-full flex-1 min-h-0 order-1 lg:order-2 flex items-center justify-center p-1 lg:p-0"
                 >
                     <div className="relative w-full h-full lg:aspect-[4/3] rounded-[2rem] overflow-hidden group border border-white/10">
                         <div className="absolute inset-0 bg-accent-main/20 mix-blend-overlay z-10" />
@@ -128,7 +131,7 @@ function AboutCollege() {
     return (
         <section
             ref={containerRef}
-            className="relative w-full py-16 md:py-24 flex items-center justify-center overflow-hidden bg-black/40 backdrop-blur-sm"
+            className="relative w-full flex items-center justify-center overflow-hidden flex-1 min-h-0"
         >
             <div className="container mx-auto px-4 md:px-6 z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
@@ -137,7 +140,7 @@ function AboutCollege() {
                     initial={{ opacity: 0, x: -50 }}
                     animate={isInView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.8 }}
-                    className="relative h-[35vh] lg:h-[65vh] w-full flex items-center justify-center p-2 lg:p-0"
+                    className="relative h-[20vh] md:h-auto lg:h-[65vh] w-full flex-1 min-h-0 flex items-center justify-center p-1 lg:p-0"
                 >
                     <div className="relative w-full h-full lg:aspect-[4/3] rounded-[2rem] overflow-hidden group border border-white/10">
                         <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay z-10" />
@@ -175,13 +178,13 @@ function AboutCollege() {
                             The Institution
                         </motion.span>
 
-                        <h2 className="text-4xl md:text-5xl lg:text-7xl font-black font-syne leading-none cursor-default">
+                        <h2 className="text-2xl md:text-5xl lg:text-7xl font-black font-syne leading-none cursor-default">
                             <span className="block text-white">MAR BASELIOS</span>
                             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600">CHRISTIAN COLLEGE</span>
                         </h2>
 
-                        <p className="text-sm md:text-base lg:text-lg text-white/70 leading-relaxed font-light font-jost max-w-xl">
-                            Mar Baselios Christian College of Engineering & Technology (MBCET), Kuttikkanam, Peermade, is a premier self-financing institution offering quality engineering education in a serene hill-station campus. Established in 2001, the college is affiliated to Dr. APJ Abdul Kalam Technological University (KTU) and approved by AICTE, New Delhi. It is owned and managed by the Malankara Orthodox Syrian Church, ensuring strong leadership rooted in values and excellence.
+                        <p className="text-xs md:text-base lg:text-lg text-white/70 leading-normal font-light font-jost max-w-xl line-clamp-3 md:line-clamp-none">
+                            Mar Baselios Christian College of Engineering & Technology (MBCET), Kuttikkanam, Peermade, is a premier self-financing institution offering quality engineering education in a serene hill-station campus.
                         </p>
                     </div>
 
