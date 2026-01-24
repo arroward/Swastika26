@@ -7,7 +7,7 @@ export default function NoiseOverlay() {
 
     return (
         <div
-            className="fixed top-[-50%] left-[-50%] w-[200%] h-[200%] pointer-events-none z-50 mix-blend-overlay"
+            className="fixed top-[-50%] left-[-50%] w-[200%] h-[200%] pointer-events-none z-50 mix-blend-overlay transform-gpu will-change-transform"
             style={{
                 opacity: siteConfig.effects.noise.opacity,
                 backgroundImage: `url("${siteConfig.effects.noise.pattern}")`,

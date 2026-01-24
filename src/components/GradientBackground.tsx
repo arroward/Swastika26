@@ -98,7 +98,7 @@ export default function GradientBackground() {
         <div className="fixed inset-0 z-[-1] pointer-events-none">
             <Canvas
                 camera={{ position: [0, 0, 5], fov: 75 }}
-                dpr={[1, 1.5]} // Limit pixel ratio for performance
+                dpr={[1, 1]} // Limit to 1 for max performance
                 gl={{
                     antialias: false,
                     powerPreference: "high-performance",

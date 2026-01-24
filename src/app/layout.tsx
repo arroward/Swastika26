@@ -74,7 +74,7 @@ export default function RootLayout({
       <body className="bg-transparent h-[100dvh] w-full overflow-hidden p-2 md:p-4 lg:p-6 flex flex-col gap-2 md:gap-4">
         <LoadingProvider>
           <GradientBackground />
-          <LenisScroll />
+          {/* <LenisScroll /> */}
           {/* <InteractiveRedGradient /> */}
           <NoiseOverlay />
           <Preloader />

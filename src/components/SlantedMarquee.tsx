@@ -71,15 +71,12 @@ export default function SlantedMarquee() {
             {/* Background enhancement */}
             <div className="absolute inset-0 z-0 pointer-events-none" />
 
-            <div className="absolute inset-0 -rotate-12 transform scale-150 flex flex-col gap-6 justify-center z-10 opacity-60 hover:opacity-100 transition-opacity duration-700">
+            <div className="absolute inset-0 -rotate-12 transform scale-150 flex flex-col gap-6 justify-center z-10 opacity-60 hover:opacity-100 transition-opacity duration-700 transform-gpu">
                 <MarqueeRow items={defaultItems} direction={1} speed={40} />
                 <MarqueeRow items={[...defaultItems].reverse()} direction={-1} speed={35} />
                 <MarqueeRow items={defaultItems} direction={1} speed={45} />
                 <MarqueeRow items={[...defaultItems].reverse()} direction={-1} speed={30} />
                 <MarqueeRow items={defaultItems} direction={1} speed={50} />
-                <MarqueeRow items={[...defaultItems].reverse()} direction={-1} speed={38} />
-                <MarqueeRow items={defaultItems} direction={1} speed={42} />
-                <MarqueeRow items={[...defaultItems].reverse()} direction={-1} speed={32} />
             </div>
 
             {/* Overlay Content */}
