@@ -73,14 +73,14 @@ export default function AboutCollege() {
                             transition={{ delay: 0.3 }}
                             className="flex-[2] bg-black/40 border border-white/5 rounded-[2rem] p-6 md:p-8 flex items-center"
                         >
-                            <p className="text-xs md:text-sm lg:text-base text-white/60 font-jost leading-relaxed">
+                            <p className="text-lg md:text-sm lg:text-base text-white/100 font-jost leading-relaxed">
                                 A premier self-financing institution offering quality engineering education in a serene hill-station campus.
                                 Fostering innovation, research, and holistic development for the future generation.
                             </p>
                         </motion.div>
 
                         {/* Stats Box */}
-                        <motion.div
+                        {/* <motion.div
                             initial={{ y: 20, opacity: 0 }}
                             animate={isInView ? { y: 0, opacity: 1 } : {}}
                             transition={{ delay: 0.4 }}
@@ -92,7 +92,7 @@ export default function AboutCollege() {
                                     <span className="font-bold font-mono text-white">{stat.value}</span>
                                 </div>
                             ))}
-                        </motion.div>
+                        </motion.div> */}
                     </div>
                 </div>
             </div>
