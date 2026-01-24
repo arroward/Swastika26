@@ -9,7 +9,16 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'pub-6ed865235e424323859b654769c59e4e.r2.dev',
+      },
     ],
+  },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ["10.3.4.71:3000", "localhost:3000"],
+    },
   },
 };
 
