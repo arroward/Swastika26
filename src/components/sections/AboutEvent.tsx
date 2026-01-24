@@ -48,9 +48,9 @@ export default function AboutEvent() {
                 {/* 2. Center Panel - Hero Visual */}
                 <div className="flex-1 lg:col-span-6 min-h-0 relative rounded-[2rem] overflow-hidden group border border-white/10">
                     <img
-                        src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop"
+                        src={process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL}
                         alt="Event Main"
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
+                        className="w-full h-full object-cover  transition-all duration-700 scale-105 group-hover:scale-100"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
