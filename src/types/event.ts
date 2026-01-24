@@ -8,6 +8,7 @@ export interface Event {
   category: string;
   capacity: number;
   registeredCount: number;
+  registrationFee?: number;
   price?: number; // Optional price amount, if null or 0 then free
   isOnline: boolean; // true for online events, false for offline
   rules?: string[]; // Array of rules for the event
