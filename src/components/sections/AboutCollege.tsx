@@ -30,9 +30,9 @@ export default function AboutCollege() {
                     className="flex-1 h-[40%] lg:h-full relative rounded-[2rem] overflow-hidden group"
                 >
                     <img
-                        src="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2586&auto=format&fit=crop"
+                        src={`${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/about/DJI_0926.jpg`}
                         alt="College Campus"
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 grayscale hover:grayscale-0"
+                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-blue-900/20 mix-blend-multiply" />
 
