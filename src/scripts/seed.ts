@@ -39,6 +39,7 @@ const sampleEvents = [
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
+    price_amount: 1000,
   },
 
   {
@@ -63,6 +64,7 @@ const sampleEvents = [
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
+    price_amount: 1000,
   },
 
   {
@@ -87,6 +89,7 @@ const sampleEvents = [
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
+    price_amount: 1000,
   },
 
   {
@@ -110,6 +113,7 @@ const sampleEvents = [
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
+    price_amount: 1000,
   },
 
   {
@@ -132,6 +136,7 @@ const sampleEvents = [
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
+    price_amount: 5000,
   },
 
   {
@@ -157,6 +162,7 @@ const sampleEvents = [
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
+    price_amount: 1000,
   },
 ];
 
@@ -171,7 +177,7 @@ async function seed() {
     // Insert sample events
     for (const event of sampleEvents) {
       await sql`
-        INSERT INTO events (id, title, description, date, location, image_url, category, capacity, registered_count, rules)
+        INSERT INTO events (id, title, description, date, location, image_url, category, capacity, registered_count, rules, price_amount)
         VALUES (
           ${event.id},
           ${event.title},
@@ -182,7 +188,8 @@ async function seed() {
           ${event.category},
           ${event.capacity},
           ${event.registeredCount},
-          ${JSON.stringify(event.rules)}
+          ${JSON.stringify(event.rules)},
+          ${event.price_amount || 0}
         )
         ON CONFLICT (id) DO UPDATE SET
           title = EXCLUDED.title,
@@ -193,7 +200,8 @@ async function seed() {
           category = EXCLUDED.category,
           capacity = EXCLUDED.capacity,
           registered_count = EXCLUDED.registered_count,
-          rules = EXCLUDED.rules
+          rules = EXCLUDED.rules,
+          price_amount = EXCLUDED.price_amount
       `;
       console.log(`✅ Inserted/Updated event: ${event.title}`);
     }

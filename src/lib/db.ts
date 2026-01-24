@@ -22,7 +22,7 @@ export async function initDatabase() {
         category VARCHAR(100),
         capacity INTEGER DEFAULT 100,
         registered_count INTEGER DEFAULT 0,
-        registration_fee INTEGER DEFAULT 0,
+        price_amount INTEGER DEFAULT 0,
         is_online BOOLEAN DEFAULT false,
         rules JSONB DEFAULT '[]',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -89,7 +89,7 @@ export async function getEvents(): Promise<Event[]> {
         category,
         capacity,
         registered_count as "registeredCount",
-        registration_fee as "registrationFee",
+        price_amount as "price",
         is_online as "isOnline",
         "rules"
       FROM events
@@ -115,7 +115,7 @@ export async function getEventById(id: string): Promise<Event | null> {
         category,
         capacity,
         registered_count as "registeredCount",
-        registration_fee as "registrationFee",
+        price_amount as "price",
         is_online as "isOnline",
         "rules"
       FROM events

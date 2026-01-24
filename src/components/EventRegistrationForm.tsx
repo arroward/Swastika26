@@ -32,6 +32,9 @@ export default function EventRegistrationForm({
     accountHolderName: "",
   });
 
+  // Apply font classes to form container
+  const containerClasses = "font-jost";
+
   const [errors, setErrors] = useState({
     fullName: "",
     email: "",
@@ -246,7 +249,7 @@ export default function EventRegistrationForm({
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-gradient-to-br from-red-900/40 to-black/60 backdrop-blur-xl border border-red-500/30 rounded-3xl p-12 text-center shadow-2xl relative overflow-hidden"
+        className="bg-gradient-to-br from-red-900/40 to-black/60 backdrop-blur-xl border border-red-500/30 rounded-3xl p-12 text-center shadow-2xl relative overflow-hidden font-jost"
       >
         <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
         <motion.div
@@ -273,7 +276,7 @@ export default function EventRegistrationForm({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-4xl font-bold bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent mb-4"
+          className="text-4xl font-black font-cinzel text-white mb-4 tracking-tight"
         >
           Registration Successful!
         </motion.h2>
@@ -305,13 +308,13 @@ export default function EventRegistrationForm({
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="relative bg-gradient-to-br from-red-900/10 to-black/40 backdrop-blur-xl rounded-3xl border border-red-500/10 p-8 md:p-10 shadow-2xl overflow-hidden"
+      className="relative bg-gradient-to-br from-red-900/10 to-black/40 backdrop-blur-xl rounded-3xl border border-red-500/10 p-8 md:p-10 shadow-2xl overflow-hidden font-jost"
     >
       {/* Decorative gradient blob */}
       <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <motion.div variants={itemVariants} className="mb-10">
-        <h2 className="text-3xl font-black text-white mb-2 tracking-tight">
+        <h2 className="text-3xl font-black font-cinzel text-white mb-2 tracking-tight">
           Register for Event
         </h2>
         <p className="text-white/50 text-sm">

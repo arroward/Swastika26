@@ -38,13 +38,13 @@ export default function FormInput({
     >
       <label
         htmlFor={name}
-        className="block text-white/80 text-sm font-medium mb-2 group-focus-within:text-red-400 transition-colors duration-300"
+        className="block text-white/80 text-sm font-medium font-jost mb-2 group-focus-within:text-red-400 transition-colors duration-300"
       >
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
 
-      <div className="relative">
+      <div className="relative font-jost">
         {multiline ? (
           <textarea
             id={name}

@@ -1,145 +1,138 @@
 "use client";
 
-import React from "react";
+import { motion } from "framer-motion";
 import Link from "next/link";
-
-// Mock Event type for demonstration
-interface Event {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  location: string;
-  imageUrl: string;
-  category: string;
-  isOnline: boolean;
-  registrationFee?: number;
-  capacity: number;
-  registeredCount: number;
-}
+import { Event } from "@/types/event";
 
 interface EventCardProps {
   event: Event;
 }
 
 export default function EventCard({ event }: EventCardProps) {
-  const formattedId = event.id.padStart(3, "0");
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   return (
-    <Link
-      href={`events/${event.id}/register`}
-      className="group relative bg-black rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-500 cursor-pointer aspect-[3/4] max-w-sm block"
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="group relative h-full"
     >
-      {/* Event Image */}
-      <div className="relative w-full h-full">
-        <img
-          src={event.imageUrl}
-          alt={event.title}
-          className="w-full h-full object-cover opacity-70 group-hover:opacity-50 group-hover:scale-105 transition-all duration-500"
-        />
-
-        {/* Hover overlay with event details */}
-        <div className="absolute inset-0 bg-black/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-8">
-          <div className="text-white space-y-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-            <h3 className="text-3xl font-pirata tracking-wide">
-              {event.title}
-            </h3>
-            <p className="text-gray-300 text-sm line-clamp-3 font-light">
-              {event.description}
-            </p>
-            <div className="space-y-2 text-sm">
-              <p className="text-white-400 flex items-center gap-2">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                {new Date(event.date).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </p>
-              <p className="text-white-400 flex items-center gap-2">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                {event.location}
-              </p>
-              <p className="text-white-400 flex items-center gap-2">
-                {event.registrationFee && event.registrationFee > 0 ? (
-                  <>
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    ₹{event.registrationFee}
-                  </>
-                ) : (
-                  <>
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    Free
-                  </>
-                )}
-              </p>
+      <div className="h-full bg-gradient-to-br from-red-900/20 to-black/40 backdrop-blur-xl border border-red-500/20 rounded-xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-red-600/20 transition-all duration-300">
+        {/* Image Section - Compact */}
+        <div className="relative h-40 md:h-48 overflow-hidden bg-gradient-to-br from-red-900/30 to-black">
+          {event.imageUrl ? (
+            <img
+              src={event.imageUrl}
+              alt={event.title}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              <svg
+                className="w-16 h-16 text-red-500/30"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                />
+              </svg>
             </div>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                window.location.href = `events/${event.id}/register`;
-              }}
-              className="mt-4 w-full bg-white hover:bg-white-400 text-black font-pirata font-extrabold py-3 px-6 rounded-lg transition-colors duration-200 tracking-wide"
-            >
-              Register Now
-            </button>
+          )}
+
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+          {/* Category Badge */}
+          {event.category && (
+            <div className="absolute top-3 left-3">
+              <span className="px-2.5 py-1 bg-red-600/90 backdrop-blur-sm text-white text-xs font-bold rounded-md uppercase tracking-wider">
+                {event.category}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Content Section - Compact */}
+        <div className="p-4 space-y-3">
+          <h3 className="text-lg md:text-xl font-bold text-white font-cinzel group-hover:text-red-400 transition-colors line-clamp-2">
+            {event.title}
+          </h3>
+
+          <p className="text-white/60 text-xs md:text-sm leading-relaxed line-clamp-2 font-jost">
+            {event.description}
+          </p>
+
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 text-xs md:text-sm">
+              <svg
+                className="w-4 h-4 text-red-400 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+              <div className="flex-1 min-w-0">
+                <p className="text-white/80 font-medium truncate">
+                  {formatDate(event.date)}
+                </p>
+              </div>
+            </div>
+
+            {event.registrationFee !== undefined && (
+              <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                <span className="text-white/60 text-xs">Fee</span>
+                <span className="text-lg font-bold text-red-400">
+                  {event.registrationFee === 0
+                    ? "FREE"
+                    : `₹${event.registrationFee}`}
+                </span>
+              </div>
+            )}
           </div>
+
+          {/* CTA Button - Use Link with nested div (not button) for valid HTML and proper redirection */}
+          <Link href={`/events/${event.id}/register`} className="block mt-3">
+            <motion.div
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full py-2.5 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm rounded-lg font-bold transition-all shadow-lg shadow-red-600/20 border border-red-500/50 flex items-center justify-center gap-2 group/btn cursor-pointer"
+            >
+              <span>View Details</span>
+              <svg
+                className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </motion.div>
+          </Link>
         </div>
       </div>
-    </Link>
+    </motion.div>
   );
 }
