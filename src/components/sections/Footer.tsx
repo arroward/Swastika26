@@ -5,13 +5,7 @@ import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useInView, Variants } from 'framer-motion';
 import { Instagram, ArrowUpRight } from 'lucide-react';
 
-// Extracted constants for better performance
-const navLinks = [
-    { name: 'Events', href: '/events' },
-    { name: 'Proshow', href: '/proshow' },
-    { name: 'Register', href: '/register' },
-    { name: 'Gallery', href: '/gallery' }
-];
+import { footerContent } from '@/data/content';
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -88,9 +82,9 @@ export default function Footer() {
                             variants={itemVariants}
                             className="text-[10vw] leading-[0.8] font-bold font-cinzel tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-white/20 will-change-transform"
                         >
-                            SWASTIKA
+                            {footerContent.brandTitle}
                             <span className="block text-[3vw] font-jost font-light tracking-[0.2em] text-white/40 mt-[2vh]">
-                                2026 EDITION
+                                {footerContent.edition}
                             </span>
                         </motion.h1>
                     </div>
@@ -100,7 +94,7 @@ export default function Footer() {
                         <motion.div variants={itemVariants} className="space-y-[2vh]">
                             <h3 className="font-jost text-sm uppercase tracking-[0.2em] text-red-500 font-semibold">Menu</h3>
                             <nav className="flex flex-col gap-[1vh]">
-                                {navLinks.map((link) => (
+                                {footerContent.navLinks.map((link) => (
                                     <Link
                                         key={link.name}
                                         href={link.href}
@@ -116,7 +110,7 @@ export default function Footer() {
                         <motion.div variants={itemVariants} className="space-y-[2vh]">
                             <h3 className="font-jost text-sm uppercase tracking-[0.2em] text-red-500 font-semibold">Connect</h3>
                             <a
-                                href="https://instagram.com/swastika_2k26"
+                                href={footerContent.social.instagram.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="group inline-flex items-center gap-[1.5vw] p-[2vh] border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-500 hover:border-red-500/30 w-full md:w-auto"
@@ -126,7 +120,7 @@ export default function Footer() {
                                 </div>
                                 <div>
                                     <p className="text-xs text-white/40 font-jost uppercase tracking-wider mb-1">Follow us on</p>
-                                    <p className="text-[clamp(1rem,1.5vw,1.5rem)] text-white font-cinzel font-bold group-hover:text-red-100 transition-colors">@swastika_2k26</p>
+                                    <p className="text-[clamp(1rem,1.5vw,1.5rem)] text-white font-cinzel font-bold group-hover:text-red-100 transition-colors">{footerContent.social.instagram.handle}</p>
                                 </div>
                                 <ArrowUpRight className="ml-auto w-6 h-6 text-white/30 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
                             </a>
@@ -147,14 +141,14 @@ export default function Footer() {
                         >
                             {[...Array(10)].map((_, i) => (
                                 <span key={i} className="text-[8vh] md:text-[10vh] font-black font-cinzel leading-none px-[2vw] text-white/5">
-                                    LEGACY BEYOND LIMITS —
+                                    {footerContent.tickerText}
                                 </span>
                             ))}
                         </motion.div>
                     </div>
 
                     <p className="group relative z-10">
-                        Crafted by <span className="text-white/60 group-hover:text-red-500 transition-colors cursor-default">SWASTIKA'26 Tech Team</span>
+                        Crafted by <span className="text-white/60 group-hover:text-red-500 transition-colors cursor-default">{footerContent.credits}</span>
                     </p>
                 </motion.div>
             </motion.div>

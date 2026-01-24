@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { aboutEventContent } from '@/data/content';
 
 export default function AboutEvent() {
     const containerRef = useRef(null);
@@ -22,20 +23,20 @@ export default function AboutEvent() {
                     <div className="flex flex-col gap-1 z-10">
                         <div className="flex items-center gap-2 mb-1 lg:mb-6">
                             <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                            <span className="text-[10px] uppercase tracking-[0.2em] text-white/50">Details</span>
+                            <span className="text-[10px] uppercase tracking-[0.2em] text-white/50">{aboutEventContent.label}</span>
                         </div>
                         <h2 className="text-2xl lg:text-4xl font-black font-syne text-white leading-none">
-                            THE <span className="text-red-500">SAGA</span>
+                            {aboutEventContent.heading.text} <span className="text-red-500">{aboutEventContent.heading.highlight}</span>
                         </h2>
                     </div>
 
                     <div className="w-full space-y-4">
                         <div className="h-[1px] w-full bg-white/10" />
                         <p className="text-sm text-white/60 font-jost leading-relaxed text-justify">
-                            Swastika is the National-Level Techno-Cultural Fest of Mar Baselios Christian College of Engineering and Technology, Peermade. It is a high-octane celebration of technology, creativity, and culture that brings together passionate students from across the country to compete, collaborate, and showcase their talent on a national stage.
+                            {aboutEventContent.description1}
                         </p>
                         <p className="hidden lg:block text-sm text-white/60 font-jost leading-relaxed text-justify">
-                            With participants from diverse engineering streams and cultural backgrounds, Swastika becomes a vibrant melting pot of ideas, innovation, and energy. From intense technical challenges to electrifying cultural performances, the fest is designed to inspire, engage, and ignite the spirit of young innovators.
+                            {aboutEventContent.description2}
                         </p>
                     </div>
                 </div>
@@ -43,7 +44,7 @@ export default function AboutEvent() {
                 {/* 2. Center Panel - Hero Visual */}
                 <div className="flex-1 lg:col-span-9 min-h-0 relative rounded-[2rem] overflow-hidden group border border-white/10">
                     <img
-                        src={process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL}
+                        src={aboutEventContent.image}
                         alt="Event Main"
                         className="w-full h-full object-cover  transition-all duration-700 scale-105 group-hover:scale-100"
                     />
@@ -56,7 +57,7 @@ export default function AboutEvent() {
                             animate={isInView ? { y: 0, opacity: 1 } : {}}
                             className="text-5xl md:text-7xl xl:text-8xl font-black font-cinzel text-white leading-none tracking-tight mix-blend-overlay"
                         >
-                            SWASTIKA
+                            {aboutEventContent.visualTitle}
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0 }}
@@ -64,7 +65,7 @@ export default function AboutEvent() {
                             transition={{ delay: 0.2 }}
                             className="text-sm md:text-xl font-mono text-red-500 tracking-widest mt-1 lg:mt-2 ml-1"
                         >
-                            2026 EDITION
+                            {aboutEventContent.yearText}
                         </motion.p>
                     </div>
                 </div>

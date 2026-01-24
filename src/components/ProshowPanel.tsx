@@ -48,27 +48,27 @@ export default function ProshowPanel({
                 />
             </div>
 
-            {/* Dark Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
+            {/* Dark Gradient Overlay - Optimized for visibility */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
 
             {/* Grain */}
             <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
             {/* Content */}
-            <div className="relative z-10 h-full flex flex-col justify-end p-10 md:p-14 text-white">
+            <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-10 text-white">
 
                 {/* Date */}
-                <span className="font-mono text-xs tracking-[0.3em] text-white/60 mb-3 block">
+                <span className="font-syne text-sm font-bold tracking-widest text-white/80 mb-2 block drop-shadow-md">
                     {artist.date}
                 </span>
 
                 {/* Name */}
-                <h3 className="font-syne font-black text-5xl md:text-7xl tracking-tight leading-none">
+                <h3 className="font-cinzel font-black text-4xl md:text-6xl tracking-tight leading-none drop-shadow-lg">
                     {artist.name}
                 </h3>
 
                 {/* Role */}
-                <p className="mt-2 text-white/70 font-light">
+                <p className="mt-2 text-white/70 font-jost font-light">
                     {artist.role}
                 </p>
 
@@ -77,7 +77,7 @@ export default function ProshowPanel({
                     {artist.tags.map((tag, i) => (
                         <span
                             key={i}
-                            className="px-3 py-1 text-[10px] uppercase tracking-widest font-mono border border-white/20 rounded-full text-white/70"
+                            className="px-3 py-1 text-[10px] uppercase tracking-widest font-jost font-medium border border-white/20 rounded-full text-white/70"
                         >
                             {tag}
                         </span>
