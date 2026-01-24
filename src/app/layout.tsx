@@ -9,6 +9,7 @@ import NoiseOverlay from "@/components/NoiseOverlay";
 import { LoadingProvider } from "@/components/LoadingProvider";
 import Navbar from "@/components/Navbar";
 import MainContainer from "@/components/MainContainer";
+import NotificationPermissionRequest from "@/components/NotificationPermissionRequest";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -78,6 +79,7 @@ export default function RootLayout({
           {/* <InteractiveRedGradient /> */}
           <NoiseOverlay />
           <Preloader />
+          <NotificationPermissionRequest />
           <Navbar />
           <MainContainer>
             {children}
