@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { Instagram, Twitter, Linkedin, MessageCircle, Github, Globe, Terminal, Mail } from 'lucide-react';
+import { Instagram, Twitter, Linkedin, MessageCircle, Github, Globe, Terminal, Mail, Activity, Wifi } from 'lucide-react';
 
 export default function Footer() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -51,83 +51,104 @@ export default function Footer() {
             </div>
 
             {/* 2. Main Content Container */}
-            <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 pt-20 flex-grow flex flex-col justify-center">
+            <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 flex flex-col flex-grow justify-between pb-8 pt-20">
+                {/* CREATIVE CENTERPIECE: TERMINAL & STATUS */}
+                <div className="w-full flex-grow flex flex-col md:flex-row items-center justify-between gap-12 md:gap-24 mb-12">
 
-                {/* MIDDLE SECTION: LINKS & INFO */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-12 border-t border-white/10">
-
-                    {/* Brand Column */}
-                    <div className="space-y-6">
-                        <div className="flex items-center gap-3 group">
-                            <div className="p-2 bg-white/5 rounded-lg border border-white/10 group-hover:border-red-500/50 transition-colors">
-                                <Globe className="w-6 h-6 text-white group-hover:text-red-500 transition-colors" />
-                            </div>
-                            <span className="font-syne font-bold text-xl tracking-tight">SWASTIKA 26</span>
+                    {/* Left: System Diagnostics */}
+                    <div className="hidden md:flex flex-col gap-4 w-64 opacity-50 font-mono text-xs text-red-500/80">
+                        <div className="flex items-center gap-2 text-white/40">
+                            <Activity className="w-4 h-4" />
+                            <span>SYSTEM STATUS: ONLINE</span>
                         </div>
-                        <p className="font-mono text-sm text-white/50 leading-relaxed max-w-xs">
-                            The ultimate convergence of technology, culture, and innovation.
-                            Redefining the future one line of code at a time.
-                        </p>
-                    </div>
-
-                    {/* Navigation */}
-                    <div className="space-y-4">
-                        <h4 className="font-mono text-xs text-white/30 uppercase tracking-widest mb-6">Navigation</h4>
-                        <ul className="space-y-2">
-                            {['About', 'Events', 'Sponsors', 'Gallery'].map((item) => (
-                                <li key={item}>
-                                    <Link href={`#${item.toLowerCase()}`} className="group flex items-center gap-2">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-white/20 group-hover:bg-red-500 transition-colors" />
-                                        <span className="font-syne text-lg text-white/60 group-hover:text-white transition-colors">{item}</span>
-                                    </Link>
-                                </li>
+                        <div className="h-px w-full bg-white/10" />
+                        <div className="space-y-1">
+                            {["INIT_CORE_V.2.6", "PROTOCOL: OVERDRIVE", "UPLINK: SECURE", "LATENCY: 12ms"].map((text, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: i * 0.2 + 0.5, duration: 0.5 }}
+                                    className="flex justify-between"
+                                >
+                                    <span>{text}</span>
+                                    <span className="text-white/20">OK</span>
+                                </motion.div>
                             ))}
-                        </ul>
+                        </div>
                     </div>
 
-                    {/* Contact */}
-                    <div className="space-y-4">
-                        <h4 className="font-mono text-xs text-white/30 uppercase tracking-widest mb-6">Connect</h4>
-                        <ul className="space-y-2">
-                            <li className="flex items-center gap-3 text-white/60 hover:text-white transition-colors cursor-pointer">
-                                <Mail size={16} />
-                                <span className="font-mono text-sm">hello@swastika26.com</span>
-                            </li>
-                            <li className="flex items-center gap-3 text-white/60 hover:text-white transition-colors cursor-pointer">
-                                <MessageCircle size={16} />
-                                <span className="font-mono text-sm">Join Discord Server</span>
-                            </li>
-                        </ul>
+                    {/* Center: Hero Typography */}
+                    <div className="text-center relative">
+                        <motion.h1
+                            initial={{ y: 20, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.8 }}
+                            className="text-6xl md:text-8xl lg:text-9xl font-black font-syne tracking-tighter bg-gradient-to-b from-white via-white/80 to-transparent bg-clip-text text-transparent"
+                        >
+                            REVOLUTION
+                        </motion.h1>
+                        <div className="absolute top-0 right-0 -mr-4 -mt-2">
+                            <motion.div
+                                animate={{ opacity: [0.5, 1, 0.5] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                                className="px-2 py-0.5 rounded border border-red-500 text-[10px] font-mono text-red-500 bg-red-500/10 tracking-widest"
+                            >
+                                LIVE
+                            </motion.div>
+                        </div>
+                        <p className="mt-2 font-mono text-sm text-white/30 tracking-[0.5em] uppercase">Join the movement</p>
                     </div>
 
-                    {/* Socials */}
-                    <div className="space-y-4">
-                        <h4 className="font-mono text-xs text-white/30 uppercase tracking-widest mb-6">Socials</h4>
-                        <div className="flex gap-4">
-                            {[Twitter, Instagram, Linkedin, Github].map((Icon, i) => (
-                                <a key={i} href="#" className="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-red-600 hover:border-red-600 hover:scale-110 transition-all duration-300">
-                                    <Icon size={20} />
-                                </a>
+                    {/* Right: Data Visualizer */}
+                    <div className="hidden md:flex flex-col items-end gap-4 w-64 opacity-50 font-mono text-xs text-white/40">
+                        <div className="flex items-center gap-2 text-red-500/80">
+                            <span>NETWORK TRAFFIC</span>
+                            <Wifi className="w-4 h-4" />
+                        </div>
+                        <div className="flex gap-1 h-8 items-end">
+                            {[40, 70, 30, 85, 50, 65, 45, 90, 60, 35].map((height, i) => (
+                                <motion.div
+                                    key={i}
+                                    animate={{ height: [`${height}%`, `${Math.max(20, Math.random() * 100)}%`] }}
+                                    transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
+                                    className="w-1.5 bg-red-600 rounded-sm"
+                                    style={{ height: `${height}%` }}
+                                />
                             ))}
+                        </div>
+                        <div className="text-right">
+                            <p>PACKETS: 8,492,104</p>
+                            <p className="text-white/20">ENCRYPTION: AES-256</p>
                         </div>
                     </div>
                 </div>
 
-                {/* BOTTOM BAR: CREDITS & LEGAL */}
-                <div className="mt-auto pt-12 pb-6 flex flex-col md:flex-row items-center justify-between gap-6 border-t border-white/5">
-                    <p className="font-mono text-xs text-white/30">
-                        © {currentYear} Swastika 26. All rights reserved.
-                    </p>
+                {/* Footer Bottom Bar */}
+                <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/5 pt-6">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                        <p className="font-mono text-xs text-white/30">
+                            © {currentYear} Swastika 26.
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-6">
+                        {[Twitter, Instagram, Linkedin, Github].map((Icon, i) => (
+                            <a key={i} href="#" className="text-white/20 hover:text-red-500 transition-colors">
+                                <Icon size={18} />
+                            </a>
+                        ))}
+                    </div>
 
                     {/* Tech Team Pill */}
                     <Link href="/credits">
-                        <div className="group relative px-5 py-2 rounded-full bg-[#0A0A0A] border border-white/10 flex items-center gap-3 overflow-hidden cursor-pointer hover:border-green-500/50 transition-colors">
-                            <div className="absolute inset-0 bg-green-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <Terminal size={14} className="text-white/40 group-hover:text-green-400 transition-colors" />
-                            <span className="font-mono text-xs text-white/40 group-hover:text-green-400 transition-colors">
+                        <div className="group relative px-4 py-1.5 rounded-full bg-[#0A0A0A] border border-white/10 flex items-center gap-3 overflow-hidden cursor-pointer hover:border-green-500/50 transition-colors">
+                            <div className="absolute inset-0 bg-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <Terminal size={12} className="text-white/30 group-hover:text-green-400 transition-colors" />
+                            <span className="font-mono text-[10px] text-white/30 group-hover:text-green-400 transition-colors uppercase tracking-wider">
                                 System Architects
                             </span>
-                            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
                         </div>
                     </Link>
                 </div>
@@ -147,6 +168,6 @@ export default function Footer() {
                     ))}
                 </motion.div>
             </div>
-        </footer>
+        </footer >
     );
 }

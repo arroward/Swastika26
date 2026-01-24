@@ -14,7 +14,7 @@
     "test-db": "dotenv -e .env -- tsx scripts/test-relationships.ts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.972.0",
+    "@aws-sdk/client-s3": "^3.975.0",
     "@ducanh2912/next-pwa": "^10.2.9",
     "@gsap/react": "^2.1.2",
     "@neondatabase/serverless": "^1.0.2",
