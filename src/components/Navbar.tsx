@@ -114,7 +114,7 @@ export default function Navbar() {
                                                 <span className={`font-mono text-sm md:text-base text-accent-main transition-all duration-300 ${hoveredIdx === i ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'}`}>
                                                     0{i + 1}
                                                 </span>
-                                                <span className={`font-cinzel font-black text-4xl md:text-7xl uppercase transition-all duration-500 ${hoveredIdx === i ? 'text-white translate-x-2' : 'text-transparent stroke-text hover:text-white/50'}`}>
+                                                <span className={`font-cinzel font-black text-4xl md:text-5xl uppercase transition-all duration-500 ${hoveredIdx === i ? 'text-white translate-x-2' : 'text-transparent stroke-text hover:text-white/50'}`}>
                                                     {item.title}
                                                 </span>
                                             </Link>
