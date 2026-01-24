@@ -13,7 +13,8 @@ const categories = [
         desc: "Coding, Hackathons, & Robotics",
         icon: Code,
         accent: "from-blue-500 to-cyan-500",
-        shadow: "shadow-blue-500/20"
+        shadow: "shadow-blue-500/20",
+        image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop'
     },
     {
         id: 2,
@@ -21,7 +22,8 @@ const categories = [
         desc: "Dance, Music, & Drama",
         icon: Music,
         accent: "from-pink-500 to-rose-500",
-        shadow: "shadow-pink-500/20"
+        shadow: "shadow-pink-500/20",
+        image: 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop'
     },
     {
         id: 3,
@@ -29,7 +31,8 @@ const categories = [
         desc: "Valorant, FIFA, & BGMI",
         icon: Gamepad2,
         accent: "from-green-500 to-emerald-500",
-        shadow: "shadow-green-500/20"
+        shadow: "shadow-green-500/20",
+        image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop'
     },
     {
         id: 4,
@@ -37,7 +40,8 @@ const categories = [
         desc: "Hands-on Learning Experience",
         icon: Wrench,
         accent: "from-yellow-500 to-orange-500",
-        shadow: "shadow-yellow-500/20"
+        shadow: "shadow-yellow-500/20",
+        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop'
     },
     {
         id: 5,
@@ -45,7 +49,8 @@ const categories = [
         desc: "Painting, Sketching & Digital",
         icon: Palette,
         accent: "from-purple-500 to-violet-500",
-        shadow: "shadow-purple-500/20"
+        shadow: "shadow-purple-500/20",
+        image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800&auto=format&fit=crop'
     },
     {
         id: 6,
@@ -53,7 +58,8 @@ const categories = [
         desc: "Poetry, Standup & Singing",
         accent: "from-red-500 to-orange-500",
         icon: Mic2,
-        shadow: "shadow-red-500/20"
+        shadow: "shadow-red-500/20",
+        image: 'https://images.unsplash.com/photo-1590402494682-cd3fb5321c5e?q=80&w=800&auto=format&fit=crop'
     }
 ];
 
@@ -108,16 +114,7 @@ export default function Events() {
                 <div className="w-full relative z-20 flex-1 min-h-0 flex items-center justify-center pb-4">
                     <div className="w-full h-full flex items-center justify-center">
                         {/* Linear Carousel */}
-                        <Event3DCarousel
-                            items={[
-                                { image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=800&auto=format&fit=crop', text: 'Technical' },
-                                { image: 'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=800&auto=format&fit=crop', text: 'Cultural' },
-                                { image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=800&auto=format&fit=crop', text: 'Esports' },
-                                { image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop', text: 'Workshops' },
-                                { image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=800&auto=format&fit=crop', text: 'Arts' },
-                                { image: 'https://images.unsplash.com/photo-1590402494682-cd3fb5321c5e?q=80&w=800&auto=format&fit=crop', text: 'Open Mic' }
-                            ]}
-                        />
+                        <Event3DCarousel items={categories} />
                     </div>
                 </div>
             </div>
