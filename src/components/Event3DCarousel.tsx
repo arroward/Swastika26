@@ -60,7 +60,7 @@ export default function Event3DCarousel({ events }: Event3DCarouselProps) {
   const scrollNext = () => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = isMobile ? window.innerWidth * 0.8 : 400;
+    const cardWidth = isMobile ? window.innerWidth * 0.8 : 360;
     const scrollAmount = cardWidth + (isMobile ? 24 : 48);
     container.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
@@ -68,7 +68,7 @@ export default function Event3DCarousel({ events }: Event3DCarouselProps) {
   const scrollPrev = () => {
     if (!scrollContainerRef.current) return;
     const container = scrollContainerRef.current;
-    const cardWidth = isMobile ? window.innerWidth * 0.8 : 400;
+    const cardWidth = isMobile ? window.innerWidth * 0.8 : 360;
     const scrollAmount = cardWidth + (isMobile ? 24 : 48);
     container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
   };
@@ -116,60 +116,54 @@ function CarouselCard({ event, index }: { event: Event; index: number }) {
   return (
     <Link
       href={`/events/${event.id}/register`}
-      className="snap-center shrink-0 w-[80vw] md:w-[400px] h-[75%] md:h-[90%] mx-3 md:mx-6 relative group rounded-3xl overflow-hidden cursor-pointer"
+      className="snap-center shrink-0 w-[80vw] md:w-[360px] h-[75%] md:h-[90%] mx-3 md:mx-6 relative group rounded-3xl overflow-hidden cursor-pointer shadow-2xl ring-1 ring-white/10"
     >
-      {/* Background Image with Zoom Effect */}
-      <div className="absolute inset-0 overflow-hidden rounded-3xl">
+      {/* Background Image with improved visibility */}
+      <div className="absolute inset-0 overflow-hidden rounded-3xl bg-gray-900">
         <img
           src={event.imageUrl}
           alt={title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 filter brightness-[0.7] group-hover:brightness-100"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-90 group-hover:brightness-110"
         />
       </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 transition-opacity duration-500" />
+      {/* Refined Gradient Overlay - improved visibility of upper poster area */}
+      {/* Refined Gradient Overlay - transparent top, black bottom, black till the title */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black from-20% via-black/50 to-transparent opacity-100 transition-opacity duration-500" />
 
-      {/* Animated Glow Border */}
+      {/* Glassmorphism/Glow Border */}
       <div
         className={cn(
-          "absolute inset-0 rounded-3xl border-2 border-transparent transition-all duration-300 pointer-events-none",
-          "group-hover:border-white/20",
+          "absolute inset-0 rounded-3xl border border-white/10 transition-all duration-300 pointer-events-none",
+          "group-hover:border-white/30 group-hover:shadow-[inset_0_0_20px_rgba(255,255,255,0.1)]",
         )}
-      >
-        <div
-          className={cn(
-            "absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t opacity-0 group-hover:opacity-20 transition-opacity duration-500 from-white",
-          )}
-        />
-      </div>
+      />
 
       {/* Content Container */}
-      <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-end">
-        {/* Large Index Number */}
-        <div className="absolute top-4 right-6 text-6xl md:text-8xl font-black text-white/5 font-cinzel select-none group-hover:text-white/10 transition-colors duration-500">
+      <div className="absolute inset-0 p-5 md:p-6 flex flex-col justify-end">
+        {/* Large Index Number - slightly reduced and transparent */}
+        <div className="absolute top-4 right-5 text-5xl md:text-7xl font-black text-white/10 font-cinzel select-none group-hover:text-white/20 transition-colors duration-500">
           {(index + 1).toString().padStart(2, "0")}
         </div>
 
         {/* Main Content */}
         <div className="relative z-10 transform transition-transform duration-500 group-hover:-translate-y-2">
-          <div className="flex items-center gap-3 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 -translate-x-4 group-hover:translate-x-0">
-            <div
-              className={cn(
-                "h-[1px] w-12 bg-gradient-to-r from-white to-transparent",
-              )}
-            />
+          {/* Decorative line */}
+          <div className="flex items-center gap-2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 -translate-x-4 group-hover:translate-x-0">
+            <div className="h-[2px] w-8 bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
           </div>
 
-          <h3 className="text-3xl md:text-5xl font-black font-cinzel text-white leading-none tracking-wide drop-shadow-lg">
+          <h3 className="text-xl md:text-3xl font-bold font-cinzel text-white leading-tight tracking-wide drop-shadow-md">
             {title}
           </h3>
 
-          <div className="h-0 group-hover:h-auto overflow-hidden transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100">
-            <p className="text-sm md:text-base text-gray-300 mt-3 font-jost font-light leading-relaxed max-w-[90%] line-clamp-3">
-              {event.description ||
-                "Experience the best of innovation and creativity."}
-            </p>
+          <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-in-out">
+            <div className="overflow-hidden">
+              <p className="text-xs md:text-sm text-gray-200 mt-2 font-jost font-light leading-relaxed opacity-90 line-clamp-3">
+                {event.description ||
+                  "Experience the best of innovation and creativity."}
+              </p>
+            </div>
           </div>
         </div>
       </div>
