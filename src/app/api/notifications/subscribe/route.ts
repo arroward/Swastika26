@@ -20,6 +20,8 @@ export async function POST(request: Request) {
             lastSeen: new Date()
         }, { merge: true });
 
+        console.log('Successfully subscribed FCM token:', token);
+
         return NextResponse.json({ success: true });
     } catch (error) {
         console.error('Subscription error:', error);
