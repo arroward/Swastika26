@@ -29,13 +29,13 @@ export default function AboutEvent() {
                         </h2>
                     </div>
 
-                    <div className="block space-y-4 w-full">
+                    <div className="w-full space-y-4">
                         <div className="h-[1px] w-full bg-white/10" />
                         <p className="text-sm text-white/60 font-jost leading-relaxed text-justify">
-                            Swastika is the National Level Techno-Cultural Fest of Mar Baselios Christian College of Engineering and Technology, Peermade — a high-octane celebration of technology, creativity, and culture. It brings together passionate students from across the country to compete, collaborate, and push the limits of innovation while showcasing their talents on a national stage.
+                            Swastika is the National-Level Techno-Cultural Fest of Mar Baselios Christian College of Engineering and Technology, Peermade. It is a high-octane celebration of technology, creativity, and culture that brings together passionate students from across the country to compete, collaborate, and showcase their talent on a national stage.
                         </p>
-                        <p className="text-sm text-white/60 font-jost leading-relaxed text-justify">
-                            With participants from diverse engineering streams and cultural backgrounds, Swastika becomes a melting pot of fresh ideas, brilliant minds, and unstoppable energy. From intense technical challenges to electrifying cultural performances, the fest is designed to inspire, engage, and ignite young innovators.
+                        <p className="hidden lg:block text-sm text-white/60 font-jost leading-relaxed text-justify">
+                            With participants from diverse engineering streams and cultural backgrounds, Swastika becomes a vibrant melting pot of ideas, innovation, and energy. From intense technical challenges to electrifying cultural performances, the fest is designed to inspire, engage, and ignite the spirit of young innovators.
                         </p>
                     </div>
                 </div>
