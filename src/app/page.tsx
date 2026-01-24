@@ -1,4 +1,4 @@
-"use client";
+
 
 import Hero from "@/components/sections/Hero";
 import AboutEvent from "@/components/sections/AboutEvent";
