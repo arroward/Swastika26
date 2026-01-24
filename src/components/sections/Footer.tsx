@@ -2,21 +2,48 @@
 
 import Link from 'next/link';
 import { useRef } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { Instagram, Twitter, Linkedin, MessageCircle, Github, Globe, Terminal, Mail, Activity, Wifi } from 'lucide-react';
+import { motion, useMotionValue, useSpring, useInView, Variants } from 'framer-motion';
+import { Instagram, ArrowUpRight } from 'lucide-react';
+
+// Extracted constants for better performance
+const navLinks = [
+    { name: 'Events', href: '/events' },
+    { name: 'Proshow', href: '/proshow' },
+    { name: 'Register', href: '/register' },
+    { name: 'Gallery', href: '/gallery' }
+];
+
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+        }
+    }
+};
+
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }
+    }
+};
 
 export default function Footer() {
     const containerRef = useRef<HTMLDivElement>(null);
-
     const currentYear = new Date().getFullYear();
+    const isInView = useInView(containerRef, { once: true, margin: "-10%" });
 
-    // Smooth magnetic mouse effect
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const springConfig = { damping: 20, stiffness: 100, mass: 0.5 }; // Smooth lag
-    const smoothX = useSpring(mouseX, springConfig);
-    const smoothY = useSpring(mouseY, springConfig);
+    // Optimized spring config
+    const smoothX = useSpring(mouseX, { damping: 20, stiffness: 100, mass: 0.5 });
+    const smoothY = useSpring(mouseY, { damping: 20, stiffness: 100, mass: 0.5 });
 
     const handleMouseMove = ({ currentTarget, clientX, clientY }: React.MouseEvent) => {
         const { left, top } = currentTarget.getBoundingClientRect();
@@ -28,146 +55,105 @@ export default function Footer() {
         <footer
             ref={containerRef}
             onMouseMove={handleMouseMove}
-            className="relative bg-[#030303] text-white w-full h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] flex flex-col justify-between overflow-hidden sm:pb-0 pb-10"
+            className="relative bg-[#050505] text-white w-full h-auto flex flex-col justify-start overflow-hidden pt-12 pb-6"
         >
-            {/* 1. Dynamic Background Grid with Performant Spotlight */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                {/* Base Grid */}
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-
+            {/* Background Effects */}
+            <div className="absolute inset-0 z-0 pointer-events-none transform-gpu">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem]" />
                 <motion.div
-                    className="absolute w-[600px] h-[600px] bg-red-600/05 rounded-full blur-[100px]"
-                    style={{
-                        x: smoothX,
-                        y: smoothY,
-                        translateX: "-50%",
-                        translateY: "-50%",
-                        willChange: "transform",
-                    }}
+                    className="absolute w-[800px] h-[800px] bg-red-600/5 rounded-full blur-[120px] will-change-transform"
+                    style={{ x: smoothX, y: smoothY, translateX: "-50%", translateY: "-50%" }}
                 />
-
-                {/* Animated Noise Texture */}
-                <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150 mix-blend-overlay pointer-events-none" />
+                <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
             </div>
 
-            {/* 2. Main Content Container */}
-            <div className="relative z-10 w-full max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 flex flex-col flex-grow justify-between pb-8 pt-20">
-                {/* CREATIVE CENTERPIECE: TERMINAL & STATUS */}
-                <div className="w-full flex-grow flex flex-col md:flex-row items-center justify-between gap-12 md:gap-24 mb-12">
+            <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+                className="relative z-10 container mx-auto px-6 h-full flex flex-col justify-between"
+            >
+                {/* Upper Section */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
 
-                    {/* Left: System Diagnostics */}
-                    <div className="hidden md:flex flex-col gap-4 w-64 opacity-50 font-mono text-xs text-red-500/80">
-                        <div className="flex items-center gap-2 text-white/40">
-                            <Activity className="w-4 h-4" />
-                            <span>SYSTEM STATUS: ONLINE</span>
-                        </div>
-                        <div className="h-px w-full bg-white/10" />
-                        <div className="space-y-1">
-                            {["INIT_CORE_V.2.6", "PROTOCOL: OVERDRIVE", "UPLINK: SECURE", "LATENCY: 12ms"].map((text, i) => (
-                                <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, x: -10 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: i * 0.2 + 0.5, duration: 0.5 }}
-                                    className="flex justify-between"
-                                >
-                                    <span>{text}</span>
-                                    <span className="text-white/20">OK</span>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Center: Hero Typography */}
-                    <div className="text-center relative">
+                    {/* Brand / Title */}
+                    <div className="lg:col-span-8 space-y-8">
                         <motion.h1
-                            initial={{ y: 20, opacity: 0 }}
-                            whileInView={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.8 }}
-                            className="text-6xl md:text-8xl lg:text-9xl font-black font-syne tracking-tighter bg-gradient-to-b from-white via-white/80 to-transparent bg-clip-text text-transparent"
+                            variants={itemVariants}
+                            className="text-[10vw] leading-[0.8] font-bold font-cinzel tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-white/20 will-change-transform"
                         >
-                            REVOLUTION
-                        </motion.h1>
-                        <div className="absolute top-0 right-0 -mr-4 -mt-2">
-                            <motion.div
-                                animate={{ opacity: [0.5, 1, 0.5] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                                className="px-2 py-0.5 rounded border border-red-500 text-[10px] font-mono text-red-500 bg-red-500/10 tracking-widest"
-                            >
-                                LIVE
-                            </motion.div>
-                        </div>
-                        <p className="mt-2 font-mono text-sm text-white/30 tracking-[0.5em] uppercase">Join the movement</p>
-                    </div>
-
-                    {/* Right: Data Visualizer */}
-                    <div className="hidden md:flex flex-col items-end gap-4 w-64 opacity-50 font-mono text-xs text-white/40">
-                        <div className="flex items-center gap-2 text-red-500/80">
-                            <span>NETWORK TRAFFIC</span>
-                            <Wifi className="w-4 h-4" />
-                        </div>
-                        <div className="flex gap-1 h-8 items-end">
-                            {[40, 70, 30, 85, 50, 65, 45, 90, 60, 35].map((height, i) => (
-                                <motion.div
-                                    key={i}
-                                    animate={{ height: [`${height}%`, `${Math.max(20, Math.random() * 100)}%`] }}
-                                    transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse", ease: "linear" }}
-                                    className="w-1.5 bg-red-600 rounded-sm"
-                                    style={{ height: `${height}%` }}
-                                />
-                            ))}
-                        </div>
-                        <div className="text-right">
-                            <p>PACKETS: 8,492,104</p>
-                            <p className="text-white/20">ENCRYPTION: AES-256</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Footer Bottom Bar */}
-                <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/5 pt-6">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                        <p className="font-mono text-xs text-white/30">
-                            © {currentYear} Swastika 26.
-                        </p>
-                    </div>
-
-                    <div className="flex items-center gap-6">
-                        {[Twitter, Instagram, Linkedin, Github].map((Icon, i) => (
-                            <a key={i} href="#" className="text-white/20 hover:text-red-500 transition-colors">
-                                <Icon size={18} />
-                            </a>
-                        ))}
-                    </div>
-
-                    {/* Tech Team Pill */}
-                    <Link href="/credits">
-                        <div className="group relative px-4 py-1.5 rounded-full bg-[#0A0A0A] border border-white/10 flex items-center gap-3 overflow-hidden cursor-pointer hover:border-green-500/50 transition-colors">
-                            <div className="absolute inset-0 bg-green-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <Terminal size={12} className="text-white/30 group-hover:text-green-400 transition-colors" />
-                            <span className="font-mono text-[10px] text-white/30 group-hover:text-green-400 transition-colors uppercase tracking-wider">
-                                System Architects
+                            SWASTIKA
+                            <span className="block text-[3vw] font-jost font-light tracking-[0.2em] text-white/40 mt-2">
+                                2026 EDITION
                             </span>
-                        </div>
-                    </Link>
-                </div>
-            </div>
+                        </motion.h1>
+                    </div>
 
-            {/* 3. Infinite Marquee Background (Low Opacity) */}
-            <div className="absolute bottom-0 w-full overflow-hidden pointer-events-none opacity-[0.02]">
+                    {/* Navigation & Info */}
+                    <div className="lg:col-span-4 flex flex-col justify-between gap-12 pt-4">
+                        <motion.div variants={itemVariants} className="space-y-6">
+                            <h3 className="font-jost text-sm uppercase tracking-[0.2em] text-red-500 font-semibold">Menu</h3>
+                            <nav className="flex flex-col gap-2">
+                                {navLinks.map((link) => (
+                                    <Link
+                                        key={link.name}
+                                        href={link.href}
+                                        className="group flex items-center gap-2 text-2xl md:text-3xl font-jost font-light text-white/70 hover:text-white transition-colors w-fit"
+                                    >
+                                        <ArrowUpRight className="w-5 h-5 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 text-red-500" />
+                                        {link.name}
+                                    </Link>
+                                ))}
+                            </nav>
+                        </motion.div>
+
+                        <motion.div variants={itemVariants} className="space-y-6">
+                            <h3 className="font-jost text-sm uppercase tracking-[0.2em] text-red-500 font-semibold">Connect</h3>
+                            <a
+                                href="https://instagram.com/swastika_2k26"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group inline-flex items-center gap-4 p-6 border border-white/10 rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-500 hover:border-red-500/30 w-full md:w-auto"
+                            >
+                                <div className="p-3 rounded-full bg-white/10 group-hover:bg-red-500 group-hover:text-white transition-colors duration-300">
+                                    <Instagram size={24} />
+                                </div>
+                                <div>
+                                    <p className="text-xs text-white/40 font-jost uppercase tracking-wider mb-1">Follow us on</p>
+                                    <p className="text-xl text-white font-cinzel font-bold group-hover:text-red-100 transition-colors">@swastika_2k26</p>
+                                </div>
+                                <ArrowUpRight className="ml-auto w-6 h-6 text-white/30 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+                            </a>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* Footer Bottom */}
                 <motion.div
-                    className="whitespace-nowrap flex"
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{ duration: 30, ease: "linear", repeat: Infinity }}
+                    variants={itemVariants}
+                    className="mt-12 md:mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs md:text-sm font-jost text-white/30 uppercase tracking-widest"
                 >
-                    {[...Array(4)].map((_, i) => (
-                        <h1 key={i} className="text-[15vw] font-black font-syne text-white px-12">
-                            SWASTIKA 26 — INNOVATE — CREATE —
-                        </h1>
+
+                    <p className="group">
+                        Crafted by <span className="text-white/60 group-hover:text-red-500 transition-colors cursor-default">SWASTIKA'26 Tech Team</span>
+                    </p>
+                </motion.div>
+            </motion.div>
+
+            {/* Marquee Background
+            <div className="absolute bottom-0 left-0 w-full overflow-hidden pointer-events-none opacity-[0.03] select-none">
+                <motion.div
+                    className="whitespace-nowrap flex will-change-transform"
+                    animate={{ x: ["0%", "-30%"] }}
+                    transition={{ duration: 40, ease: "linear", repeat: Infinity }}
+                >
+                    {[...Array(3)].map((_, i) => (
+                        <span key={i} className="text-[20vw] font-black font-cinzel leading-none px-12 text-white">
+                            LEGACY BEYOND LIMITS —
+                        </span>
                     ))}
                 </motion.div>
-            </div>
-        </footer >
+            </div> */}
+        </footer>
     );
 }
