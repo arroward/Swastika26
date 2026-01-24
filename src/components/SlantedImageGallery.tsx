@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import Image from "next/image";
+
 import { motion } from "framer-motion";
 
 
@@ -16,12 +16,12 @@ const GalleryImage = ({ src }: { src: string }) => {
     const [imgSrc, setImgSrc] = useState(src);
 
     return (
-        <Image
+        <motion.img
             src={imgSrc}
             alt="Gallery Item"
-            fill
-            className="object-cover transition-opacity duration-300"
-            sizes="(max-width: 768px) 40vw, 25vw"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="w-full h-full object-cover transition-opacity duration-300"
             onError={() => {
                 setImgSrc(process.env.NEXT_PUBLIC_FALLBACK_IMAGE_URL || '/placeholder.jpg');
             }}
