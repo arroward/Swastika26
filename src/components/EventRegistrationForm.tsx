@@ -26,7 +26,7 @@ export default function EventRegistrationForm({
     phone: "",
     collegeName: "",
     universityName: "",
-    teamSize: 0,
+    teamSize: 1,
     teamMembers: [] as string[],
     upiTransactionId: "",
     accountHolderName: "",
