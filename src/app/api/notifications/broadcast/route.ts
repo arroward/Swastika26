@@ -43,6 +43,10 @@ export async function POST(request: Request) {
                 title,
                 body,
                 imageUrl: imageUrl || undefined,
+                icon: '/logo/wh_sw.png',
+            },
+            data: {
+                url: '/',
             },
             tokens,
         };

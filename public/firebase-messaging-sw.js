@@ -19,17 +19,11 @@ if (firebaseConfig.apiKey && firebaseConfig.projectId) {
 
 const messaging = firebase.messaging();
 
+// Note: We don't call self.registration.showNotification here because 
+// we are sending the 'notification' object in the FCM payload.
+// FCM handles displaying the notification automatically for us.
 messaging.onBackgroundMessage((payload) => {
-    const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-        body: payload.notification.body,
-        icon: '/logo/wh_sw.png',
-        data: {
-            url: payload.data?.url || '/'
-        }
-    };
-
-    self.registration.showNotification(notificationTitle, notificationOptions);
+    // console.log('Handling background message', payload);
 });
 
 self.addEventListener('notificationclick', function (event) {
