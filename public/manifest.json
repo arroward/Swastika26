@@ -1,0 +1,57 @@
+{
+    "name": "Swastika 2026 - Techno Cultural Fest",
+    "short_name": "Swastika 2026",
+    "description": "National Level Techno-Cultural Fest - MBCCET",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#000000",
+    "theme_color": "#dc2626",
+    "categories": [
+        "events",
+        "entertainment",
+        "education"
+    ],
+    "icons": [
+        {
+            "src": "/logo/wh_sw.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/logo/wh_sw.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "Events",
+            "short_name": "Events",
+            "description": "View all events",
+            "url": "/#events",
+            "icons": [
+                {
+                    "src": "/logo/wh_sw.png",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Gallery",
+            "short_name": "Gallery",
+            "description": "View gallery",
+            "url": "/#gallery",
+            "icons": [
+                {
+                    "src": "/logo/wh_sw.png",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
+}
