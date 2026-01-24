@@ -234,6 +234,41 @@ export default async function EventRegisterPage({ params }: PageProps) {
                     </div>
                   </div>
 
+                  {/* Rules Section */}
+                  {event.rules && event.rules.length > 0 && (
+                    <div className="mt-8 pt-8 border-t border-white/10">
+                      <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <svg
+                          className="w-5 h-5 text-red-500"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                        Rules & Guidelines
+                      </h3>
+                      <ul className="space-y-3">
+                        {event.rules.map((rule, index) => (
+                          <li
+                            key={index}
+                            className="flex gap-3 text-white/70 text-sm md:text-base group/rule cursor-default"
+                          >
+                            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-red-500 mt-2 group-hover/rule:scale-125 transition-transform duration-300"></span>
+                            <span className="group-hover/rule:text-white/90 transition-colors duration-300">
+                              {rule}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   {isFullyBooked && (
                     <div className="mt-8 bg-gradient-to-r from-red-600/20 to-red-700/10 border border-red-500/30 rounded-xl p-6 backdrop-blur-md text-center">
                       <p className="text-red-200 font-bold text-sm md:text-base">

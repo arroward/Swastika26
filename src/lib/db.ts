@@ -22,6 +22,9 @@ export async function initDatabase() {
         category VARCHAR(100),
         capacity INTEGER DEFAULT 100,
         registered_count INTEGER DEFAULT 0,
+        registration_fee INTEGER DEFAULT 0,
+        is_online BOOLEAN DEFAULT false,
+        rules JSONB DEFAULT '[]',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
@@ -87,7 +90,8 @@ export async function getEvents(): Promise<Event[]> {
         capacity,
         registered_count as "registeredCount",
         registration_fee as "registrationFee",
-        is_online as "isOnline"
+        is_online as "isOnline",
+        "rules"
       FROM events
       ORDER BY date ASC
     `;
@@ -112,7 +116,8 @@ export async function getEventById(id: string): Promise<Event | null> {
         capacity,
         registered_count as "registeredCount",
         registration_fee as "registrationFee",
-        is_online as "isOnline"
+        is_online as "isOnline",
+        "rules"
       FROM events
       WHERE id = ${id}
     `;
@@ -218,7 +223,8 @@ export async function getAdminEvents(adminId: string, role: string) {
           e.image_url as "imageUrl",
           e.category,
           e.capacity,
-          e.registered_count as "registeredCount"
+          e.registered_count as "registeredCount",
+          e."rules"
         FROM events e
         INNER JOIN admin_events ae ON e.id = ae.event_id
         WHERE ae.admin_id = ${adminId}
@@ -365,7 +371,8 @@ export async function getAdminManagedEvents(adminId: string): Promise<Event[]> {
         e.image_url as "imageUrl",
         e.category,
         e.capacity,
-        e.registered_count as "registeredCount"
+        e.registered_count as "registeredCount",
+        e."rules"
       FROM events e
       JOIN admin_events ae ON e.id = ae.event_id
       WHERE ae.admin_id = ${adminId}
