@@ -39,16 +39,18 @@ export default function CTA() {
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
 
                 <motion.div
-                    className="absolute w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[100px] will-change-transform"
+                    className="absolute w-[800px] h-[800px] opacity-30 pointer-events-none will-change-transform"
                     style={{
+                        background: "radial-gradient(circle closest-side, rgba(220,38,38,0.4), transparent)",
                         x: smoothX,
                         y: smoothY,
                         translateX: "-50%",
                         translateY: "-50%",
+                        transform: "translateZ(0)", // Force GPU
                     }}
                 />
 
-                <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150 mix-blend-overlay pointer-events-none" />
+
             </div>
 
             <div className="container mx-auto px-4 z-10 text-center relative">
