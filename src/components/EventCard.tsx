@@ -27,7 +27,7 @@ export default function EventCard({ event }: EventCardProps) {
 
   return (
     <Link
-      href={`/${event.id}/register`}
+      href={`events/${event.id}/register`}
       className="group relative bg-black rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-500 cursor-pointer aspect-[3/4] max-w-sm block"
     >
       {/* Event Image */}
@@ -131,7 +131,7 @@ export default function EventCard({ event }: EventCardProps) {
             <button
               onClick={(e) => {
                 e.preventDefault();
-                window.location.href = `/${event.id}/register`;
+                window.location.href = `events/${event.id}/register`;
               }}
               className="mt-4 w-full bg-white hover:bg-white-400 text-black font-pirata font-extrabold py-3 px-6 rounded-lg transition-colors duration-200 tracking-wide"
             >
