@@ -18,43 +18,145 @@ import { sql, initDatabase } from "../lib/db";
 
 const sampleEvents = [
   {
-    id: "tech-summit-2026",
-    title: "Tech Summit 2026",
+    id: "editography-cinesplice",
+    title: "Editography (Cinesplice)",
     description:
-      "Join industry leaders for a day of innovation, networking, and cutting-edge technology discussions. Learn about the latest trends in AI, cloud computing, and software development.",
-    date: "2026-04-15T09:00:00Z",
-    location: "San Francisco Convention Center",
+      "Editography (Cinesplice) is an online image editing competition showcasing creative enhancement skills with restrictions on advanced manipulation.",
+    rules: [
+      "Entry must be original and not duplicated from another participant",
+      "Images from digital cameras or smartphones are allowed",
+      "Only basic editing is permitted; advanced editing is prohibited",
+      "No borders, logos, copyright marks, or identifying marks allowed",
+      "Winners are decided based on creativity and quality",
+      "50% weightage for likes and shares, 50% for judges’ decision",
+      "Artificially generated likes will result in disqualification",
+      "Judges’ decision will be final",
+    ],
+    date: "2024-04-05T00:00:00Z",
+    location: "Online",
     imageUrl:
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80",
-    category: "Technology",
-    capacity: 200,
-    registeredCount: 87,
+      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0063.jpg",
+    category: "Online Event",
+    capacity: 1000,
+    registeredCount: 0,
   },
+
   {
-    id: "design-conference-2026",
-    title: "Creative Design Conference",
+    id: "duo-dance-duo-dynamics",
+    title: "Duo Dance (Duo Dynamics)",
     description:
-      "Explore the future of design with workshops on UX/UI, graphic design, and creative thinking. Network with designers from around the world and showcase your portfolio.",
-    date: "2026-05-20T10:00:00Z",
-    location: "New York Design Center",
+      "Duo Dance (Duo Dynamics) is a short-form duo dance competition emphasizing coordination, rhythm, and expression.",
+    rules: [
+      "Maximum of 2 members per team",
+      "Performance duration must not exceed 1 minute",
+      "Camera must remain fixed during recording",
+      "No transitions or visual effects allowed",
+      "Multiple teams from the same college are allowed",
+      "Video must be submitted in the highest possible quality",
+      "Judging based on presentation and number of likes",
+      "Judges’ decision is final and binding",
+    ],
+    date: "2024-04-05T00:00:00Z",
+    location: "Online",
     imageUrl:
-      "https://images.unsplash.com/photo-1558403194-611308249627?w=800&q=80",
-    category: "Design",
-    capacity: 150,
-    registeredCount: 62,
+      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0062.jpg",
+    category: "Online Event",
+    capacity: 1000,
+    registeredCount: 0,
   },
+
   {
-    id: "startup-bootcamp-2026",
-    title: "Startup Bootcamp",
+    id: "recreating-frame-lens-legacy",
+    title: "Recreating Frame (Lens Legacy)",
     description:
-      "Intensive 2-day bootcamp for aspiring entrepreneurs. Learn how to build, launch, and scale your startup with guidance from successful founders and investors.",
-    date: "2026-06-10T09:00:00Z",
-    location: "Austin Startup Hub",
+      "Recreating Frame (Lens Legacy) celebrates cinema by recreating iconic movie scenes in a creative way.",
+    rules: [
+      "Entry must not be duplicated from another participant",
+      "Photos can be taken using any digital camera or smartphone",
+      "Any movie scene or character from any language is allowed",
+      "Original frame and recreated frame must be combined into one image",
+      "File size should not exceed 10 MB",
+      "Accepted formats: JPG or PNG",
+      "Judging based on creativity, presentation, and likes",
+      "Judges’ decision will be final",
+    ],
+    date: "2024-04-05T00:00:00Z",
+    location: "Online",
     imageUrl:
-      "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80",
-    category: "Business",
-    capacity: 100,
-    registeredCount: 45,
+      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0061.jpg",
+    category: "Online Event",
+    capacity: 1000,
+    registeredCount: 0,
+  },
+
+  {
+    id: "prompt-drawing-sketch-alchemy",
+    title: "Prompt Drawing (Sketch Alchemy)",
+    description:
+      "Prompt Drawing (Sketch Alchemy) is an AI-based art competition using prompt-driven image generation.",
+    rules: [
+      "Submission must be an original AI-generated image",
+      "Theme: Astronaut having tea with aliens in space",
+      "Images must be generated using Stable Diffusion Web",
+      "Generated images should follow a cinematic style",
+      "Entries must be submitted within the specified timeframe",
+      "Judging based on creativity, relevance, and aesthetics",
+      "Judges’ decision will be final",
+    ],
+    date: "2024-04-05T00:00:00Z",
+    location: "Online",
+    imageUrl:
+      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0059.jpg",
+    category: "Online Event",
+    capacity: 1000,
+    registeredCount: 0,
+  },
+
+  {
+    id: "short-film-narratex",
+    title: "Short Film (Narratex)",
+    description:
+      "Short Film (Narratex) is a storytelling competition for aspiring filmmakers.",
+    rules: [
+      "Short films must be original",
+      "Copied or plagiarized content leads to disqualification",
+      "Documentaries are not allowed",
+      "Maximum duration of the film is 5 minutes",
+      "Films can be in any language",
+      "Judges’ decision is final",
+    ],
+    date: "2024-04-05T00:00:00Z",
+    location: "Online",
+    imageUrl:
+      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0060.jpg",
+    category: "Online Event",
+    capacity: 1000,
+    registeredCount: 0,
+  },
+
+  {
+    id: "photography-visual-odyssey",
+    title: "Photography (Visual Odyssey)",
+    description:
+      "Photography (Visual Odyssey) is an online photography contest focused on originality and visual storytelling.",
+    rules: [
+      "Photographs must be original",
+      "Entries from digital cameras and smartphones are allowed",
+      "Basic editing is permitted",
+      "Advanced editing is prohibited",
+      "No borders, logos, or watermarks allowed",
+      "Winners selected based on creativity and quality",
+      "50% likes and shares, 50% judges’ decision",
+      "Artificial engagement will result in disqualification",
+      "Judges’ decision will be final",
+    ],
+    date: "2024-04-05T00:00:00Z",
+    location: "Online",
+    imageUrl:
+      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0058.jpg",
+    category: "Online Event",
+    capacity: 1000,
+    registeredCount: 0,
   },
 ];
 
@@ -69,7 +171,7 @@ async function seed() {
     // Insert sample events
     for (const event of sampleEvents) {
       await sql`
-        INSERT INTO events (id, title, description, date, location, image_url, category, capacity, registered_count)
+        INSERT INTO events (id, title, description, date, location, image_url, category, capacity, registered_count, rules)
         VALUES (
           ${event.id},
           ${event.title},
@@ -79,7 +181,8 @@ async function seed() {
           ${event.imageUrl},
           ${event.category},
           ${event.capacity},
-          ${event.registeredCount}
+          ${event.registeredCount},
+          ${JSON.stringify(event.rules)}
         )
         ON CONFLICT (id) DO UPDATE SET
           title = EXCLUDED.title,
@@ -89,7 +192,8 @@ async function seed() {
           image_url = EXCLUDED.image_url,
           category = EXCLUDED.category,
           capacity = EXCLUDED.capacity,
-          registered_count = EXCLUDED.registered_count
+          registered_count = EXCLUDED.registered_count,
+          rules = EXCLUDED.rules
       `;
       console.log(`✅ Inserted/Updated event: ${event.title}`);
     }
