@@ -8,12 +8,14 @@ export default function AdminNotifications() {
     const [body, setBody] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [status, setStatus] = useState<string | null>(null);
+    const [deliveryErrors, setDeliveryErrors] = useState<any[]>([]);
     const [isSending, setIsSending] = useState(false);
 
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSending(true);
         setStatus('Processing...');
+        setDeliveryErrors([]);
 
         try {
             const res = await fetch('/api/notifications/broadcast', {
@@ -26,6 +28,7 @@ export default function AdminNotifications() {
 
             if (res.ok && data.success) {
                 setStatus(`Success! Sent to ${data.successCount} devices (Failed: ${data.failureCount}).`);
+                if (data.errors) setDeliveryErrors(data.errors);
                 setTitle('');
                 setBody('');
                 setImageUrl('');
@@ -95,9 +98,25 @@ export default function AdminNotifications() {
                     </button>
 
                     {status && (
-                        <p className={`text-center text-sm font-mono ${status.includes('Success') ? 'text-green-400' : 'text-red-400'}`}>
-                            {status}
-                        </p>
+                        <div className="space-y-4">
+                            <p className={`text-center text-sm font-mono ${status.includes('Success') ? 'text-green-400' : 'text-red-400'}`}>
+                                {status}
+                            </p>
+
+                            {deliveryErrors.length > 0 && (
+                                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg max-h-40 overflow-y-auto">
+                                    <h4 className="text-xs font-bold text-red-400 uppercase mb-2">Delivery Error Details:</h4>
+                                    <div className="space-y-2">
+                                        {deliveryErrors.map((err, i) => (
+                                            <div key={i} className="text-[10px] font-mono text-red-300/70 border-b border-red-500/10 pb-2 last:border-0">
+                                                <span className="text-red-400">Token:</span> {err.token}<br />
+                                                <span className="text-red-400">Error:</span> {err.error?.message || 'Unknown FCM Error'}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     )}
                 </form>
             </motion.div>

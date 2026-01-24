@@ -43,7 +43,12 @@ export async function POST(request: Request) {
                 title,
                 body,
                 imageUrl: imageUrl || undefined,
-                icon: '/logo/wh_sw.png',
+            },
+            webpush: {
+                notification: {
+                    icon: '/logo/wh_sw.png',
+                    image: imageUrl || undefined,
+                }
             },
             data: {
                 url: '/',
@@ -55,25 +60,47 @@ export async function POST(request: Request) {
         // For MVP, assuming < 500.
         const response = await adminMessaging.sendEachForMulticast(message);
 
-        // Clean up invalid tokens
+        // Collect errors and clean up invalid tokens
+        const errors: any[] = [];
+        const failedTokens: string[] = [];
+
         if (response.failureCount > 0) {
-            const failedTokens: string[] = [];
             response.responses.forEach((resp, idx) => {
                 if (!resp.success) {
-                    failedTokens.push(tokens[idx]);
+                    const error = resp.error;
+                    errors.push({
+                        token: tokens[idx].substring(0, 10) + '...',
+                        error: error
+                    });
+
+                    // Identify invalid tokens for cleanup
+                    if (error?.code === 'messaging/registration-token-not-registered' ||
+                        error?.code === 'messaging/invalid-argument') {
+                        failedTokens.push(tokens[idx]);
+                    }
                 }
             });
-            // Optionally delete failed tokens from DB
-            // const batch = adminFirestore.batch();
-            // failedTokens.forEach(t => batch.delete(adminFirestore.collection('fcm_tokens').doc(t)));
-            // await batch.commit();
-            console.log(`Failed to send to ${response.failureCount} tokens. Cleanup pending.`);
+            console.log(`Failed to send to ${response.failureCount} tokens.`, errors);
+
+            // Clean up invalid tokens from Firestore
+            if (failedTokens.length > 0 && adminFirestore) {
+                const db = adminFirestore;
+                try {
+                    const batch = db.batch();
+                    failedTokens.forEach(t => batch.delete(db.collection('fcm_tokens').doc(t)));
+                    await batch.commit();
+                    console.log(`Cleaned up ${failedTokens.length} invalid/stale tokens.`);
+                } catch (cleanupError) {
+                    console.error("Failed to cleanup tokens:", cleanupError);
+                }
+            }
         }
 
         return NextResponse.json({
             success: true,
             successCount: response.successCount,
-            failureCount: response.failureCount
+            failureCount: response.failureCount,
+            errors: errors.length > 0 ? errors : undefined
         });
 
     } catch (error) {
