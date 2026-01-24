@@ -15,31 +15,31 @@ export default function Home() {
     <main className="bg-transparent w-full text-white relative">
       {/* Premium Cursor Lighting */}
 
-      <section id="home" className="snap-start w-full h-auto">
+      <section id="home" className="snap-start snap-always w-full h-auto">
         <Hero />
       </section>
-      <section id="about" className="snap-start w-full h-auto">
+      <section id="about" className="snap-start snap-always w-full h-auto">
         <AboutEvent />
       </section>
-      <section className="snap-start w-full h-auto">
+      <section className="snap-start snap-always w-full h-auto">
         <AboutCollege />
       </section>
-      <section className="snap-start w-full h-auto">
+      <section className="snap-start snap-always w-full h-auto">
         <MarqueeSection />
       </section>
-      <section id="proshow" className="snap-start w-full h-auto">
+      <section id="proshow" className="snap-start snap-always w-full h-auto">
         <Proshow />
       </section>
-      <section id="events" className="snap-start w-full h-auto">
+      <section id="events" className="snap-start snap-always w-full h-auto">
         <Events />
       </section>
-      <section id="gallery" className="snap-start w-full h-auto">
+      <section id="gallery" className="snap-start snap-always w-full h-auto">
         <Gallery />
       </section>
-      <section className="snap-start w-full h-auto">
+      <section className="snap-start snap-always w-full h-auto">
         <CTA />
       </section>
-      <section id="footer" className="snap-start w-full h-auto">
+      <section id="footer" className="snap-start snap-always w-full h-auto">
         <Footer />
       </section>
     </main>
