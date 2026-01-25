@@ -38,7 +38,7 @@ const jost = Jost({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://swastika.live"),
-  title: "Swastika.26",
+  title: "Swastika'26",
   description: "Join the revolution. National Level Techno-Cultural Fest.",
   manifest: "/manifest.json",
   appleWebApp: {

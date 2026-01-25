@@ -1,17 +1,46 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { aboutEventContent } from '@/data/content';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutEvent() {
     const containerRef = useRef(null);
-    const isInView = useInView(containerRef, { once: true, margin: "-10%" });
+    const titleRef = useRef(null);
+    const yearRef = useRef(null);
+
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 60%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        tl.from(titleRef.current, {
+            y: 30,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        })
+            .from(yearRef.current, {
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            }, "-=0.6");
+
+    }, { scope: containerRef });
 
     return (
         <section
+            id="about"
             ref={containerRef}
-            className="relative w-full h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] flex items-center justify-center overflow-hidden px-4 md:px-6 py-2 md:py-4"
+            className="relative w-full h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] flex items-center justify-center overflow-hidden px-4 md:px-6 py-2 md:py-4 panel snap-start snap-always"
         >
             {/* Main Grid Container */}
             <div className="w-full h-full flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-4">
@@ -52,21 +81,18 @@ export default function AboutEvent() {
 
                     {/* Floating Big Title */}
                     <div className="absolute bottom-4 left-4 lg:bottom-10 lg:left-10 z-10 text-left">
-                        <motion.h1
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={isInView ? { y: 0, opacity: 1 } : {}}
+                        <h1
+                            ref={titleRef}
                             className="text-5xl md:text-7xl xl:text-8xl font-black font-cinzel text-white leading-none tracking-tight mix-blend-overlay"
                         >
                             {aboutEventContent.visualTitle}
-                        </motion.h1>
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={isInView ? { opacity: 1 } : {}}
-                            transition={{ delay: 0.2 }}
+                        </h1>
+                        <p
+                            ref={yearRef}
                             className="text-sm md:text-xl font-mono text-red-500 tracking-widest mt-1 lg:mt-2 ml-1"
                         >
                             {aboutEventContent.yearText}
-                        </motion.p>
+                        </p>
                     </div>
                 </div>
 

@@ -20,6 +20,20 @@ const nextConfig: NextConfig = {
       allowedOrigins: ["10.3.4.71:3000", "localhost:3000"],
     },
   },
+  async headers() {
+    return [
+      {
+        source: '/:all*(svg|jpg|jpeg|png|gif|webp|woff2)',
+        locale: false,
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          }
+        ],
+      },
+    ];
+  },
 };
 
 export default withPWA({

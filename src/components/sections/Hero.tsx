@@ -3,7 +3,6 @@
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { motion } from 'framer-motion';
 import { useLoading } from '@/components/LoadingProvider';
 import Countdown from '@/components/Countdown';
 import VariableProximity from '@/components/VariableProximity';
@@ -15,11 +14,7 @@ export default function Hero() {
     const container = useRef(null);
     const { isLoading } = useLoading();
 
-
     useGSAP(() => {
-        // Logo Reveal code removed to allow Framer Motion layoutId transition
-
-
         // Hero Text Reveal
         gsap.from('.hero-char', {
             y: 50,
@@ -29,6 +24,15 @@ export default function Hero() {
             ease: 'power3.out',
             delay: 0.5,
             clearProps: 'all'
+        });
+
+        // Logo Reveal (GSAP equivalent)
+        gsap.from('.hero-logo-img', {
+            scale: 0.8,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out",
+            delay: 0.2
         });
 
         // Subtitle Reveal
@@ -43,7 +47,7 @@ export default function Hero() {
     }, { scope: container });
 
     return (
-        <section ref={container} className="relative h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] flex flex-col items-center justify-evenly pt-2 pb-4 px-1 md:px-4 overflow-hidden rounded-[2rem]">
+        <section id="home" ref={container} className="relative h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] flex flex-col items-center justify-evenly pt-2 pb-4 px-1 md:px-4 overflow-hidden rounded-[2rem] panel snap-start snap-always">
             <BackgroundGlows />
 
             <div className="z-20 text-center relative max-w-full flex-shrink-0 flex flex-col items-center justify-center">
@@ -51,12 +55,10 @@ export default function Hero() {
                 {/* Logo from Splash Screen */}
                 <div className="hero-logo w-24 h-24 md:w-28 md:h-28 lg:w-28 lg:h-28 relative z-50 mb-2">
                     {!isLoading && (
-                        <motion.img
-                            layoutId="shared-logo"
+                        <img
                             src={siteConfig.logos.main}
                             alt={`${siteConfig.name} Logo`}
-                            className="w-full h-full drop-shadow-[0_0_25px_rgba(220,38,38,0.6)] animate-pulse-slow will-change-transform"
-                            transition={{ duration: 1.2, ease: [0.43, 0.13, 0.23, 0.96] }}
+                            className="hero-logo-img w-full h-full drop-shadow-[0_0_25px_rgba(220,38,38,0.6)] animate-pulse-slow will-change-transform"
                         />
                     )}
                 </div>

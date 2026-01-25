@@ -1,96 +1,113 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
-import dynamic from 'next/dynamic';
-
-// Dynamically import the heavy text component
-const VariableProximity = dynamic(() => import('@/components/VariableProximity'), {
-    ssr: false,
-    loading: () => <span className="font-syne font-black text-5xl md:text-6xl lg:text-8xl opacity-0">DON'T MISS OUT</span>
-});
-
-const springConfig = { damping: 20, stiffness: 100, mass: 0.5 };
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default function CTA() {
     const containerRef = useRef<HTMLElement>(null);
-    const isInView = useInView(containerRef, { once: true, margin: "-20%" }); // Delayed trigger for better performance
+    const textContainerRef = useRef<HTMLDivElement>(null);
 
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+    // Refs for individual elements if needed for specific animations
+    const titleRef = useRef<HTMLHeadingElement>(null);
 
-    const smoothX = useSpring(mouseX, springConfig);
-    const smoothY = useSpring(mouseY, springConfig);
+    // Refs for quick setters
+    const xTo = useRef<((value: number) => void) | null>(null);
+    const yTo = useRef<((value: number) => void) | null>(null);
 
-    const handleMouseMove = ({ currentTarget, clientX, clientY }: React.MouseEvent) => {
-        const { left, top } = currentTarget.getBoundingClientRect();
-        mouseX.set(clientX - left);
-        mouseY.set(clientY - top);
+    useGSAP(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // QuickTo setup for parallax
+        if (textContainerRef.current) {
+            xTo.current = gsap.quickTo(textContainerRef.current, "x", { duration: 0.5, ease: "power3" });
+            yTo.current = gsap.quickTo(textContainerRef.current, "y", { duration: 0.5, ease: "power3" });
+        }
+
+        // Entrance Animation
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 60%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        tl.from(textContainerRef.current?.children || [], {
+            y: 100,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.15,
+            ease: "power3.out"
+        });
+
+    }, { scope: containerRef });
+
+    const handleMove = (e: React.MouseEvent) => {
+        if (!xTo.current || !yTo.current) return;
+
+        const rect = containerRef.current?.getBoundingClientRect();
+        if (!rect) return;
+
+        const relX = (e.clientX - rect.left) / rect.width - 0.5;
+        const relY = (e.clientY - rect.top) / rect.height - 0.5;
+
+        // Move text slightly with mouse
+        xTo.current(relX * 30);
+        yTo.current(relY * 30);
+
+        // Move background glows opposite
+        gsap.to('.glow-bg', {
+            x: relX * -60,
+            y: relY * -60,
+            duration: 1.5,
+            ease: "power2.out",
+            overwrite: "auto"
+        });
     };
 
     return (
         <section
             ref={containerRef}
-            onMouseMove={handleMouseMove}
-            className="relative py-32 flex items-center justify-center overflow-hidden bg-black text-white transform-gpu"
+            onMouseMove={handleMove}
+            className="relative w-full h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] flex items-center justify-center overflow-hidden bg-black panel select-none cursor-default snap-start snap-always"
         >
-            {/* Background Grid with Performant Spotlight */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]" />
-
-                <motion.div
-                    className="absolute w-[800px] h-[800px] opacity-30 pointer-events-none will-change-transform"
-                    style={{
-                        background: "radial-gradient(circle closest-side, rgba(220,38,38,0.4), transparent)",
-                        x: smoothX,
-                        y: smoothY,
-                        translateX: "-50%",
-                        translateY: "-50%",
-                        transform: "translateZ(0)", // Force GPU
-                    }}
-                />
-
-
+            {/* Background Atmosphere */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-red-900/10 rounded-full blur-[100px] glow-bg transform-gpu" />
+                <div className="absolute top-1/4 left-1/3 w-[40vw] h-[40vw] bg-orange-900/5 rounded-full blur-[80px] glow-bg animate-pulse-slow transform-gpu" />
             </div>
 
-            <div className="container mx-auto px-4 z-10 text-center relative">
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                    className="space-y-8 will-change-transform"
-                >
-                    <h2 className="text-5xl md:text-6xl lg:text-8xl font-black font-syne text-white tracking-tighter mix-blend-difference cursor-default flex flex-col items-center">
-                        <div className="mb-4">
-                            <VariableProximity
-                                label="DON'T MISS OUT"
-                                className="font-syne"
-                                fromFontVariationSettings="'wght' 400"
-                                toFontVariationSettings="'wght' 900"
-                                radius={200}
-                            />
-                        </div>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-red-500 animate-gradient bg-[length:200%_auto] text-center font-cinzel font-bold">
-                            BE PART OF SWASTIKA
-                        </span>
+            {/* Main Content - Fully Visible Stack */}
+            <div
+                ref={textContainerRef}
+                className="relative z-10 flex flex-col items-center justify-center text-center gap-2 md:gap-4 w-full"
+            >
+                {/* 1. DON'T MISS OUT */}
+                <div className="overflow-hidden w-full">
+                    <h2 ref={titleRef} className="text-4xl md:text-6xl lg:text-8xl font-black font-syne text-white tracking-tighter mix-blend-difference hover:text-red-500 transition-colors duration-500">
+                        DON'T MISS OUT
                     </h2>
-                    <p className="max-w-xl mx-auto text-xl text-white/70 font-jost font-light">
-                        Join 5000+ students, 60+ events, and experience the future of culture and technology.
+                </div>
+
+                {/* 2. BE PART OF */}
+                <div className="overflow-hidden mt-2 md:mt-6">
+                    <p className="text-lg md:text-2xl font-cinzel text-red-500 font-bold tracking-[0.3em] uppercase">
+                        BE PART OF
                     </p>
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-6 pt-8">
-                        <button className="group relative px-12 py-4 bg-white text-black font-bold text-lg rounded-full overflow-hidden hover:scale-105 transition-transform will-change-transform shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(220,38,38,0.5)]">
-                            <span className="relative z-10 font-syne uppercase tracking-wider">Register Now</span>
-                            <div className="absolute inset-0 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500 ease-out -z-0" />
-                            <span className="absolute inset-0 flex items-center justify-center text-white z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-syne uppercase tracking-wider">
-                                Let's Go
-                            </span>
-                        </button>
-                        <button className="px-12 py-4 border border-white/20 text-white font-bold text-lg rounded-full hover:bg-white/5 transition-colors font-syne uppercase tracking-wider">
-                            Download Brochure
-                        </button>
-                    </div>
-                </motion.div>
+                </div>
+
+                {/* 3. SWASTIKA */}
+                <div className="overflow-hidden w-full">
+                    <h1 className="text-5xl md:text-8xl lg:text-[11rem] font-black font-syne text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-neutral-500 tracking-tighter leading-none glow-text drop-shadow-2xl">
+                        SWASTIKA
+                    </h1>
+                </div>
             </div>
+
+            {/* Grid Overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none z-0" />
         </section>
     );
 }

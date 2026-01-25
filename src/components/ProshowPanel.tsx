@@ -1,6 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
 interface ProshowPanelProps {
     artist: {
@@ -21,41 +23,73 @@ export default function ProshowPanel({
     hoveredIndex,
     setHoveredIndex
 }: ProshowPanelProps) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const imageRef = useRef<HTMLImageElement>(null);
+    const edgeRef = useRef<HTMLDivElement>(null);
+
     const isActive = hoveredIndex === index;
+    const isSomeoneHovered = hoveredIndex !== null;
+
+    useGSAP(() => {
+        // Container Filter Animation
+        let filterValue = 'brightness(1) blur(0px)';
+        if (isSomeoneHovered) {
+            filterValue = isActive
+                ? 'brightness(1.15) blur(0px)'
+                : 'brightness(0.6) blur(2px)';
+        }
+
+        gsap.to(containerRef.current, {
+            filter: filterValue,
+            duration: 0.3,
+            ease: "power3.out",
+            overwrite: true
+        });
+
+        // Image Scale Animation
+        gsap.to(imageRef.current, {
+            scale: isActive ? 1.08 : 1.02,
+            duration: 0.8,
+            ease: "power2.out",
+            overwrite: true
+        });
+
+        // Ceremonial Edge Opacity
+        gsap.to(edgeRef.current, {
+            opacity: isActive ? 1 : 0,
+            duration: 0.3,
+            ease: "power2.out",
+            overwrite: true
+        });
+
+    }, { dependencies: [hoveredIndex, isActive, isSomeoneHovered], scope: containerRef });
 
     return (
-        <motion.div
+        <div
+            ref={containerRef}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
-            animate={{
-                filter: hoveredIndex === null
-                    ? 'brightness(1) blur(0px)'
-                    : isActive
-                        ? 'brightness(1.15) blur(0px)'
-                        : 'brightness(0.6) blur(2px)',
-            }}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             className="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden cursor-pointer will-change-[filter] group transform-gpu"
         >
-            {/* Background Image - Optimized with motion.img */}
+            {/* Background Image */}
             <div className="absolute inset-0 overflow-hidden">
-                <motion.img
+                <img
+                    ref={imageRef}
                     src={artist.image}
                     alt={artist.name}
                     className="w-full h-full object-cover will-change-transform"
-                    animate={{ scale: isActive ? 1.08 : 1.02 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }} // Smoother, faster reaction than 8s
+                    style={{ transform: 'scale(1.02)' }} // Set initial scale to match logic
                 />
             </div>
 
-            {/* Dark Gradient Overlay - Optimized for visibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+            {/* Dark Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent pointer-events-none" />
 
             {/* Grain */}
-            <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            <div className="absolute inset-0 opacity-[0.04] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
 
             {/* Content */}
-            <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-10 text-white">
+            <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-10 text-white pointer-events-none">
 
                 {/* Date */}
                 <span className="font-syne text-sm font-bold tracking-widest text-white/80 mb-2 block drop-shadow-md">
@@ -86,10 +120,10 @@ export default function ProshowPanel({
             </div>
 
             {/* Ceremonial Edge */}
-            <motion.div
-                animate={{ opacity: isActive ? 1 : 0 }}
-                className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-red-500 to-transparent"
+            <div
+                ref={edgeRef}
+                className="absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-red-500 to-transparent opacity-0"
             />
-        </motion.div>
+        </div>
     );
 }

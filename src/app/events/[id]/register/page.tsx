@@ -189,49 +189,7 @@ export default async function EventRegisterPage({ params }: PageProps) {
                       </div>
                     </div>
 
-                    {/* Capacity Detail with Progress Bar */}
-                    <div className="flex gap-3 items-start group/item cursor-default">
-                      <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-white/10 to-white/5 flex items-center justify-center border border-white/20 group-hover/item:border-white/40 transition-all duration-300 group-hover/item:from-white/15 group-hover/item:to-white/10">
-                        <svg
-                          className="w-4 h-4 md:w-5 md:h-5 text-white"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                          />
-                        </svg>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-white/70 text-[10px] md:text-xs uppercase tracking-wide">
-                          Capacity
-                        </p>
-                        <p className="text-white font-bold mt-0.5 md:mt-1 text-xs md:text-sm">
-                          {event.registeredCount} / {event.capacity} registered
-                        </p>
-                        {!isFullyBooked && (
-                          <div className="mt-1.5 md:mt-2 space-y-1">
-                            <div className="w-full bg-white/5 rounded-full h-1 md:h-1.5 border border-white/10 overflow-hidden">
-                              <div
-                                className="h-full bg-gradient-to-r from-red-500 via-red-600 to-red-700 transition-all duration-500 rounded-full"
-                                style={{
-                                  width: `${percentageBooked}%`,
-                                  boxShadow: "0 0 20px rgba(220, 38, 38, 0.5)",
-                                }}
-                              ></div>
-                            </div>
-                            <p className="text-red-400 text-[10px] font-semibold">
-                              {event.capacity - event.registeredCount} spots
-                              left
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+                  
 
                     {/* Price Detail */}
                     <div className="flex gap-3 items-start group/item cursor-default">

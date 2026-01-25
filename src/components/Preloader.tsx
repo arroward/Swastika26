@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLoading } from '@/components/LoadingProvider';
 
+import { proshowContent, aboutEventContent, aboutCollegeContent, autoShowContent } from '@/data/content';
+import { events } from '@/data/events';
+
 export default function Preloader() {
     const { isLoading, setIsLoading } = useLoading();
     const [progress, setProgress] = useState(0);
@@ -14,12 +17,13 @@ export default function Preloader() {
             '/logo/WH_LOGO.svg',
             '/logo/BL_LOGO.svg',
             '/logo/wh_sw.png',
-            'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=2670&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=2670&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=1000&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=1000&auto=format&fit=crop',
-        ];
+            // Dynamic Images from Data
+            ...(proshowContent.artists.map((a) => a.image).filter(Boolean) as string[]),
+            aboutEventContent.image,
+            aboutCollegeContent.images.campus,
+            ...autoShowContent.images,
+            ...events.map((e) => e.image),
+        ].filter(Boolean) as string[];
 
         let loadedCount = 0;
         const totalResources = imagesToPreload.length;
@@ -135,16 +139,6 @@ export default function Preloader() {
                         >
                             SWASTIKA<span className="text-accent-main">.</span>26
                         </motion.h1>
-
-                        {/* Tagline */}
-                        <motion.p
-                            initial={{ y: 10, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.7, duration: 0.8 }}
-                            className="text-white/60 font-jost text-sm md:text-base tracking-widest uppercase mb-12"
-                        >
-                            Refining the Future
-                        </motion.p>
 
                         {/* Progress Bar */}
                         <div className="w-64 md:w-80 h-1 bg-white/10 rounded-full overflow-hidden">

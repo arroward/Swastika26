@@ -3,21 +3,23 @@
 import { useFCM } from "@/hooks/use-fcm";
 import { Bell, BellRing, Calendar, Zap, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useLoading } from "@/components/LoadingProvider";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/config/site.config";
 
 export default function NotificationPermissionRequest() {
     const { permission, requestPermission } = useFCM();
+    const { isLoading } = useLoading();
     const [isDismissed, setIsDismissed] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
-    // Delay showing the modal slightly to not overwhelm on load
+    // Delay showing the modal slightly after loading finishes
     useEffect(() => {
-        if (permission === 'default' && !isDismissed) {
-            const timer = setTimeout(() => setShowModal(true), 3000);
+        if (!isLoading && permission === 'default' && !isDismissed) {
+            const timer = setTimeout(() => setShowModal(true), 1500);
             return () => clearTimeout(timer);
         }
-    }, [permission, isDismissed]);
+    }, [isLoading, permission, isDismissed]);
 
     const handleEnable = async () => {
         await requestPermission();

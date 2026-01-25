@@ -1,60 +1,88 @@
 'use client';
 
-import { useState } from "react";
-
-import { motion } from "framer-motion";
-
-
+import { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 interface ImageRowProps {
     images: string[];
-    direction?: number;
-    speed?: number;
+    direction?: number; // 1 for left, -1 for right
+    speed?: number; // Duration in seconds
 }
 
 const GalleryImage = ({ src }: { src: string }) => {
-    const [imgSrc, setImgSrc] = useState(src);
-
     return (
-        <motion.img
-            src={imgSrc}
+        <img
+            src={src}
             alt="Gallery Item"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="w-full h-full object-cover transition-opacity duration-300"
-            onError={() => {
-                setImgSrc(process.env.NEXT_PUBLIC_FALLBACK_IMAGE_URL || '/placeholder.jpg');
+            className="w-full h-full object-cover transition-opacity duration-500"
+            loading="lazy"
+            onError={(e) => {
+                e.currentTarget.src = process.env.NEXT_PUBLIC_FALLBACK_IMAGE_URL || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop';
             }}
         />
     );
 };
 
 const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
-    return (
-        <div className="flex overflow-hidden whitespace-nowrap gap-2 select-none">
-            <motion.div
-                className="flex gap-2 min-w-full shrink-0 items-center"
-                style={{ willChange: "transform" }}
-                initial={{ x: direction === 1 ? "0%" : "-100%" }}
-                animate={{ x: direction === 1 ? "-100%" : "0%" }}
-                transition={{
-                    repeat: Infinity,
-                    ease: "linear",
+    const rowRef = useRef<HTMLDivElement>(null);
+    const firstPartRef = useRef<HTMLDivElement>(null);
+    const secondPartRef = useRef<HTMLDivElement>(null);
+
+    useGSAP(() => {
+        if (!firstPartRef.current || !secondPartRef.current) return;
+
+        // Reset positions
+        gsap.set([firstPartRef.current, secondPartRef.current], { xPercent: 0 });
+
+        // Calculate target xPercent based on direction
+        // If direction is 1 (move left): animate to -100%
+        // If direction is -1 (move right): animate to 100% (but we need to start at -100%?)
+
+        // Actually, easiest seamless loop for infinite scroll:
+        // Move both parts to the left (-100%). When one completes, it wraps?
+        // Standard approach: 
+        // Part 1 starts at 0. Part 2 starts at 100.
+        // Animate both to -100 (part 1) and 0 (part 2).
+
+        // Let's mimic the Framer Motion logic which was:
+        // initial={{ x: direction === 1 ? "0%" : "-100%" }}
+        // animate={{ x: direction === 1 ? "-100%" : "0%" }}
+
+        const start = direction === 1 ? 0 : -100;
+        const end = direction === 1 ? -100 : 0;
+
+        // Apply animation to both specialized container divs
+        [firstPartRef.current, secondPartRef.current].forEach((el) => {
+            gsap.fromTo(el,
+                { xPercent: start },
+                {
+                    xPercent: end,
                     duration: speed,
-                }}
+                    ease: "none",
+                    repeat: -1
+                }
+            );
+        });
+
+    }, { scope: rowRef, dependencies: [direction, speed] });
+
+    return (
+        <div ref={rowRef} className="flex overflow-hidden whitespace-nowrap gap-0 select-none w-full">
+            {/* Part 1 */}
+            <div
+                ref={firstPartRef}
+                className="flex gap-0 min-w-full shrink-0 items-center justify-around"
+                style={{ willChange: "transform" }}
             >
                 {images.map((src, idx) => (
                     <div
                         key={`img-1-${idx}`}
-                        className="relative h-[20vh] md:h-[28vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
+                        className="relative h-[35vh] md:h-[50vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
                     >
-                        <motion.div
-                            className="w-full h-full"
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.5 }}
-                        >
+                        <div className="w-full h-full transition-transform duration-500 group-hover:scale-110">
                             <GalleryImage src={src} />
-                        </motion.div>
+                        </div>
 
                         {/* Tech Overlays */}
                         <div className="absolute inset-0 bg-red-900/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-500" />
@@ -66,30 +94,22 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
                         <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-red-500/0 group-hover:border-red-500/50 transition-colors duration-300" />
                     </div>
                 ))}
-            </motion.div>
-            <motion.div
-                className="flex gap-2 min-w-full shrink-0 items-center"
+            </div>
+
+            {/* Part 2 (Duplicate for loop) */}
+            <div
+                ref={secondPartRef}
+                className="flex gap-0 min-w-full shrink-0 items-center justify-around"
                 style={{ willChange: "transform" }}
-                initial={{ x: direction === 1 ? "0%" : "-100%" }}
-                animate={{ x: direction === 1 ? "-100%" : "0%" }}
-                transition={{
-                    repeat: Infinity,
-                    ease: "linear",
-                    duration: speed,
-                }}
             >
                 {images.map((src, idx) => (
                     <div
                         key={`img-2-${idx}`}
-                        className="relative h-[20vh] md:h-[28vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
+                        className="relative h-[35vh] md:h-[50vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
                     >
-                        <motion.div
-                            className="w-full h-full"
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.5 }}
-                        >
+                        <div className="w-full h-full transition-transform duration-500 group-hover:scale-110">
                             <GalleryImage src={src} />
-                        </motion.div>
+                        </div>
 
                         {/* Tech Overlays */}
                         <div className="absolute inset-0 bg-red-900/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-500" />
@@ -101,10 +121,12 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
                         <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-red-500/0 group-hover:border-red-500/50 transition-colors duration-300" />
                     </div>
                 ))}
-            </motion.div>
+            </div>
         </div>
     );
 };
+
+import { siteConfig } from "@/config/site.config";
 
 export default function SlantedImageGallery({ images = [] }: { images: string[] }) {
     // Distribute images uniquely across rows using modulo to ensure balance and no duplicates
@@ -112,12 +134,13 @@ export default function SlantedImageGallery({ images = [] }: { images: string[] 
     const row2 = images.filter((_, i) => i % 3 === 1);
     const row3 = images.filter((_, i) => i % 3 === 2);
 
+    const baseSpeed = siteConfig.gallery.speed || 1;
+
     return (
-        <div className="flex flex-col gap-[2px] w-full">
-            <ImageRow images={row1} direction={1} speed={50} />
-            <ImageRow images={row2} direction={-1} speed={40} />
-            <ImageRow images={row3} direction={1} speed={60} />
+        <div className="flex flex-col gap-0 w-full h-full justify-center">
+            <ImageRow images={row1} direction={1} speed={50 * baseSpeed} />
+            <ImageRow images={row2} direction={-1} speed={40 * baseSpeed} />
+            <ImageRow images={row3} direction={1} speed={60 * baseSpeed} />
         </div>
     );
 }
-

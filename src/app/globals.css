@@ -194,13 +194,11 @@
 .marquee-container {
   overflow: hidden;
   white-space: nowrap;
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 10%,
-    black 90%,
-    transparent
-  );
+  mask-image: linear-gradient(to right,
+      transparent,
+      black 10%,
+      black 90%,
+      transparent);
 }
 
 .marquee-content {
@@ -239,6 +237,7 @@
   40% {
     transform: translate(-5%, 15%);
   }
+
   50% {
     transform: translate(-10%, 5%);
   }
@@ -367,10 +366,12 @@
     } */
   }
 }
+
 /* Scrollbar Hiding */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;

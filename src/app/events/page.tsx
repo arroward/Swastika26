@@ -36,11 +36,7 @@ export default async function Home() {
       <div className="container mx-auto px-4 py-20 md:py-24 relative z-10 max-w-7xl">
         {/* Hero Section - Compact */}
         <div className="text-center mb-8 md:mb-12">
-          <div className="inline-block mb-3">
-            <span className="px-4 py-1.5 bg-gradient-to-r from-red-600/20 to-red-800/20 border border-red-500/30 rounded-full text-red-400 text-xs md:text-sm font-semibold backdrop-blur-sm">
-              SWASTIKA 2026
-            </span>
-          </div>
+         
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-white mb-3 tracking-tight leading-tight">
             Discover Events
@@ -79,21 +75,7 @@ export default async function Home() {
           <EventList events={events} />
         )}
 
-        {/* CTA Section - Compact */}
-        <div className="mt-12 md:mt-16 bg-gradient-to-br from-red-900/30 to-red-950/20 backdrop-blur-xl border border-red-500/20 rounded-2xl p-6 md:p-8 text-center shadow-2xl">
-          <h2 className="text-2xl md:text-3xl font-black font-cinzel text-white mb-2">
-            Need Help?
-          </h2>
-          <p className="text-white/70 text-sm md:text-base mb-4 font-jost">
-            Have questions about our events or need assistance?
-          </p>
-          <Link
-            href="/contact"
-            className="inline-block px-6 py-2.5 md:px-8 md:py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white rounded-lg md:rounded-xl font-bold text-sm md:text-base transition-all shadow-lg shadow-red-600/20 border border-red-500/50"
-          >
-            Contact Support
-          </Link>
-        </div>
+       
       </div>
     </div>
   );

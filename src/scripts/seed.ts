@@ -32,7 +32,7 @@ const sampleEvents = [
       "Artificially generated likes will result in disqualification",
       "Judges’ decision will be final",
     ],
-    date: "2024-04-05T00:00:00Z",
+    date: "2026-02-19T00:00:00Z",
     location: "Online",
     imageUrl:
       "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0063.jpg",
@@ -57,7 +57,7 @@ const sampleEvents = [
       "Judging based on presentation and number of likes",
       "Judges’ decision is final and binding",
     ],
-    date: "2024-04-05T00:00:00Z",
+    date: "2026-02-19T00:00:00Z",
     location: "Online",
     imageUrl:
       "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0062.jpg",
@@ -82,7 +82,7 @@ const sampleEvents = [
       "Judging based on creativity, presentation, and likes",
       "Judges’ decision will be final",
     ],
-    date: "2024-04-05T00:00:00Z",
+    date: "2026-02-19T00:00:00Z",
     location: "Online",
     imageUrl:
       "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0061.jpg",
@@ -106,7 +106,7 @@ const sampleEvents = [
       "Judging based on creativity, relevance, and aesthetics",
       "Judges’ decision will be final",
     ],
-    date: "2024-04-05T00:00:00Z",
+    date: "2026-02-19T00:00:00Z",
     location: "Online",
     imageUrl:
       "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0059.jpg",
@@ -129,7 +129,7 @@ const sampleEvents = [
       "Films can be in any language",
       "Judges’ decision is final",
     ],
-    date: "2024-04-05T00:00:00Z",
+    date: "2026-02-19T00:00:00Z",
     location: "Online",
     imageUrl:
       "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0060.jpg",
@@ -155,7 +155,7 @@ const sampleEvents = [
       "Artificial engagement will result in disqualification",
       "Judges’ decision will be final",
     ],
-    date: "2024-04-05T00:00:00Z",
+    date: "2026-02-19T00:00:00Z",
     location: "Online",
     imageUrl:
       "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0058.jpg",
