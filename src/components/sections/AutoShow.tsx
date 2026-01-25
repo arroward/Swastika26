@@ -93,10 +93,14 @@ export default function AutoShow() {
                         // {autoShowContent.location}
                     </span>
 
+                    
+
                     <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black font-cinzel text-white tracking-tighter leading-none mb-4 drop-shadow-lg">
                         AUTO<br className="hidden md:block" /> <span className="text-transparent stroke-text-lg inline-block md:block">SHOW</span>
                     </h2>
-
+<span className="text-white/40 font-mono tracking-wider text-[10px] md:text-xs uppercase mb-4 block">
+                        {autoShowContent.organizer}
+                    </span>
                     <p className="text-white/60 text-sm md:text-base lg:text-lg font-jost font-light leading-relaxed max-w-lg">
                         {autoShowContent.description}
                     </p>

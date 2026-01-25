@@ -25,6 +25,7 @@ interface Developer {
         github?: string;
         linkedin?: string;
         portfolio?: string;
+        instagram?: string;
     };
 }
 
@@ -140,11 +141,11 @@ export default function CreditsPage() {
             </div>
 
             {/* --- CONTENT WRAPPER --- */}
-            <div className="relative z-10 w-full h-full flex flex-col items-center pt-20 pb-10 px-4">
+            <div className="relative z-10 w-full h-full flex flex-col items-center pt-12 md:pt-20 pb-10 px-4">
 
                 {/* HERO TITLE */}
-                <div ref={heroRef} className="mb-12 md:mb-20 text-center relative w-full px-2">
-                    <div className="overflow-hidden mb-2">
+                <div ref={heroRef} className="mb-6 md:mb-12 text-center relative w-full px-2">
+                    <div className="overflow-hidden mb-1">
                         <span className="inline-block text-accent-main font-mono text-[10px] md:text-sm tracking-[0.3em] md:tracking-[0.5em] uppercase hero-char">
                             Orchestrators of
                         </span>
@@ -163,17 +164,17 @@ export default function CreditsPage() {
 
                 {/* CARDS CONTAINER - No 3D transform style */}
                 <div
-                    className="w-full max-w-7xl flex flex-wrap justify-center gap-6 md:gap-8 px-2 md:px-4"
+                    className="w-full max-w-7xl flex flex-col md:flex-row flex-wrap justify-center gap-4 md:gap-8 px-2 md:px-4 flex-1"
                 >
                     {developers.map((dev) => (
-                        <div key={dev.id} className="w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] min-w-[280px]">
+                        <div key={dev.id} className="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)]">
                             <Card dev={dev} />
                         </div>
                     ))}
                 </div>
 
                 {/* FOOTER TEXT */}
-                <div className="mt-16 md:mt-20 text-center opacity-50 font-mono text-xs pb-10">
+                <div className="mt-6 md:mt-12 text-center opacity-50 font-mono text-xs pb-4">
                     <p>ENGINEERED IN 2026</p>
                     <p className="mt-2 text-[10px] tracking-widest">SWASTIKA TECH TEAM</p>
                 </div>
@@ -186,63 +187,71 @@ export default function CreditsPage() {
 // --- SUBMIT COMPONENT: Card ---
 function Card({ dev }: { dev: Developer }) {
     // Removed GSAP Refs and Hover Handlers for cleaner static/CSS-only interaction
-    const [isClicked, setIsClicked] = useState(false);
+
+    const handleCardClick = () => {
+        if (dev.socials.instagram) {
+            window.open(dev.socials.instagram, '_blank', 'noopener,noreferrer');
+        }
+    };
 
     return (
         <div
-            onClick={() => setIsClicked(!isClicked)}
-            className="dev-card group relative h-[400px] md:h-[500px] w-full bg-neutral-900 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/5 transition-all duration-500 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(220,38,38,0.2)]"
+            onClick={handleCardClick}
+            className="dev-card group relative w-full h-[38dvh] md:h-[400px] bg-neutral-900 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/5 transition-all duration-500 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(220,38,38,0.2)] cursor-pointer"
         >
             {/* Background Image */}
             <div className="absolute inset-0 w-full h-full">
                 <img
                     src={dev.image}
                     alt={dev.name}
-                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isClicked ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110 grayscale-0" // Always color
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 md:via-black/20 to-transparent opacity-90 md:hover:opacity-70 transition-opacity duration-500" />
             </div>
 
             {/* Hover Tech Overlay */}
-            <div className="absolute inset-0 p-5 md:p-6 flex flex-col justify-between z-20">
-                {/* Top: Tech Stack Tags - Fade in on hover
-                <div className="flex flex-wrap gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 transform translate-y-0 md:-translate-y-4 md:group-hover:translate-y-0">
-                    {dev.tech.map((t, i) => (
-                        <span key={i} className="px-2 py-1 text-[10px] bg-red-600/80 backdrop-blur-md rounded border border-red-500/30 font-mono text-white">
-                            {t}
-                        </span>
-                    ))}
-                </div> */}
+            <div className="absolute inset-0 p-5 md:p-6 flex flex-col justify-end z-20">
 
                 {/* Bottom: Info - Slide up slightly on hover */}
-                <div className="transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300">
-                    {/* <div className="flex items-center gap-2 mb-2">
-                        <div className="w-8 h-1 bg-red-600 rounded-full" />
-                        <span className="text-red-400 font-mono text-xs uppercase tracking-wider">{dev.role}</span>
-                    </div> */}
-                    <h2 className="text-2xl md:text-3xl font-black font-syne text-white mb-2 leading-none uppercase">
+                <div className="transform translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 transition-transform duration-300 w-full flex items-end justify-between">
+
+                    <h2 className="text-2xl md:text-3xl font-black font-syne text-white leading-none uppercase drop-shadow-md">
                         {dev.name.split(' ')[0]} <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-200 to-neutral-500 group-hover:from-red-500 group-hover:to-orange-500 transition-colors duration-300">
+                        <span className="text-gray-200 group-hover:text-red-500 transition-colors duration-300">
                             {dev.name.split(' ')[1]}
                         </span>
                     </h2>
 
-                    {/* Bio Reveal - CSS Transition Only */}
+                    {/* Bio Reveal - CSS Transition Only - Now Socials on Right */}
                     <div className="h-auto md:h-0 md:group-hover:h-auto overflow-hidden transition-all duration-300">
-                        {/* <p className="text-xs md:text-sm text-gray-300 font-jost mb-4 pt-2 border-t border-white/10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                            {dev.bio}
-                        </p> */}
-
                         {/* Social Icons */}
-                        <div className="flex gap-4 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-200 pointer-events-auto md:pointer-events-none md:group-hover:pointer-events-auto">
+                        <div className="flex gap-3 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 delay-200 pointer-events-auto md:pointer-events-none md:group-hover:pointer-events-auto">
                             {dev.socials.github && (
-                                <Link href={dev.socials.github} className="hover:text-red-500 transition-colors"><Github size={18} /></Link>
+                                <Link
+                                    href={dev.socials.github}
+                                    className="hover:text-red-500 text-white/80 transition-colors"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <Github size={20} />
+                                </Link>
                             )}
                             {dev.socials.linkedin && (
-                                <Link href={dev.socials.linkedin} className="hover:text-red-500 transition-colors"><Linkedin size={18} /></Link>
+                                <Link
+                                    href={dev.socials.linkedin}
+                                    className="hover:text-red-500 text-white/80 transition-colors"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <Linkedin size={20} />
+                                </Link>
                             )}
                             {dev.socials.portfolio && (
-                                <Link href={dev.socials.portfolio} className="hover:text-red-500 transition-colors"><Globe size={18} /></Link>
+                                <Link
+                                    href={dev.socials.portfolio}
+                                    className="hover:text-red-500 text-white/80 transition-colors"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <Globe size={20} />
+                                </Link>
                             )}
                         </div>
                     </div>

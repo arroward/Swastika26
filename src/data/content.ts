@@ -89,7 +89,8 @@ export const autoShowContent = {
         `${R2_BASE}/autoshow/AU.jpeg`
     ],
     location: "Main Ground",
-    date: "February 20"
+    date: "February 20",
+    organizer: "Conducted by Dept. of Mechanical Engineering"
 };
 
 export const developers = [
@@ -100,7 +101,7 @@ export const developers = [
         image: "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/devs/IMG-20260125-WA0019.jpg", // Placeholder real photo
         bio: "Orchestrating the digital symphony. Specialist in scalable architecture and performance optimization.",
         tech: ["Next.js", "GSAP", "Node.js"],
-        socials: { github: "#", linkedin: "#", portfolio: "#" }
+        socials: { github: "https://github.com/bbinxx",  instagram: "https://www.instagram.com/ibxbin/" }
     },
     {
         id: 2,
@@ -109,6 +110,6 @@ export const developers = [
         image: "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/devs/IMG-20251201-WA0018.jpg",
         bio: "Blurring the line between code and art. Passionate about micro-interactions and immersive UI.",
         tech: ["WebGL", "Three.js", "React"],
-        socials: { github: "#", linkedin: "#" }
+        socials: { github: "https://github.com/MathewsVinoy",  instagram: "https://www.instagram.com/mathews_vinoy/" }
     }
 ];
