@@ -77,7 +77,7 @@ export default function AboutCollege() {
                     >
                         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
 
-                        <h2 className="text-4xl md:text-6xl lg:text-7xl font-black font-syne uppercase text-white leading-[0.85] mb-4">
+                        <h2 className="text-2xl md:text-5xl lg:text-6xl font-black font-syne uppercase text-white leading-[0.85] mb-4">
                             {aboutCollegeContent.title.line1} <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">{aboutCollegeContent.title.highlight}</span>
                         </h2>
