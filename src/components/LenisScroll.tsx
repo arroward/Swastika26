@@ -5,13 +5,18 @@ import Lenis from 'lenis';
 
 export default function LenisScroll() {
     useEffect(() => {
+        const scrollContainer = document.querySelector('#main-container');
+
         const lenis = new Lenis({
-            duration: 1.2,
+            duration: 1.0,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: 'vertical',
             gestureOrientation: 'vertical',
             smoothWheel: true,
-            touchMultiplier: 2,
+            wheelMultiplier: 3,
+            touchMultiplier: 2.5,
+            wrapper: scrollContainer as HTMLElement,
+            content: scrollContainer as HTMLElement,
         });
 
         function raf(time: number) {

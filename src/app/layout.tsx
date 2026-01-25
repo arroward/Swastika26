@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
 import { Syne, Inter, Cinzel_Decorative, Jost } from "next/font/google";
 import "./globals.css";
+import "./tw-animate.css";
 import LenisScroll from "@/components/LenisScroll";
 import Preloader from "@/components/Preloader";
 import GradientBackground from "@/components/GradientBackground";
+import NoiseOverlay from "@/components/NoiseOverlay";
+import { LoadingProvider } from "@/components/LoadingProvider";
+import Navbar from "@/components/Navbar";
+import MainContainer from "@/components/MainContainer";
+import NotificationPermissionRequest from "@/components/NotificationPermissionRequest";
+import VisitorLogger from "@/components/VisitorLogger";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -31,8 +38,33 @@ const jost = Jost({
 });
 
 export const metadata: Metadata = {
-  title: "Swastika '26 | The Future of Tech",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://swastika.live"),
+  title: "Swastika'26",
   description: "Join the revolution. National Level Techno-Cultural Fest.",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Swastika.26",
+  },
+  icons: {
+    icon: "/logo/wh_sw.png",
+    apple: "/logo/wh_sw.png",
+  },
+  openGraph: {
+    title: "Swastika 2026 - Techno Cultural Fest",
+    description: "National Level Techno-Cultural Fest - Join the revolution",
+    type: "website",
+    images: ["/logo/wh_sw.png"],
+  },
+};
+
+export const viewport = {
+  themeColor: "#dc2626",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({
@@ -42,11 +74,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`} suppressHydrationWarning>
-      <body className="bg-noise">
-        <LenisScroll />
-        <GradientBackground /> {/* Global Background added here to persist */}
-        <Preloader />
-        {children}
+      <body className="bg-transparent h-[100dvh] w-full overflow-hidden p-2 md:p-4 lg:p-6 flex flex-col gap-2 md:gap-4">
+        <LoadingProvider>
+          <GradientBackground />
+          {/* <LenisScroll /> */}
+          {/* <InteractiveRedGradient /> */}
+          <NoiseOverlay />
+          <Preloader />
+          <NotificationPermissionRequest />
+          <VisitorLogger />
+          <Navbar />
+          <MainContainer>
+            {children}
+          </MainContainer>
+        </LoadingProvider>
       </body>
     </html>
   );

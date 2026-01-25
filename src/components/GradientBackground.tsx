@@ -95,8 +95,16 @@ function GradientMesh() {
 
 export default function GradientBackground() {
     return (
-        <div className="fixed inset-0 z-0 pointer-events-none">
-            <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+        <div className="fixed inset-0 z-[-1] pointer-events-none">
+            <Canvas
+                camera={{ position: [0, 0, 5], fov: 75 }}
+                dpr={[1, 1]} // Limit to 1 for max performance
+                gl={{
+                    antialias: false,
+                    powerPreference: "high-performance",
+                    preserveDrawingBuffer: false
+                }}
+            >
                 <GradientMesh />
             </Canvas>
         </div>
