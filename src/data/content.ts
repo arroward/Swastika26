@@ -2,18 +2,18 @@ import { Trophy, Users, GraduationCap, BookOpen } from 'lucide-react';
 
 export const proshowContent = {
     title: "PROSHOW",
-    subtitle: "The Main Event",
+    subtitle: "CLASH OF CHAMPIONS",
     artists: [
         {
             name: "M-QUBE BAND",
-            role: "Live Performance",
+            role: "SONIC ARTILLERY",
             date: "FEB 21",
             image: process.env.NEXT_PUBLIC_PROSHOW_1 || "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/Proshow/IMG_20260124_231343.jpg",
             tags: ["LIVE", "BAND", "FUSION"]
         },
         {
             name: "FEJO",
-            role: "Rap Sensation",
+            role: "LYRICAL TITAN",
             date: "FEB 22",
             image: process.env.NEXT_PUBLIC_PROSHOW_2 || "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/Proshow/572096521_18544823974041491_1124277227909786857_n.jpg",
             tags: ["RAP", "HIPHOP", "MALAYALAM"]
@@ -24,11 +24,11 @@ export const proshowContent = {
 export const aboutEventContent = {
     heading: {
         text: "THE",
-        highlight: "SAGA"
+        highlight: "ODYSSEY"
     },
     label: "Details",
-    description1: "Swastika is the National-Level Techno-Cultural Fest of Mar Baselios Christian College of Engineering and Technology, Peermade. It is a high-octane celebration of technology, creativity, and culture that brings together passionate students from across the country to compete, collaborate, and showcase their talent on a national stage.",
-    description2: "With participants from diverse engineering streams and cultural backgrounds, Swastika becomes a vibrant melting pot of ideas, innovation, and energy. From intense technical challenges to electrifying cultural performances, the fest is designed to inspire, engage, and ignite the spirit of young innovators.",
+    description1: "Swastika is the National-Level Techno-Cultural Fest of Mar Baselios Christian College of Engineering and Technology, Peermade. It is a digital colosseum where 5000+ warriors from across the nation converge to test their mettle in a spectacle of code, culture, and conquest.",
+    description2: "A melting pot of diverse engineering streams and cultural identities, Swastika transforms the campus into a citadel of innovation. From high-stakes technical duels to electrifying cultural showcases, every event is a battle for glory.",
     visualTitle: "SWASTIKA",
     yearText: "2026 EDITION",
     image: process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL
@@ -41,7 +41,7 @@ export const aboutCollegeContent = {
         highlight: "Christian College"
     },
     established: "2001",
-    description: "A premier self-financing institution offering quality engineering education in a serene hill-station campus. Fostering innovation, research, and holistic development for the future generation.",
+    description: "A premier citadel of engineering education perched in the high ranges. We forge the next generation of innovators through rigorous academic discipline and holistic development.",
     images: {
         campus: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/about/DJI_0926.jpg`
     },
