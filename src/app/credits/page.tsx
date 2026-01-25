@@ -163,10 +163,12 @@ export default function CreditsPage() {
 
                 {/* CARDS CONTAINER - No 3D transform style */}
                 <div
-                    className="w-full max-w-7xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 px-2 md:px-4"
+                    className="w-full max-w-7xl flex flex-wrap justify-center gap-6 md:gap-8 px-2 md:px-4"
                 >
                     {developers.map((dev) => (
-                        <Card key={dev.id} dev={dev} />
+                        <div key={dev.id} className="w-full sm:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] min-w-[280px]">
+                            <Card dev={dev} />
+                        </div>
                     ))}
                 </div>
 
@@ -184,9 +186,11 @@ export default function CreditsPage() {
 // --- SUBMIT COMPONENT: Card ---
 function Card({ dev }: { dev: Developer }) {
     // Removed GSAP Refs and Hover Handlers for cleaner static/CSS-only interaction
+    const [isClicked, setIsClicked] = useState(false);
 
     return (
         <div
+            onClick={() => setIsClicked(!isClicked)}
             className="dev-card group relative h-[400px] md:h-[500px] w-full bg-neutral-900 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-white/5 transition-all duration-500 hover:border-red-500/50 hover:shadow-[0_0_30px_rgba(220,38,38,0.2)]"
         >
             {/* Background Image */}
@@ -194,7 +198,7 @@ function Card({ dev }: { dev: Developer }) {
                 <img
                     src={dev.image}
                     alt={dev.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                    className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 ${isClicked ? 'grayscale-0' : 'grayscale group-hover:grayscale-0'}`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 md:via-black/20 to-transparent opacity-90 md:hover:opacity-70 transition-opacity duration-500" />
             </div>

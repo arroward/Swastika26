@@ -44,12 +44,12 @@ export default function Navbar() {
 
     // Menu Items
     const menuItems = [
-        { title: "Home", href: "#home" },
-        { title: "About", href: "#about" },
-        { title: "Events", href: "#events" },
-        { title: "Proshows", href: "#proshow" },
-        { title: "Gallery", href: "#gallery" },
-        // { title: "Sponsors", href: "#sponsors" },
+        { title: "Home", href: "/#home" },
+        { title: "About", href: "/#about" },
+        { title: "Events", href: "/#events" },
+        { title: "Proshows", href: "/#proshow" },
+        { title: "Gallery", href: "/#gallery" },
+        // { title: "Sponsors", href: "/#sponsors" },
     ];
 
     // Initial Entrance Animation

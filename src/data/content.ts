@@ -68,7 +68,6 @@ export const footerContent = {
     navLinks: [
         { name: "Events", href: "/events" },
         { name: "Proshow", href: "/#proshow" },
-        { name: "Register", href: "/#events" },
         { name: "Gallery", href: "/#gallery" }
     ],
     email: "swastika26@mbcpeermade.com",
