@@ -150,13 +150,13 @@ export default function CreditsPage() {
                         </span>
                     </div>
                     <div className="relative">
-                        <h1 className="text-[12vw] md:text-9xl font-black font-syne tracking-tighter leading-[0.85] uppercase mix-blend-difference break-words">
-                            {"CODECRAFT".split("").map((char, i) => (
+                        <h1 className="text-[10vw] md:text-9xl font-black font-syne tracking-tighter leading-[0.85] uppercase mix-blend-difference break-words">
+                            {"SWASTIKA.LIVE".split("").map((char, i) => (
                                 <span key={i} className="hero-char inline-block hover:text-red-500 transition-colors duration-300 cursor-default">{char}</span>
                             ))}
                         </h1>
                         <h1 className="text-[12vw] md:text-9xl font-black font-syne tracking-tighter leading-[0.85] uppercase text-transparent stroke-text opacity-50 absolute top-1 left-1 -z-10 blur-sm break-words select-none pointer-events-none">
-                            CODECRAFT
+                            SWASTIKA.LIVE
                         </h1>
                     </div>
                 </div>
