@@ -19,7 +19,7 @@ import { sql, initDatabase } from "../lib/db";
 const sampleEvents = [
   {
     id: "editography-cinesplice",
-    title: "Editography (Cinesplice)",
+    title: "Cinesplice (Editography)",
     description:
       "Editography (Cinesplice) is an online image editing competition showcasing creative enhancement skills with restrictions on advanced manipulation.",
     rules: [
@@ -44,7 +44,7 @@ const sampleEvents = [
 
   {
     id: "duo-dance-duo-dynamics",
-    title: "Duo Dance (Duo Dynamics)",
+    title: "Duo Dynamics (Duo Dance)",
     description:
       "Duo Dance (Duo Dynamics) is a short-form duo dance competition emphasizing coordination, rhythm, and expression.",
     rules: [
@@ -69,7 +69,7 @@ const sampleEvents = [
 
   {
     id: "recreating-frame-lens-legacy",
-    title: "Recreating Frame (Lens Legacy)",
+    title: "Lens Legacy (Recreating Frame)",
     description:
       "Recreating Frame (Lens Legacy) celebrates cinema by recreating iconic movie scenes in a creative way.",
     rules: [
@@ -94,7 +94,7 @@ const sampleEvents = [
 
   {
     id: "prompt-drawing-sketch-alchemy",
-    title: "Prompt Drawing (Sketch Alchemy)",
+    title: "Sketch Alchemy (Prompt Drawing)",
     description:
       "Prompt Drawing (Sketch Alchemy) is an AI-based art competition using prompt-driven image generation.",
     rules: [
@@ -118,7 +118,7 @@ const sampleEvents = [
 
   {
     id: "short-film-narratex",
-    title: "Short Film (Narratex)",
+    title: "Narratex (Short Film)",
     description:
       "Short Film (Narratex) is a storytelling competition for aspiring filmmakers.",
     rules: [
@@ -141,7 +141,7 @@ const sampleEvents = [
 
   {
     id: "photography-visual-odyssey",
-    title: "Photography (Visual Odyssey)",
+    title: "Visual Odyssey (Photography)",
     description:
       "Photography (Visual Odyssey) is an online photography contest focused on originality and visual storytelling.",
     rules: [

@@ -45,55 +45,6 @@ export default async function Home() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-white mb-3 tracking-tight leading-tight">
             Discover Events
           </h1>
-
-          <p className="text-sm md:text-base lg:text-lg text-white/60 font-jost leading-relaxed max-w-2xl mx-auto mb-6">
-            Explore our diverse range of competitive events, workshops, and
-            cultural programs designed to challenge and inspire.
-          </p>
-
-          {/* Stats Bar - Compact */}
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6 mb-6">
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-black text-red-500 mb-0.5 font-cinzel">
-                {events.length}+
-              </div>
-              <div className="text-xs text-white/50 uppercase tracking-wider">
-                Events
-              </div>
-            </div>
-            <div className="w-px bg-white/10"></div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-black text-red-500 mb-0.5 font-cinzel">
-                1000+
-              </div>
-              <div className="text-xs text-white/50 uppercase tracking-wider">
-                Participants
-              </div>
-            </div>
-            <div className="w-px bg-white/10"></div>
-            <div className="text-center">
-              <div className="text-2xl md:text-3xl font-black text-red-500 mb-0.5 font-cinzel">
-                3
-              </div>
-              <div className="text-xs text-white/50 uppercase tracking-wider">
-                Days
-              </div>
-            </div>
-          </div>
-
-          {/* Filter/Category Tabs - Compact */}
-          <div className="flex flex-wrap justify-center gap-2">
-            {["All", "Technical", "Cultural", "Sports", "Workshops"].map(
-              (category) => (
-                <button
-                  key={category}
-                  className="px-3 py-1.5 md:px-4 md:py-2 bg-white/5 hover:bg-red-600/20 border border-white/10 hover:border-red-500/30 rounded-lg text-xs md:text-sm text-white/70 hover:text-white transition-all duration-300 backdrop-blur-sm font-medium"
-                >
-                  {category}
-                </button>
-              ),
-            )}
-          </div>
         </div>
 
         {/* Events Section */}
