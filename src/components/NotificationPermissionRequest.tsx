@@ -177,12 +177,7 @@ export default function NotificationPermissionRequest() {
                             desc="Real-time alerts for live events"
                             color="bg-yellow-500/20 text-yellow-400"
                         />
-                        <BenefitItem
-                            icon={<Bell size={16} className="md:w-[18px] md:h-[18px]" />}
-                            title="Exclusive Reveals"
-                            desc="Artist announcements first"
-                            color="bg-red-500/20 text-red-400"
-                        />
+                       
                         <BenefitItem
                             icon={<Calendar size={16} className="md:w-[18px] md:h-[18px]" />}
                             title="Schedule Info"
