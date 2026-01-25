@@ -44,7 +44,7 @@ export default function EventList({ events }: EventListProps) {
 
   return (
     <div className="space-y-6">
-      {/* Search Bar - Compact */}
+      {/* Search Bar - Compact
       <div className="relative group">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
           <svg
@@ -88,7 +88,7 @@ export default function EventList({ events }: EventListProps) {
             </svg>
           </button>
         )}
-      </div>
+      </div> */}
 
       {/* Results Count */}
       <div className="flex items-center justify-between text-xs md:text-sm">

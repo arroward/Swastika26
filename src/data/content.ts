@@ -1,5 +1,7 @@
 import { Trophy, Users, GraduationCap, BookOpen } from 'lucide-react';
 
+const R2_BASE = "https://pub-6ed865235e424323859b654769c59e4e.r2.dev";
+
 export const proshowContent = {
     title: "PROSHOW",
     subtitle: "Featured Performances",
@@ -10,7 +12,7 @@ export const proshowContent = {
             date: "February 20",
             image:
                 process.env.NEXT_PUBLIC_PROSHOW_1 ||
-                "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/Proshow/IMG_20260124_231343.jpg",
+                `${R2_BASE}/Proshow/IMG_20260124_231343.jpg`,
             tags: ["Live", "Band", "Fusion"]
         },
         {
@@ -19,7 +21,7 @@ export const proshowContent = {
             date: "February 21",
             image:
                 process.env.NEXT_PUBLIC_PROSHOW_2 ||
-                "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/Proshow/572096521_18544823974041491_1124277227909786857_n.jpg",
+                `${R2_BASE}/Proshow/572096521_18544823974041491_1124277227909786857_n.jpg`,
             tags: ["Rap", "Hip Hop", "Malayalam"]
         }
     ]
@@ -37,7 +39,7 @@ export const aboutEventContent = {
         "The festival provides a platform for collaboration, creativity, and knowledge sharing among participants from various engineering disciplines. It includes technical competitions, cultural programs, and interactive sessions designed to encourage innovation and teamwork.",
     visualTitle: "SWASTIKA",
     yearText: "2026 Edition",
-    image: process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL
+    image: process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL || `${R2_BASE}/about/DJI_0926.jpg` // Fallback to campus image if event image missing
 };
 
 export const aboutCollegeContent = {
@@ -50,7 +52,7 @@ export const aboutCollegeContent = {
     description:
         "Mar Baselios Christian College of Engineering and Technology is an institution dedicated to providing quality engineering education. The college emphasizes academic excellence, research, and the overall development of students.",
     images: {
-        campus: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/about/DJI_0926.jpg`
+        campus: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL || R2_BASE}/about/DJI_0926.jpg`
     },
     stats: [
         { label: "Years of Operation", value: "25+", icon: Trophy },
@@ -84,9 +86,30 @@ export const autoShowContent = {
     title: "AUTO SHOW",
     description: "Experience the adrenaline of precision driving and automotive excellence. Witness the finest collection of modified cars.",
     images: [
-        "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/autoshow/AU-(1).jpeg",
-        "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/autoshow/AU.jpeg"
+        `${R2_BASE}/autoshow/AU-(1).jpeg`,
+        `${R2_BASE}/autoshow/AU.jpeg`
     ],
     location: "Main Ground",
     date: "February 20"
 };
+
+export const developers = [
+    {
+        id: 1,
+        name: "Bibin Raju",
+        role: "Lead Architect",
+        image: "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/devs/IMG-20260125-WA0019.jpg", // Placeholder real photo
+        bio: "Orchestrating the digital symphony. Specialist in scalable architecture and performance optimization.",
+        tech: ["Next.js", "GSAP", "Node.js"],
+        socials: { github: "#", linkedin: "#", portfolio: "#" }
+    },
+    {
+        id: 2,
+        name: "Mathews Vinoy",
+        role: "Creative Developer",
+        image: "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/devs/IMG-20251201-WA0018.jpg",
+        bio: "Blurring the line between code and art. Passionate about micro-interactions and immersive UI.",
+        tech: ["WebGL", "Three.js", "React"],
+        socials: { github: "#", linkedin: "#" }
+    }
+];

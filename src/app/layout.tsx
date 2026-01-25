@@ -10,6 +10,7 @@ import { LoadingProvider } from "@/components/LoadingProvider";
 import Navbar from "@/components/Navbar";
 import MainContainer from "@/components/MainContainer";
 import NotificationPermissionRequest from "@/components/NotificationPermissionRequest";
+import VisitorLogger from "@/components/VisitorLogger";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -81,6 +82,7 @@ export default function RootLayout({
           <NoiseOverlay />
           <Preloader />
           <NotificationPermissionRequest />
+          <VisitorLogger />
           <Navbar />
           <MainContainer>
             {children}
