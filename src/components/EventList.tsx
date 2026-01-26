@@ -43,7 +43,7 @@ export default function EventList({ events }: EventListProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
       {/* Search Bar - Compact
       <div className="relative group">
         <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -91,7 +91,7 @@ export default function EventList({ events }: EventListProps) {
       </div> */}
 
       {/* Results Count */}
-      <div className="flex items-center justify-between text-xs md:text-sm">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs md:text-sm">
         <p className="text-white/50">
           <span className="text-red-400 font-semibold">
             {filteredEvents.length}
@@ -113,7 +113,7 @@ export default function EventList({ events }: EventListProps) {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="max-w-xl mx-auto"
+            className="max-w-xl mx-auto px-4 sm:px-0"
           >
             <div className="bg-gradient-to-br from-red-900/20 to-black/40 backdrop-blur-xl border border-red-500/20 rounded-2xl p-8 md:p-12 text-center shadow-2xl">
               <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-red-600/10 rounded-full mb-4 border-2 border-red-500/20">
@@ -151,7 +151,7 @@ export default function EventList({ events }: EventListProps) {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6 lg:gap-8"
           >
             {filteredEvents.map((event) => (
               <motion.div key={event.id} variants={itemVariants}>
