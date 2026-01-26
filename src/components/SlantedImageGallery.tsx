@@ -17,6 +17,7 @@ const GalleryImage = ({ src }: { src: string }) => {
             alt="Gallery Item"
             className="w-full h-full object-cover transition-opacity duration-500"
             loading="lazy"
+            decoding="async"
             onError={(e) => {
                 e.currentTarget.src = process.env.NEXT_PUBLIC_FALLBACK_IMAGE_URL || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop';
             }}
@@ -60,7 +61,8 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
                     xPercent: end,
                     duration: speed,
                     ease: "none",
-                    repeat: -1
+                    repeat: -1,
+                    force3D: true
                 }
             );
         });
@@ -73,12 +75,12 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
             <div
                 ref={firstPartRef}
                 className="flex gap-0 min-w-full shrink-0 items-center justify-around"
-                style={{ willChange: "transform" }}
+                style={{ willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
             >
                 {images.map((src, idx) => (
                     <div
                         key={`img-1-${idx}`}
-                        className="relative h-[35vh] md:h-[50vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
+                        className="relative h-[40vh] min-h-[220px] md:h-[45vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
                     >
                         <div className="w-full h-full transition-transform duration-500 group-hover:scale-110">
                             <GalleryImage src={src} />
@@ -100,12 +102,12 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
             <div
                 ref={secondPartRef}
                 className="flex gap-0 min-w-full shrink-0 items-center justify-around"
-                style={{ willChange: "transform" }}
+                style={{ willChange: "transform", backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}
             >
                 {images.map((src, idx) => (
                     <div
                         key={`img-2-${idx}`}
-                        className="relative h-[35vh] md:h-[50vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
+                        className="relative h-[40vh] min-h-[220px] md:h-[45vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
                     >
                         <div className="w-full h-full transition-transform duration-500 group-hover:scale-110">
                             <GalleryImage src={src} />
