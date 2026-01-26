@@ -26,14 +26,7 @@ export default function Hero() {
             clearProps: 'all'
         });
 
-        // Logo Reveal (GSAP equivalent)
-        gsap.from('.hero-logo-img', {
-            scale: 0.8,
-            opacity: 0,
-            duration: 1.2,
-            ease: "power3.out",
-            delay: 0.2
-        });
+        // Previous GSAP Logo Reveal removed to allow Framer Motion shared layout
 
         // Subtitle Reveal
         gsap.from('.hero-sub', {
@@ -54,13 +47,11 @@ export default function Hero() {
 
                 {/* Logo from Splash Screen */}
                 <div className="hero-logo w-24 h-24 md:w-28 md:h-28 lg:w-28 lg:h-28 relative z-50 mb-2">
-                    {!isLoading && (
-                        <img
-                            src={siteConfig.logos.main}
-                            alt={`${siteConfig.name} Logo`}
-                            className="hero-logo-img w-full h-full drop-shadow-[0_0_25px_rgba(220,38,38,0.6)] animate-pulse-slow will-change-transform"
-                        />
-                    )}
+                    <img
+                        src={siteConfig.logos.main}
+                        alt={`${siteConfig.name} Logo`}
+                        className={`hero-logo-img w-full h-full drop-shadow-[0_0_25px_rgba(220,38,38,0.6)] will-change-transform ${isLoading ? 'opacity-0' : 'opacity-100 animate-pulse-slow'}`}
+                    />
                 </div>
 
                 {/* Main Title - Stacked for Impact */}

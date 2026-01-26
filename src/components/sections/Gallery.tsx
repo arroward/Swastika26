@@ -15,7 +15,7 @@ export default async function Gallery() {
                 <div className="absolute inset-0 z-20 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,#000000_120%)] opacity-80" />
 
                 {/* Slanted Container - Scaled up to fill corners */}
-                <div className="w-[150%] h-[150%] -rotate-6 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-700">
+                <div className="w-[150%] h-[150%] -rotate-6 flex items-center justify-center opacity-100 md:opacity-60 md:hover:opacity-100 transition-opacity duration-700">
                     <SlantedImageGallery images={images} />
                 </div>
             </div>
