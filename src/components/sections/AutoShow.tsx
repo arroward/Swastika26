@@ -11,12 +11,11 @@ export default function AutoShow() {
     const textRef = useRef<HTMLDivElement>(null);
     const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
-    // Automatic slideshow
+    // Automatic slideshow logic
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentImageIdx((prev) => (prev + 1) % autoShowContent.images.length);
-        }, 3000); // Change image every 3 seconds
-
+        }, 4000); // 4 seconds feels more cinematic than 3
         return () => clearInterval(interval);
     }, []);
 
@@ -24,15 +23,16 @@ export default function AutoShow() {
         gsap.registerPlugin(ScrollTrigger);
 
         if (textRef.current) {
+            // Animate each text element with a "staggered lift"
             gsap.from(textRef.current.children, {
-                y: 100,
+                y: 50,
                 opacity: 0,
-                duration: 1,
-                stagger: 0.2,
-                ease: "power3.out",
+                duration: 1.2,
+                stagger: 0.15,
+                ease: "power4.out",
                 scrollTrigger: {
                     trigger: containerRef.current,
-                    start: "top 60%",
+                    start: "top 70%",
                     toggleActions: "play none none reverse"
                 }
             });
@@ -43,72 +43,85 @@ export default function AutoShow() {
         <section
             ref={containerRef}
             id="autoshow"
-            className="w-full relative h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] flex items-center justify-center overflow-hidden bg-black panel snap-start snap-always"
+            className="w-full relative h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] flex items-center justify-center overflow-hidden bg-[#050505] panel snap-start snap-always"
         >
-            {/* Background Grid */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
+            {/* Background Grid - Darkened for contrast */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none z-0" />
 
             {/* Content Flex Container */}
-            <div className="relative z-10 container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-center gap-6 lg:gap-12">
+            <div className="relative z-10 container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-center gap-10 lg:gap-20">
 
                 {/* Image Side - Slideshow */}
-                <div className="w-full md:w-3/5 relative h-[50vh] md:h-[75vh] overflow-hidden rounded-xl group shadow-2xl shadow-red-900/10">
-                    <div className="absolute inset-0 border border-white/10 rounded-xl z-20 pointer-events-none" />
+                <div className="w-full md:w-[55%] relative h-[45vh] md:h-[70vh] overflow-hidden rounded-2xl group shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                    {/* Inner Border Glow */}
+                    <div className="absolute inset-0 border border-white/10 rounded-2xl z-20 pointer-events-none group-hover:border-red-600/30 transition-colors duration-700" />
 
                     {autoShowContent.images.map((src, index) => (
                         <div
                             key={index}
-                            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentImageIdx ? 'opacity-100' : 'opacity-0'
-                                }`}
+                            className={`absolute inset-0 transition-all duration-1000 ease-in-out transform ${
+                                index === currentImageIdx ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                            }`}
                         >
                             <img
                                 src={src}
                                 alt={`Auto Show ${index + 1}`}
-                                className="w-full h-full object-cover filter brightness-[0.8] contrast-125 group-hover:brightness-100 transition-all duration-700"
+                                className="w-full h-full object-cover filter brightness-[0.7] contrast-[1.1] group-hover:brightness-90 transition-all duration-1000"
                             />
                         </div>
                     ))}
 
-                    {/* Badge */}
-                    <div className="absolute top-4 left-4 z-30 bg-red-600 px-3 py-1 transform -skew-x-12 shadow-lg">
-                        <span className="block transform skew-x-12 font-mono font-bold text-black tracking-widest text-xs">
+                    {/* Scarlet Badge */}
+                    <div className="absolute top-6 left-6 z-30 bg-[#FF3131] px-4 py-1.5 transform -skew-x-12 shadow-[0_0_20px_rgba(255,49,49,0.4)]">
+                        <span className="block transform skew-x-12 font-jost font-black text-black tracking-[0.2em] text-[10px] md:text-xs uppercase">
                             {autoShowContent.date}
                         </span>
                     </div>
 
-                    {/* Dots Indicator */}
-                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+                    {/* Dots Indicator - Refined */}
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-3">
                         {autoShowContent.images.map((_, idx) => (
                             <div
                                 key={idx}
-                                className={`h-1 rounded-full transition-all duration-300 ${idx === currentImageIdx ? 'w-6 bg-red-600' : 'w-2 bg-white/50'}`}
+                                className={`h-1 rounded-full transition-all duration-500 ${
+                                    idx === currentImageIdx ? 'w-8 bg-[#FF3131]' : 'w-2 bg-white/20'
+                                }`}
                             />
                         ))}
                     </div>
                 </div>
 
-                {/* Text Side */}
-                <div ref={textRef} className="w-full md:w-2/5 flex flex-col items-start text-left justify-center pb-8 md:pb-0">
-                    <span className="text-red-500 font-mono tracking-widest text-xs md:text-sm mb-2 block">
+                {/* Text Side - High Readability */}
+                <div ref={textRef} className="w-full md:w-[40%] flex flex-col items-start text-left justify-center">
+                    <span className="text-[#FF3131] font-jost font-bold tracking-[0.4em] text-[10px] md:text-xs mb-4 block uppercase">
                         // {autoShowContent.location}
                     </span>
 
-                    
-
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black font-cinzel text-white tracking-tighter leading-none mb-4 drop-shadow-lg">
-                        AUTO<br className="hidden md:block" /> <span className="text-transparent stroke-text-lg inline-block md:block">SHOW</span>
+                    <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-cinzel text-white tracking-tighter leading-[0.85] mb-6">
+                        AUTO<br className="hidden md:block" /> 
+                        <span 
+                            className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20"
+                            style={{ WebkitTextStroke: '1px rgba(255,255,255,0.1)' }}
+                        >
+                            SHOW
+                        </span>
                     </h2>
-<span className="text-white/40 font-mono tracking-wider text-[10px] md:text-xs uppercase mb-4 block">
+
+                    <span className="text-white/40 font-jost tracking-[0.3em] text-[10px] md:text-xs uppercase mb-6 block font-bold border-l-2 border-red-600 pl-4">
                         {autoShowContent.organizer}
                     </span>
-                    <p className="text-white/60 text-sm md:text-base lg:text-lg font-jost font-light leading-relaxed max-w-lg">
+
+                    <p className="text-white/60 text-sm md:text-base lg:text-lg font-jost font-light leading-relaxed max-w-md">
                         {autoShowContent.description}
                     </p>
                 </div>
             </div>
 
-            {/* Decorative Noise */}
+            {/* Decorative Grain Overlay */}
             <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none z-0" />
+            
+            {/* Bottom Vignette for depth */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 pointer-events-none" />
         </section>
     );
 }
