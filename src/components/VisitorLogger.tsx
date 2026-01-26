@@ -58,8 +58,15 @@ export default function VisitorLogger() {
                     // Determine collection based on environment
                     const isDev = process.env.NODE_ENV === 'development';
 
-                    // Rule: Don't log localhost in Production
-                    if (!isDev && window.location.hostname === 'localhost') {
+                    // Rule: Don't log localhost or local network IPs in Production
+                    const hostname = window.location.hostname;
+                    const isLocal = hostname === 'localhost' ||
+                        hostname === '127.0.0.1' ||
+                        hostname.startsWith('192.168.') ||
+                        hostname.startsWith('10.') ||
+                        /^172\.(1[6-9]|2\d|3[0-1])\./.test(hostname);
+
+                    if (!isDev && isLocal) {
                         return;
                     }
 
