@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Offline - Swastika 2026</title>
     <style>
+        :root {
+            --bg-main: #020202;
+            --accent-main: #dc2626;
+            --accent-glow: #ef4444;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,102 +21,307 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #000000;
-            color: #ffffff;
+            font-family: 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            height: 100dvh;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Ambient Background Glow */
+        .ambient-glow {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Grid Pattern */
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+            z-index: 0;
+            pointer-events: none;
         }
 
         .container {
-            text-align: center;
-            max-width: 500px;
+            position: relative;
+            z-index: 10;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 4px;
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
+            max-width: 90%;
+            width: 440px;
+            margin: 20px;
+            animation: fadeIn 0.8s ease-out;
+            display: flex;
+            flex-direction: column;
         }
 
-        .icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 30px;
-            background: linear-gradient(135deg, #dc2626, #ef4444);
-            border-radius: 50%;
+        .inner-content {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
             display: flex;
+            flex-direction: column;
+            /* Explicitly set column direction */
             align-items: center;
             justify-content: center;
-            font-size: 60px;
+            width: 100%;
+        }
+
+        .logo-wrapper {
+            width: 120px;
+            height: auto;
+            margin: 0 auto 24px;
+            position: relative;
+            filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.3));
+            animation: float 6s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        .logo-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
         }
 
         h1 {
-            font-size: 32px;
-            margin-bottom: 16px;
-            font-weight: 900;
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 12px;
             letter-spacing: -0.02em;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            line-height: 1.2;
         }
 
         p {
-            font-size: 16px;
-            color: #a1a1aa;
-            margin-bottom: 30px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
             line-height: 1.6;
+            max-width: 100%;
         }
 
-        .retry-btn {
-            background: #dc2626;
-            color: white;
+        .btn {
+            background: var(--text-primary);
+            color: black;
             border: none;
             padding: 14px 32px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             border-radius: 9999px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 0 rgba(255, 255, 255, 0.0);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            width: auto;
+            white-space: nowrap;
         }
 
-        .retry-btn:hover {
-            background: #ef4444;
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 40px -10px rgba(220, 38, 38, 0.5);
+            box-shadow: 0 10px 30px -5px rgba(255, 255, 255, 0.3);
+            background: #ffffff;
         }
 
-        .status {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #71717a;
+        .btn:active {
+            transform: translateY(0);
         }
 
-        .online {
-            color: #22c55e;
+        .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--accent-glow);
+            margin-right: 8px;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .status-dot.online {
+            background-color: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+        }
+
+        .connection-status {
+            margin-top: 24px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                margin: 0;
+            }
+
+            .inner-content {
+                padding: 30px 20px;
+            }
+
+            .icon-wrapper {
+                width: 64px;
+                height: 64px;
+                margin-bottom: 20px;
+            }
+
+            .icon-svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 8px;
+            }
+
+            p {
+                font-size: 14px;
+                margin-bottom: 24px;
+            }
+
+            .btn {
+                padding: 12px 28px;
+                font-size: 14px;
+                width: 100%;
+            }
+
+            .ambient-glow {
+                width: 100%;
+                height: 100%;
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.2;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
+    <div class="ambient-glow"></div>
+    <div class="bg-grid"></div>
+
     <div class="container">
-        <div class="icon">📡</div>
-        <h1>You're Offline</h1>
-        <p>It looks like you've lost your internet connection. Don't worry, you can still browse cached pages.</p>
-        <button class="retry-btn" onclick="window.location.reload()">Try Again</button>
-        <div class="status" id="status">Checking connection...</div>
+        <div class="inner-content">
+            <div class="logo-wrapper">
+                <img src="logo/WH_LOGO.svg" alt="Swastika Logo" class="logo-img">
+            </div>
+            <h1>Connection Lost</h1>
+            <p>You seem to be disconnected from the digital realm. Connect to the internet to resume your experience.
+            </p>
+
+            <button class="btn" onclick="window.location.reload()">
+                Reconnect
+            </button>
+
+            <div class="connection-status" id="status-container">
+                <span class="status-dot" id="status-dot"></span>
+                <span id="status-text">Waiting for connection...</span>
+            </div>
+        </div>
     </div>
 
     <script>
+        const statusDot = document.getElementById('status-dot');
+        const statusText = document.getElementById('status-text');
+        const container = document.getElementById('status-container');
+
         function updateOnlineStatus() {
-            const status = document.getElementById('status');
             if (navigator.onLine) {
-                status.textContent = 'Back online! Click "Try Again" to reload.';
-                status.classList.add('online');
+                statusDot.classList.add('online');
+                statusText.textContent = 'Connection restored';
+                statusText.style.color = '#22c55e';
             } else {
-                status.textContent = 'Still offline. Please check your connection.';
-                status.classList.remove('online');
+                statusDot.classList.remove('online');
+                statusText.textContent = 'Waiting for connection...';
+                statusText.style.color = 'rgba(255, 255, 255, 0.4)';
             }
         }
 
         window.addEventListener('online', updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
-        
+
         // Initial check
-        setTimeout(updateOnlineStatus, 1000);
+        updateOnlineStatus();
+
+        // Optional: Auto-reload when back online after a delay
+        window.addEventListener('online', () => {
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        });
     </script>
 </body>
+
 </html>
