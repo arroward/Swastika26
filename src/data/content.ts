@@ -2,6 +2,12 @@ import { Trophy, Users, GraduationCap, BookOpen } from 'lucide-react';
 
 const R2_BASE = "https://pub-6ed865235e424323859b654769c59e4e.r2.dev";
 
+export const appConfig = {
+    splashScreen: {
+        type: 'classic', // Options: 'cinematic', 'classic', 'random'
+    }
+};
+
 export const proshowContent = {
     title: "PROSHOW",
     subtitle: "Featured Performances",
@@ -101,7 +107,7 @@ export const developers = [
         image: "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/devs/IMG-20260125-WA0019.jpg", // Placeholder real photo
         bio: "Orchestrating the digital symphony. Specialist in scalable architecture and performance optimization.",
         tech: ["Next.js", "GSAP", "Node.js"],
-        socials: { github: "https://github.com/bbinxx",  instagram: "https://www.instagram.com/ibxbin/" }
+        socials: { github: "https://github.com/bbinxx", instagram: "https://www.instagram.com/ibxbin/" }
     },
     {
         id: 2,
@@ -110,6 +116,6 @@ export const developers = [
         image: "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/devs/IMG-20251201-WA0018.jpg",
         bio: "Blurring the line between code and art. Passionate about micro-interactions and immersive UI.",
         tech: ["WebGL", "Three.js", "React"],
-        socials: { github: "https://github.com/MathewsVinoy",  instagram: "https://www.instagram.com/mathews_vinoy/" }
+        socials: { github: "https://github.com/MathewsVinoy", instagram: "https://www.instagram.com/mathews_vinoy/" }
     }
 ];
