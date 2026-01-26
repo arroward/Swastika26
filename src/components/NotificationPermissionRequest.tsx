@@ -8,9 +8,12 @@ import { siteConfig } from "@/config/site.config";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
+import { usePathname } from 'next/navigation';
+
 export default function NotificationPermissionRequest() {
     const { permission, requestPermission } = useFCM();
     const { isLoading } = useLoading();
+    const pathname = usePathname();
     const [isDismissed, setIsDismissed] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
@@ -21,11 +24,14 @@ export default function NotificationPermissionRequest() {
 
     // Delay showing the modal slightly after loading finishes
     useEffect(() => {
+        // Disable on dev route
+        if (pathname !== '/') return;
+
         if (!isLoading && permission === 'default' && !isDismissed) {
             const timer = setTimeout(() => setShowModal(true), 1500);
             return () => clearTimeout(timer);
         }
-    }, [isLoading, permission, isDismissed]);
+    }, [isLoading, permission, isDismissed, pathname]);
 
     // Animation Logic
     const { contextSafe } = useGSAP({ scope: containerRef });

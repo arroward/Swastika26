@@ -37,11 +37,21 @@ export default function CreditsPage() {
     // Logging for Credits Page
     useEffect(() => {
         const logCreditsVisit = async () => {
-            const sessionKey = 'credits_visited_logged';
-            // Check if already logged in this session
-            if (typeof window !== 'undefined' && sessionStorage.getItem(sessionKey)) return;
+            // Dynamic import if needed, or static if already installed. 
+            // Since we installed it, we can import it at top, but for cleaner diff let's assume global or helper.
+            // Ideally we should extract the Fingerprint logic to a hook or helper, but user asked to improve logging here.
 
             try {
+                // Initialize FingerprintJS
+                const FingerprintJS = (await import('@fingerprintjs/fingerprintjs')).default;
+                const fp = await FingerprintJS.load();
+                const result = await fp.get();
+                const visitorId = result.visitorId;
+
+                const sessionKey = `credits_visited_${visitorId}`;
+                // Check if already logged in this session/browser persistently
+                if (typeof window !== 'undefined' && localStorage.getItem(sessionKey)) return;
+
                 // Ensure auth
                 if (auth) {
                     try {
@@ -54,14 +64,19 @@ export default function CreditsPage() {
                 }
 
                 if (db) {
-                    await addDoc(collection(db, 'credits_visitors'), {
+                    const isDev = process.env.NODE_ENV === 'development';
+                    const collectionName = isDev ? 'credits_visitors_dev' : 'credits_visitors';
+
+                    await addDoc(collection(db, collectionName), {
+                        visitorId: visitorId,
                         timestamp: serverTimestamp(),
                         userAgent: navigator.userAgent,
                         platform: navigator.platform, // Provides basic OS info
                         screenResolution: `${window.innerWidth}x${window.innerHeight}`,
                         referrer: document.referrer || 'direct',
                     });
-                    sessionStorage.setItem(sessionKey, 'true');
+                    // Mark locally to save reads/writes
+                    localStorage.setItem(sessionKey, 'true');
                 }
             } catch (error) {
                 console.error("Failed to log credits visit:", error);
