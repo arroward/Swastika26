@@ -23,6 +23,7 @@ export async function initDatabase() {
         capacity INTEGER DEFAULT 100,
         registered_count INTEGER DEFAULT 0,
         price_amount INTEGER DEFAULT 0,
+        registration_fee INTEGER DEFAULT 0,
         is_online BOOLEAN DEFAULT false,
         rules JSONB DEFAULT '[]',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -90,6 +91,7 @@ export async function getEvents(): Promise<Event[]> {
         capacity,
         registered_count as "registeredCount",
         price_amount as "price",
+        COALESCE(registration_fee, price_amount, 0) as "registrationFee",
         is_online as "isOnline",
         "rules"
       FROM events
@@ -116,6 +118,7 @@ export async function getEventById(id: string): Promise<Event | null> {
         capacity,
         registered_count as "registeredCount",
         price_amount as "price",
+        COALESCE(registration_fee, price_amount, 0) as "registrationFee",
         is_online as "isOnline",
         "rules"
       FROM events
@@ -224,6 +227,7 @@ export async function getAdminEvents(adminId: string, role: string) {
           e.category,
           e.capacity,
           e.registered_count as "registeredCount",
+          COALESCE(e.registration_fee, e.price_amount, 0) as "registrationFee",
           e."rules"
         FROM events e
         INNER JOIN admin_events ae ON e.id = ae.event_id

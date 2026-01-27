@@ -1,7 +1,7 @@
 import EventList from "@/components/EventList";
 import { getEvents } from "@/lib/db";
 import LightRays from "@/components/LightRays";
-
+import Link from "next/link";
 
 export default async function Home() {
   // Fetch events from database
@@ -35,15 +35,8 @@ export default async function Home() {
       {/* Main Container */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14 md:py-20 lg:py-24 relative z-10 max-w-7xl">
         {/* Hero Section - Compact */}
-<<<<<<< HEAD
         <div className="text-center mb-6 sm:mb-8 md:mb-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-white mb-3 tracking-tight leading-tight">
-=======
-        <div className="text-center mb-8 md:mb-12">
-
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-white mb-3 tracking-tight leading-tight">
->>>>>>> bibin
             Discover Events
           </h1>
         </div>
@@ -79,11 +72,6 @@ export default async function Home() {
         ) : (
           <EventList events={events} />
         )}
-<<<<<<< HEAD
-=======
-
-
->>>>>>> bibin
       </div>
     </div>
   );
