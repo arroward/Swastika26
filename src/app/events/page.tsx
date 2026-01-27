@@ -28,25 +28,30 @@ export default async function Home() {
         />
 
         {/* Additional decorative elements */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-red-600/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-red-800/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-16 left-6 sm:top-20 sm:left-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-red-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-16 right-6 sm:bottom-20 sm:right-10 w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 bg-red-800/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       {/* Main Container */}
-      <div className="container mx-auto px-4 py-20 md:py-24 relative z-10 max-w-7xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14 md:py-20 lg:py-24 relative z-10 max-w-7xl">
         {/* Hero Section - Compact */}
+<<<<<<< HEAD
+        <div className="text-center mb-6 sm:mb-8 md:mb-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-white mb-3 tracking-tight leading-tight">
+=======
         <div className="text-center mb-8 md:mb-12">
 
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-black font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-white via-red-200 to-white mb-3 tracking-tight leading-tight">
+>>>>>>> bibin
             Discover Events
           </h1>
         </div>
 
         {/* Events Section */}
         {events.length === 0 ? (
-          <div className="max-w-xl mx-auto">
-            <div className="bg-gradient-to-br from-red-900/20 to-black/40 backdrop-blur-xl border border-red-500/20 rounded-2xl p-8 md:p-12 text-center shadow-2xl">
+          <div className="max-w-xl mx-auto px-4 sm:px-0">
+            <div className="bg-gradient-to-br from-red-900/20 to-black/40 backdrop-blur-xl border border-red-500/20 rounded-2xl p-6 sm:p-8 md:p-12 text-center shadow-2xl">
               <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-red-600/10 rounded-full mb-4 border-2 border-red-500/20">
                 <svg
                   className="w-8 h-8 md:w-10 md:h-10 text-red-400"
@@ -74,8 +79,11 @@ export default async function Home() {
         ) : (
           <EventList events={events} />
         )}
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> bibin
       </div>
     </div>
   );
