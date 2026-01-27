@@ -116,10 +116,10 @@ function CarouselCard({ event, index }: { event: Event; index: number }) {
   return (
     <Link
       href={`/events/${event.id}/register`}
-      className="snap-center shrink-0 w-[80vw] md:w-[360px] h-[75%] md:h-[90%] mx-3 md:mx-6 relative group rounded-3xl overflow-hidden cursor-pointer shadow-2xl ring-1 ring-white/10"
+      className="snap-center shrink-0 w-[80vw] md:w-[360px] h-[75%] md:h-[90%] mx-3 md:mx-6 relative group rounded-[var(--site-radius)] overflow-hidden cursor-pointer shadow-2xl ring-1 ring-white/10"
     >
       {/* Background Image with improved visibility */}
-      <div className="absolute inset-0 overflow-hidden rounded-3xl bg-gray-900">
+      <div className="absolute inset-0 overflow-hidden rounded-[var(--site-radius)] bg-gray-900">
         <img
           src={event.imageUrl}
           alt={title}
@@ -134,7 +134,7 @@ function CarouselCard({ event, index }: { event: Event; index: number }) {
       {/* Glassmorphism/Glow Border */}
       <div
         className={cn(
-          "absolute inset-0 rounded-3xl border border-white/10 transition-all duration-300 pointer-events-none",
+          "absolute inset-0 rounded-[var(--site-radius)] border border-white/10 transition-all duration-300 pointer-events-none",
           "group-hover:border-white/30 group-hover:shadow-[inset_0_0_20px_rgba(255,255,255,0.1)]",
         )}
       />

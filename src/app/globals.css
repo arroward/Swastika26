@@ -21,7 +21,10 @@
 
   /* Utility mapping for Tailwind manually if needed, or just standard CSS class */
 
-  --radius: 0.625rem;
+  /* Universal Site Radius */
+  --site-radius: 0.75rem;
+  /* 12px - Matches the desired rounded-xl look */
+  --radius: var(--site-radius);
 
   --background: oklch(1 0 0);
 
@@ -100,7 +103,16 @@
     color: var(--text-primary);
     font-family: var(--font-body);
     overflow-x: hidden;
-    /* cursor: none !important; */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
   }
 
   /* Force hide cursor on everything */

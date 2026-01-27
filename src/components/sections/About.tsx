@@ -89,7 +89,7 @@ function AboutEvent() {
                     transition={{ duration: 1 }}
                     className="relative h-[20vh] md:h-auto lg:h-[65vh] w-full flex-1 min-h-0 order-1 lg:order-2 flex items-center justify-center p-1 lg:p-0"
                 >
-                    <div className="relative w-full h-full lg:aspect-[4/3] rounded-[2rem] overflow-hidden group border border-white/10">
+                    <div className="relative w-full h-full lg:aspect-[4/3] rounded-[var(--site-radius)] overflow-hidden group border border-white/10">
                         <div className="absolute inset-0 bg-accent-main/20 mix-blend-overlay z-10" />
                         {!imageLoaded && <SkeletonImage className="w-full h-full" />}
                         <img
@@ -101,7 +101,7 @@ function AboutEvent() {
                         />
 
                         {/* Floating Date Badge */}
-                        <div className="absolute bottom-0 right-0 bg-black/80 backdrop-blur-md p-4 lg:p-6 border-t border-l border-white/10 rounded-tl-3xl z-20">
+                        <div className="absolute bottom-0 right-0 bg-black/80 backdrop-blur-md p-4 lg:p-6 border-t border-l border-white/10 rounded-tl-[var(--site-radius)] z-20">
                             <div className="text-right">
                                 <p className="text-3xl lg:text-4xl font-black font-syne text-white leading-none">20-21</p>
                                 <p className="text-accent-main text-xs font-bold tracking-[0.3em] font-jost uppercase mt-1">February</p>
@@ -141,7 +141,7 @@ function AboutCollege() {
                     transition={{ duration: 0.8 }}
                     className="relative h-[20vh] md:h-auto lg:h-[65vh] w-full flex-1 min-h-0 flex items-center justify-center p-1 lg:p-0"
                 >
-                    <div className="relative w-full h-full lg:aspect-[4/3] rounded-[2rem] overflow-hidden group border border-white/10">
+                    <div className="relative w-full h-full lg:aspect-[4/3] rounded-[var(--site-radius)] overflow-hidden group border border-white/10">
                         <div className="absolute inset-0 bg-blue-600/10 mix-blend-overlay z-10" />
                         {!imageLoaded && <SkeletonImage className="w-full h-full" />}
                         <img
@@ -151,7 +151,7 @@ function AboutCollege() {
                             onLoad={() => setImageLoaded(true)}
                             className={`w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110 ${imageLoaded ? 'block' : 'hidden'}`}
                         />
-                        <div className="absolute top-0 left-0 bg-black/80 backdrop-blur-md p-4 lg:p-6 border-b border-r border-white/10 rounded-br-3xl z-20">
+                        <div className="absolute top-0 left-0 bg-black/80 backdrop-blur-md p-4 lg:p-6 border-b border-r border-white/10 rounded-br-[var(--site-radius)] z-20">
                             <div className="text-left">
                                 <p className="text-lg lg:text-xl font-bold font-cinzel text-white leading-none">ESTD.</p>
                                 <p className="text-white/60 text-base font-mono mt-1">2001</p>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -67,7 +67,7 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
             );
         });
 
-    }, { scope: rowRef, dependencies: [direction, speed] });
+    }, { scope: rowRef, dependencies: [direction, speed, images.length] });
 
     return (
         <div ref={rowRef} className="flex overflow-hidden whitespace-nowrap gap-0 select-none w-full">
@@ -131,18 +131,47 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
 import { siteConfig } from "@/config/site.config";
 
 export default function SlantedImageGallery({ images = [] }: { images: string[] }) {
+    const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
+
+    useEffect(() => {
+        if (!images.length) return;
+
+        images.forEach((src) => {
+            if (loadedImages.has(src)) return;
+
+            const img = new Image();
+            img.src = src;
+            img.onload = () => {
+                setLoadedImages((prev) => {
+                    const next = new Set(prev);
+                    next.add(src);
+                    return next;
+                });
+            };
+            // Optional: Handle error case if we want to include broken images with fallbacks?
+            // For now, we strictly follow "show only loaded images" to avoid empty cards.
+        });
+    }, [images]);
+
+    // Use only images that have been loaded
+    const visibleImages = images.filter(src => loadedImages.has(src));
+
     // Distribute images uniquely across rows using modulo to ensure balance and no duplicates
-    const row1 = images.filter((_, i) => i % 3 === 0);
-    const row2 = images.filter((_, i) => i % 3 === 1);
-    const row3 = images.filter((_, i) => i % 3 === 2);
+    const row1 = visibleImages.filter((_, i) => i % 3 === 0);
+    const row2 = visibleImages.filter((_, i) => i % 3 === 1);
+    const row3 = visibleImages.filter((_, i) => i % 3 === 2);
 
     const baseSpeed = siteConfig.gallery.speed || 1;
 
+    if (visibleImages.length === 0) {
+        return null; // Or a loading spinner
+    }
+
     return (
         <div className="flex flex-col gap-0 w-full h-full justify-center">
-            <ImageRow images={row1} direction={1} speed={50 * baseSpeed} />
-            <ImageRow images={row2} direction={-1} speed={40 * baseSpeed} />
-            <ImageRow images={row3} direction={1} speed={60 * baseSpeed} />
+            {row1.length > 0 && <ImageRow images={row1} direction={1} speed={50 * baseSpeed} />}
+            {row2.length > 0 && <ImageRow images={row2} direction={-1} speed={40 * baseSpeed} />}
+            {row3.length > 0 && <ImageRow images={row3} direction={1} speed={60 * baseSpeed} />}
         </div>
     );
 }

@@ -39,13 +39,17 @@ const jost = Jost({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://swastika.live"),
-  title: "Swastika'26",
-  description: "Join the revolution. National Level Techno-Cultural Fest.",
+  title: {
+    default: "Swastika 2026 - National Level Techno-Cultural Fest",
+    template: "%s | Swastika 2026",
+  },
+  description: "Join the revolution at Swastika 2026, the National Level Techno-Cultural Fest at Mar Baselios Christian College of Engineering and Technology. Experience innovation, culture, and technology like never before.",
+  keywords: ["Swastika", "Swastika 2026", "Techno-Cultural Fest", "College Fest", "Kerala", "Engineering", "Technology", "Culture", "MBC", "Peermade"],
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Swastika.26",
+    title: "Swastika 2026",
   },
   icons: {
     icon: "/logo/wh_sw.png",
@@ -55,7 +59,24 @@ export const metadata: Metadata = {
     title: "Swastika 2026 - Techno Cultural Fest",
     description: "National Level Techno-Cultural Fest - Join the revolution",
     type: "website",
+    url: "https://swastika.live",
+    siteName: "Swastika 2026",
+    images: [{
+      url: "/logo/wh_sw.png",
+      width: 800,
+      height: 600,
+      alt: "Swastika 2026 Logo",
+    }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Swastika 2026",
+    description: "National Level Techno-Cultural Fest",
     images: ["/logo/wh_sw.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

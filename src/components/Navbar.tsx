@@ -110,7 +110,7 @@ export default function Navbar() {
         <>
             <nav
                 ref={navRef}
-                className={`w-full z-[100] px-4 py-3 md:px-6 md:py-4 flex items-center justify-between transition-all duration-500 rounded-[2rem] shrink-0
+                className={`w-full z-[100] px-4 py-3 md:px-6 md:py-4 flex items-center justify-between transition-all duration-500 rounded-[var(--site-radius)] shrink-0
                     bg-black/20 backdrop-blur-md border border-white/10 shadow-lg`}
             >
                 {/* LOGO */}

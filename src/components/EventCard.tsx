@@ -26,7 +26,7 @@ export default function EventCard({ event }: EventCardProps) {
   return (
     <Link
       href={`/events/${event.id}/register`}
-      className="group relative bg-black rounded-lg overflow-hidden hover:shadow-2xl transition-all duration-500 cursor-pointer aspect-[3/4] max-w-sm block"
+      className="group relative bg-black rounded-[var(--site-radius)] overflow-hidden hover:shadow-2xl transition-all duration-500 cursor-pointer aspect-[3/4] max-w-sm block"
     >
       {/* Event Image */}
       <div className="relative w-full h-full">

@@ -22,7 +22,7 @@ export default function AboutCollege() {
                     initial={{ clipPath: 'inset(0 100% 0 0)' }}
                     animate={isInView ? { clipPath: 'inset(0 0 0 0)' } : {}}
                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                    className="flex-1 h-[40%] lg:h-full relative rounded-[2rem] overflow-hidden group"
+                    className="flex-1 h-[40%] lg:h-full relative rounded-[var(--site-radius)] overflow-hidden group"
                 >
                     <img
                         src={aboutCollegeContent.images.campus}
@@ -44,7 +44,7 @@ export default function AboutCollege() {
                         initial={{ y: 20, opacity: 0 }}
                         animate={isInView ? { y: 0, opacity: 1 } : {}}
                         transition={{ delay: 0.2 }}
-                        className="flex-1 bg-white/5 border border-white/5 rounded-[2rem] p-6 md:p-10 flex flex-col justify-center relative overflow-hidden group hover:bg-white/10 transition-colors"
+                        className="flex-1 bg-white/5 border border-white/5 rounded-[var(--site-radius)] p-6 md:p-10 flex flex-col justify-center relative overflow-hidden group hover:bg-white/10 transition-colors"
                     >
                         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
 
@@ -66,7 +66,7 @@ export default function AboutCollege() {
                             initial={{ y: 20, opacity: 0 }}
                             animate={isInView ? { y: 0, opacity: 1 } : {}}
                             transition={{ delay: 0.3 }}
-                            className="flex-[2] bg-black/40 border border-white/5 rounded-[2rem] p-6 md:p-8 flex items-center"
+                            className="flex-[2] bg-black/40 border border-white/5 rounded-[var(--site-radius)] p-6 md:p-8 flex items-center"
                         >
                             <p className="text-lg md:text-sm lg:text-base text-white/100 font-jost leading-relaxed">
                                 {aboutCollegeContent.description}

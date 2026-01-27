@@ -52,16 +52,15 @@ export default function AutoShow() {
             <div className="relative z-10 container mx-auto px-6 h-full flex flex-col md:flex-row items-center justify-center gap-10 lg:gap-20">
 
                 {/* Image Side - Slideshow */}
-                <div className="w-full md:w-[55%] relative h-[45vh] md:h-[70vh] overflow-hidden rounded-2xl group shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+                <div className="w-full md:w-[55%] relative h-[45vh] md:h-[70vh] overflow-hidden rounded-[var(--site-radius)] group shadow-[0_0_50px_rgba(0,0,0,0.5)]">
                     {/* Inner Border Glow */}
-                    <div className="absolute inset-0 border border-white/10 rounded-2xl z-20 pointer-events-none group-hover:border-red-600/30 transition-colors duration-700" />
+                    <div className="absolute inset-0 border border-white/10 rounded-[var(--site-radius)] z-20 pointer-events-none group-hover:border-red-600/30 transition-colors duration-700" />
 
                     {autoShowContent.images.map((src, index) => (
                         <div
                             key={index}
-                            className={`absolute inset-0 transition-all duration-1000 ease-in-out transform ${
-                                index === currentImageIdx ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
-                            }`}
+                            className={`absolute inset-0 transition-all duration-1000 ease-in-out transform ${index === currentImageIdx ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
+                                }`}
                         >
                             <img
                                 src={src}
@@ -83,9 +82,8 @@ export default function AutoShow() {
                         {autoShowContent.images.map((_, idx) => (
                             <div
                                 key={idx}
-                                className={`h-1 rounded-full transition-all duration-500 ${
-                                    idx === currentImageIdx ? 'w-8 bg-[#FF3131]' : 'w-2 bg-white/20'
-                                }`}
+                                className={`h-1 rounded-full transition-all duration-500 ${idx === currentImageIdx ? 'w-8 bg-[#FF3131]' : 'w-2 bg-white/20'
+                                    }`}
                             />
                         ))}
                     </div>
@@ -98,8 +96,8 @@ export default function AutoShow() {
                     </span>
 
                     <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-cinzel text-white tracking-tighter leading-[0.85] mb-6">
-                        AUTO<br className="hidden md:block" /> 
-                        <span 
+                        AUTO<br className="hidden md:block" />
+                        <span
                             className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20"
                             style={{ WebkitTextStroke: '1px rgba(255,255,255,0.1)' }}
                         >
@@ -119,7 +117,7 @@ export default function AutoShow() {
 
             {/* Decorative Grain Overlay */}
             <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none z-0" />
-            
+
             {/* Bottom Vignette for depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60 pointer-events-none" />
         </section>

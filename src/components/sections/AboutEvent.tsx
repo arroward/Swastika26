@@ -46,7 +46,7 @@ export default function AboutEvent() {
             <div className="w-full h-full flex flex-col lg:grid lg:grid-cols-12 gap-2 lg:gap-4">
 
                 {/* 1. Left Panel / Top Mobile Header */}
-                <div className="lg:col-span-3 lg:h-full bg-[#111] rounded-[2rem] border border-white/10 p-5 lg:p-6 flex flex-col justify-between items-start shrink-0 relative overflow-hidden group gap-4 lg:gap-0">
+                <div className="lg:col-span-3 lg:h-full bg-[#111] rounded-[var(--site-radius)] border border-white/10 p-5 lg:p-6 flex flex-col justify-between items-start shrink-0 relative overflow-hidden group gap-4 lg:gap-0">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-red-600/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
                     <div className="flex flex-col gap-1 z-10">
@@ -71,7 +71,7 @@ export default function AboutEvent() {
                 </div>
 
                 {/* 2. Center Panel - Hero Visual */}
-                <div className="flex-1 lg:col-span-9 min-h-0 relative rounded-[2rem] overflow-hidden group border border-white/10">
+                <div className="flex-1 lg:col-span-9 min-h-0 relative rounded-[var(--site-radius)] overflow-hidden group border border-white/10">
                     <img
                         src={aboutEventContent.image}
                         alt="Event Main"
