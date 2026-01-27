@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { GraduationCap, Users, Trophy, BookOpen } from 'lucide-react';
+
 
 import { aboutCollegeContent } from '@/data/content';
 
