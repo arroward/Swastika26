@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { Github, Linkedin, Globe, Code2, Terminal, Cpu, Sparkles } from 'lucide-react';
+import { Github, Linkedin, Globe, Code2 } from 'lucide-react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';

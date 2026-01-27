@@ -6,7 +6,6 @@ import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
 export default function Navbar() {
-    const [isScrolled, setIsScrolled] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
@@ -18,29 +17,13 @@ export default function Navbar() {
     const line1Ref = useRef<HTMLSpanElement>(null);
     const line2Ref = useRef<HTMLSpanElement>(null);
     const line3Ref = useRef<HTMLSpanElement>(null);
-    const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
+
     const defaultPatternRef = useRef<HTMLDivElement>(null);
 
     // Timeline reference
     const tl = useRef<any>(null);
 
-    // Scroll Detection (Keep existing logic)
-    useEffect(() => {
-        const container = document.getElementById('main-container');
-        const handleScroll = () => {
-            if (container) {
-                const heroHeight = window.innerHeight * 0.9;
-                setIsScrolled(container.scrollTop > heroHeight);
-            }
-        };
-        handleScroll();
-        container?.addEventListener('scroll', handleScroll);
-        window.addEventListener('resize', handleScroll);
-        return () => {
-            container?.removeEventListener('scroll', handleScroll);
-            window.removeEventListener('resize', handleScroll);
-        };
-    }, []);
+
 
     // Menu Items
     const menuItems = [

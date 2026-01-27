@@ -83,8 +83,7 @@ export default function ClassicSplash({ progress, isLoaded, onComplete }: Classi
             // Calculate position relative to viewport (fixed)
             const currentRect = logoRef.current.getBoundingClientRect();
 
-            const scaleX = targetRect.width / currentRect.width;
-            const scaleY = targetRect.height / currentRect.height;
+
             const x = targetRect.left - currentRect.left;
             const y = targetRect.top - currentRect.top;
 

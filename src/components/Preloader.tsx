@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLoading } from '@/components/LoadingProvider';
 import { usePathname } from 'next/navigation';
 import CinematicIntro from '@/components/splash-screens/CinematicIntro';

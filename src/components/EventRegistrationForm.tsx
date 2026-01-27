@@ -32,8 +32,7 @@ export default function EventRegistrationForm({
     accountHolderName: "",
   });
 
-  // Apply font classes to form container
-  const containerClasses = "font-jost";
+
 
   const [errors, setErrors] = useState({
     fullName: "",
