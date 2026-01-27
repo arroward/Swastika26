@@ -1,5 +1,5 @@
 import { neon } from "@neondatabase/serverless";
-import { Event, Admin, AdminRole } from "@/types/event";
+import { Event, AdminRole } from "@/types/event";
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");

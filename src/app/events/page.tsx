@@ -1,7 +1,7 @@
 import EventList from "@/components/EventList";
 import { getEvents } from "@/lib/db";
 import LightRays from "@/components/LightRays";
-import Link from "next/link";
+
 
 export default async function Home() {
   // Fetch events from database

@@ -3,7 +3,6 @@
 import { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Terminal, Cpu, Zap, Globe, GraduationCap, Users, Trophy, BookOpen } from 'lucide-react';
-import VariableProximity from '@/components/VariableProximity';
 import { SkeletonImage } from '@/components/Skeleton';
 
 // About component acts as a wrapper. If we want it to be ONE full screen section, we'd need to condense. 

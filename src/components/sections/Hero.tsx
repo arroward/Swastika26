@@ -5,7 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useLoading } from '@/components/LoadingProvider';
 import Countdown from '@/components/Countdown';
-import VariableProximity from '@/components/VariableProximity';
+
 import BackgroundGlows from '@/components/BackgroundGlows';
 import { siteConfig } from '@/config/site.config';
 import { heroContent } from '@/data/hero';
