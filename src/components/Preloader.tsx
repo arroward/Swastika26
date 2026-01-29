@@ -98,7 +98,7 @@ export default function Preloader() {
     if (introType === 'cinematic') {
         return (
             <div className="fixed inset-0 z-[9999]">
-                <CinematicIntro onComplete={() => setIsLoading(false)} />
+                <CinematicIntro onComplete={() => setIsLoading(false)} progress={progress} />
             </div>
         );
     }

@@ -116,12 +116,12 @@ export default function ClassicSplash({ progress, isLoaded, onComplete }: Classi
     }, { scope: containerRef, dependencies: [isLoaded] });
 
     return (
-        <div ref={containerRef} className="fixed inset-0 z-[9999] flex flex-col items-center justify-center">
+        <div ref={containerRef} className="fixed inset-0 z-[9999] flex items-center justify-center">
             {/* Background Layer */}
             <div ref={bgRef} className="absolute inset-0 bg-black" />
 
-            {/* Logo */}
-            <div className="absolute top-[30vh] left-1/2 -translate-x-1/2 -translate-y-1/2 z-50">
+            {/* Logo - Fixed at top */}
+            <div className="absolute top-[20vh] left-1/2 -translate-x-1/2 z-50">
                 <img
                     ref={logoRef}
                     src="/logo/WH_LOGO.svg"
@@ -130,29 +130,31 @@ export default function ClassicSplash({ progress, isLoaded, onComplete }: Classi
                 />
             </div>
 
-            {/* Content Container */}
-            <div ref={contentRef} className="flex flex-col items-center mt-[20vh] relative z-10 opacity-0">
-                <h1 className="text-4xl md:text-6xl font-cinzel font-black text-white tracking-tight mb-2">
+            {/* Title - Centered */}
+            <div ref={contentRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-20 z-10 opacity-0">
+                <h1 className="text-4xl md:text-6xl font-cinzel font-black text-white tracking-tight">
                     SWASTIKA<span className="text-accent-main">.</span>26
                 </h1>
 
-                {/* Progress Bar */}
-                <div className="w-64 md:w-80 h-1 bg-white/10 rounded-full overflow-hidden">
-                    <div
-                        className="h-full bg-gradient-to-r from-accent-main to-red-600 transition-all duration-300 ease-out"
-                        style={{ width: `${progress}%` }}
-                    />
-                </div>
-
-                {/* Loading Dots */}
-                <div className="flex gap-2 mt-8">
-                    {[1, 2, 3].map((i) => (
+                <div className="flex flex-col items-center gap-6">
+                    {/* Progress Bar */}
+                    <div className="w-40 md:w-80 h-1 bg-white/10 rounded-full overflow-hidden">
                         <div
-                            key={i}
-                            className="w-2 h-2 bg-accent-main rounded-full animate-bounce"
-                            style={{ animationDelay: `${i * 0.1}s` }}
+                            className="h-full bg-gradient-to-r from-accent-main to-red-600 transition-all duration-300 ease-out"
+                            style={{ width: `${progress}%` }}
                         />
-                    ))}
+                    </div>
+
+                    {/* Loading Dots */}
+                    <div className="flex gap-2">
+                        {[1, 2, 3].map((i) => (
+                            <div
+                                key={i}
+                                className="w-2 h-2 bg-accent-main rounded-full animate-bounce"
+                                style={{ animationDelay: `${i * 0.1}s` }}
+                            />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

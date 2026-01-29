@@ -4,7 +4,7 @@ const R2_BASE = "https://pub-6ed865235e424323859b654769c59e4e.r2.dev";
 
 export const appConfig = {
     splashScreen: {
-        type: 'classic', // Options: 'cinematic', 'classic', 'random'
+        type: 'random', // Options: 'cinematic', 'classic', 'random'
     }
 };
 
