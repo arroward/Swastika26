@@ -191,7 +191,7 @@ export default function CinematicIntro({ onComplete, progress = 0 }: CinematicIn
                     <span
                         key={i}
                         className="rapid-char absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-                       font-['Cinzel'] font-black text-white opacity-0
+                       font-cinzel font-black text-white opacity-0
                        text-[20vw] md:text-[15vw] leading-none"
                     >
                         {char}
@@ -208,7 +208,7 @@ export default function CinematicIntro({ onComplete, progress = 0 }: CinematicIn
                     alt="Emblem"
                 />
 
-                <h1 className="main-title font-['Cinzel'] font-black tracking-[0.25em] uppercase">
+                <h1 className="main-title font-cinzel font-black tracking-[0.25em] uppercase">
                     <span className="block text-[12vw] md:text-[6vw] bg-gradient-to-b from-white to-gray-400 bg-clip-text text-transparent">
                         Swastika
                     </span>

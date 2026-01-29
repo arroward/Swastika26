@@ -1,76 +1,146 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Ticket } from "lucide-react";
+import { ArrowRight, Ticket, Sparkles, Calendar, Music } from "lucide-react";
 
 export default function PassSection() {
     return (
-        <section className="relative min-h-screen py-16 md:py-24 w-full bg-black text-white overflow-hidden flex items-center">
-            {/* Background Effects */}
-            <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
-            <div className="absolute top-0 right-0 w-64 h-64 md:w-80 md:h-80 bg-red-600/10 blur-[80px] md:blur-[100px] rounded-full pointer-events-none" />
+        <section className="w-full relative h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] flex items-center justify-center overflow-hidden bg-[#050505] panel snap-start snap-always">
+            {/* Animated Background Gradients */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(220,38,38,0.15),transparent_50%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(153,27,27,0.12),transparent_50%)]" />
 
-            <div className="container mx-auto px-6 relative z-10">
-                {/* Changed: gap-6 for even tighter mobile layout */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 lg:gap-20">
+            {/* Animated Grid */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
 
-                    {/* Left Content */}
-                    <div className="flex-1 text-center md:text-left space-y-4 md:space-y-8">
-                        <div className="space-y-1">
-                            <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-cinzel font-black leading-tight md:leading-[0.9] tracking-tighter">
-                                SECURE YOUR <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-900">
-                                    ENTRY PASS
+            {/* Floating Particles */}
+            <div className="absolute top-20 left-[10%] w-2 h-2 bg-red-500/40 rounded-full animate-pulse" />
+            <div className="absolute top-40 right-[15%] w-1.5 h-1.5 bg-red-400/30 rounded-full animate-pulse delay-300" />
+            <div className="absolute bottom-32 left-[20%] w-2.5 h-2.5 bg-red-600/20 rounded-full animate-pulse delay-700" />
+
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
+                <div className="flex flex-col items-center gap-8 sm:gap-10 max-w-5xl mx-auto">
+
+                    {/* Content */}
+                    <div className="space-y-4 sm:space-y-5 text-center w-full">
+                        {/* Badge
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-950/30 border border-red-900/50 backdrop-blur-sm">
+                            <Sparkles className="w-3 h-3 text-red-500" />
+                            <span className="text-[10px] font-semibold tracking-wider uppercase text-red-400">Limited Passes</span>
+                        </div> */}
+
+                        {/* Heading */}
+                        <h2 className="font-cinzel font-black text-3xl sm:text-4xl md:text-5xl leading-[0.95] tracking-tight">
+                            UNLOCK THE
+                            <br />
+                            <span className="relative inline-block mt-1">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-800">
+                                    EXPERIENCE
                                 </span>
-                            </h2>
-                        </div>
+                                <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-red-600 via-red-500 to-transparent rounded-full" />
+                            </span>
+                        </h2>
 
-                        <p className="text-xs md:text-lg text-gray-400 max-w-lg mx-auto md:mx-0 leading-relaxed font-light px-4 md:px-0">
-                            Experience the most electrifying nights of Swastika. Secure your spot for the ultimate musical journey.
+                        {/* Description */}
+                        <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
+                            Join for two unforgettable nights of music, energy, and pure celebration at Swastika 2026.
                         </p>
 
-                        <div className="flex flex-col sm:flex-row items-center gap-4 pt-2 justify-center md:justify-start">
+                        {/* Features */}
+                        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
+                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                                <Calendar className="w-3.5 h-3.5 text-red-500" />
+                                <span className="text-xs font-medium">2 Days</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                                <Music className="w-3.5 h-3.5 text-red-500" />
+                                <span className="text-xs font-medium">All Access</span>
+                            </div>
+                        </div>
+
+                        {/* CTA Button */}
+                        <div className="flex justify-center pt-2">
                             <Link
                                 href="/pass"
-                                className="w-full sm:w-auto bg-white text-black font-bold py-3 px-8 text-sm md:text-base flex items-center justify-center gap-2 rounded-full active:scale-95 transition-transform"
+                                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 font-bold text-sm overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] hover:scale-105 active:scale-95"
                             >
-                                Get Tickets
-                                <ArrowRight size={18} />
+                                <span className="relative z-10">Get Your Pass</span>
+                                <ArrowRight className="w-4 h-4 relative z-10 transition-transform group-hover:translate-x-1" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </Link>
                         </div>
                     </div>
 
-                    {/* Right Visual / Card */}
-                    {/* Changed: Removed pb-10 and ensured no bottom margin/padding */}
-                    <div className="flex-1 w-full max-w-[220px] sm:max-w-sm relative group mb-0">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-red-600 to-red-900 opacity-20 blur-lg rounded-3xl" />
+                    {/* Ticket Card */}
+                    <div className="flex justify-center items-center w-full">
+                        <div className="relative group">
+                            {/* Glow Effect */}
+                            <div className="absolute -inset-2 sm:-inset-3 bg-gradient-to-r from-red-600 via-red-500 to-red-700 rounded-3xl opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-500" />
 
-                        <Link href="/pass" className="block">
-                            <div className="glass-panel p-4 md:p-8 rounded-2xl relative overflow-hidden flex flex-col items-center text-center space-y-3 md:space-y-5 border border-white/10 bg-white/5 backdrop-blur-sm">
+                            {/* Card */}
+                            <Link href="/pass" className="relative block">
+                                <div className="relative w-[260px] sm:w-[280px] bg-gradient-to-br from-zinc-900 via-black to-zinc-900 rounded-2xl border border-white/10 overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-105 hover:rotate-1">
+                                    {/* Top Accent */}
+                                    <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent" />
 
-                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50" />
+                                    {/* Shimmer Effect */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                <div className="p-3 md:p-4 rounded-full bg-red-600/10 text-red-500 ring-1 ring-red-500/20">
-                                    <Ticket className="w-8 h-8 md:w-12 md:h-12" strokeWidth={1} />
-                                </div>
+                                    <div className="relative p-5 space-y-3.5">
+                                        {/* Icon */}
+                                        <div className="flex justify-center">
+                                            <div className="relative">
+                                                <div className="absolute inset-0 bg-red-600/20 blur-lg rounded-full" />
+                                                <div className="relative p-3 rounded-xl bg-gradient-to-br from-red-950/50 to-red-900/30 border border-red-500/30">
+                                                    <Ticket className="w-10 h-10 text-red-500" strokeWidth={1.5} />
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                <h3 className="text-xl md:text-3xl font-cinzel font-bold text-white tracking-tight">Proshow Access</h3>
+                                        {/* Title */}
+                                        <div className="text-center space-y-0.5">
+                                            <h3 className="font-cinzel font-bold text-2xl tracking-tight">
+                                                Proshow Pass
+                                            </h3>
+                                            <p className="text-[10px] text-gray-500 uppercase tracking-widest">Swastika 2026</p>
+                                        </div>
 
-                                <div className="w-full h-px bg-white/10" />
+                                        {/* Divider */}
+                                        <div className="relative h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-                                <div className="grid grid-cols-2 gap-3 w-full">
-                                    <div className="text-center p-2 md:p-3 rounded-xl bg-white/5 border border-white/5">
-                                        <div className="text-xl md:text-3xl font-black text-white font-cinzel">02</div>
-                                        <div className="text-[8px] md:text-[10px] uppercase tracking-widest text-red-500 font-bold">Nights</div>
+                                        {/* Info Grid */}
+                                        <div className="grid grid-cols-2 gap-2.5">
+                                            <div className="relative group/card">
+                                                <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity" />
+                                                <div className="relative p-2.5 rounded-xl bg-white/5 border border-white/10 text-center space-y-0.5 transition-transform hover:scale-105">
+                                                    <div className="font-cinzel font-black text-2xl sm:text-3xl">02</div>
+                                                    <div className="text-[9px] tracking-[0.2em] uppercase text-red-500 font-bold">Nights</div>
+                                                </div>
+                                            </div>
+
+                                            <div className="relative group/card">
+                                                <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity" />
+                                                <div className="relative p-2.5 rounded-xl bg-white/5 border border-white/10 text-center space-y-0.5 transition-transform hover:scale-105">
+                                                    <div className="font-cinzel font-black text-2xl sm:text-3xl">∞</div>
+                                                    <div className="text-[9px] tracking-[0.2em] uppercase text-red-500 font-bold">Access</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Bottom Badge
+                                        <div className="flex items-center justify-center gap-1.5 pt-0.5">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                                            <span className="text-[10px] text-gray-400 font-medium">Available Now</span>
+                                        </div> */}
                                     </div>
-                                    <div className="text-center p-2 md:p-3 rounded-xl bg-white/5 border border-white/5">
-                                        <div className="text-xl md:text-3xl font-black text-white font-cinzel">ALL</div>
-                                        <div className="text-[8px] md:text-[10px] uppercase tracking-widest text-red-500 font-bold">Access</div>
-                                    </div>
+
+                                    {/* Bottom Accent */}
+                                    <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
                                 </div>
-                            </div>
-                        </Link>
+                            </Link>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>
