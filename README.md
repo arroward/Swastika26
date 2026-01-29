@@ -1,84 +1,74 @@
-# SWASTIKA '26
+# SWASTIKA '26 🔱
 
-**National Level Techno-Cultural Fest**  
-Mar Baselios Christian College of Engineering and Technology (MBCCET), Peermade
+> **National Level Techno-Cultural Fest**  
+> Mar Baselios Christian College of Engineering and Technology (MBCCET), Peermade
 
 ---
 
 ## 📅 Event Details
 
-- **Event Name:** Swastika '26
-- **Dates:** February 20-21, 2026
-- **Venue:** MBCCET, Peermade, Idukki
-- **Type:** National Level Techno-Cultural Fest
+- **Event Name**: Swastika '26
+- **Theme**: *Ancient Arena, Future Fighters*
+- **Dates**: February 20-21, 2026
+- **Venue**: MBCCET, Peermade, Idukki
+- **Website**: [Live Site Link]
 
 ---
 
-## 🎯 Theme: Ancient Arena, Future Fighters
+## 🚀 Overview
 
-> *Battles never stopped—only weapons changed. From swords to skills, from warriors to innovators.*
+Swastika '26 is the flagship techno-cultural fest of MBCCET. This repository houses the official web application for the event, featuring a high-performance, immersive 3D experience.
 
-This year's theme blends:
-- **Ancient Arena** → Colosseum warriors, competition, honor
-- **Future Fighters** → AI, tech, innovation, digital mastery
-
-Swastika '26 is where coders become warriors, designers become creators, gamers become champions, and performers become legends.
-
----
-
-## 🚀 About This Website
-
-A sophisticated countdown page built with:
-
-### **Tech Stack**
-- **Framework:** Next.js 16.1.2 with Turbopack
-- **Language:** TypeScript
-- **Styling:** Pure CSS (no frameworks)
-- **Animations:** CSS Keyframes
-- **Fonts:** Google Fonts (Cinzel, Playfair Display, Orbitron, Space Grotesk)
-
-### **Design Features**
-✨ Royal typography with serif fonts for ancient elegance  
-⚡ Futuristic Orbitron for tech elements  
-🎨 Gradient mesh background with pulse animation  
-🔲 Grid overlay and vignette effects  
-✨ Shimmer animation on theme statement  
-🎭 Floating particle system  
-📱 Fully responsive design  
-⏱️ Real-time countdown timer  
+### Key Highlights
+- **Immersive 3D UI**: Built with React Three Fiber & Drei for 3D carousels and interactive backgrounds.
+- **Advanced Animations**: Powered by GSAP and Framer Motion for smooth scroll and entry animations.
+- **Event Management**: Complete system for browsing events, proshows, and workshops.
+- **Registration System**: Secure user registration and admin management using Firebase & NeonDB.
+- **Real-time Updates**: Push notifications and dynamic content delivery.
 
 ---
 
-## 🛠️ Getting Started
+## 🛠 Tech Stack
 
-### Prerequisites
-- Node.js 20+ installed
-- npm or yarn
+### Frontend Core
+- **Next.js 16.1**: Framework with App Router and Server Components.
+- **TypeScript**: For type-safe code.
+- **Tailwind CSS v4**: Utility-first styling.
+- **Lightswind**: Lightweight UI components.
 
-### Installation
+### 3D & Animation
+- **Three.js / React Three Fiber**: Core 3D rendering.
+- **Drei**: Useful helpers for R3F.
+- **GSAP**: Performance-critical animations.
+- **Framer Motion**: Gesture-driven interactions.
+- **Lenis**: Smooth scrolling.
 
-```bash
-# Clone the repository
-git clone https://github.com/arroward/Swastika26.git
+### Backend & Data
+- **Firebase**: Auth & Realtime Database.
+- **NeonDB**: Serverless Postgres for relational data.
 
-# Navigate to project
-cd Swastika26
+### Utilities
+- **PWA**: Progressive Web App support.
+- **JSPDF**: PDF generation for tickets/receipts.
+- **Lucide React**: Iconography.
 
-# Install dependencies
-npm install
+---
 
-# Run development server
-npm run dev
-```
+## 🌟 Features
 
-Visit [http://localhost:3000](http://localhost:3000) to view the site.
+### User Interface
+- **Premium Splash Screens**: Initial load experience.
+- **3D Event Carousel**: Interactive rotating event showcase.
+- **Slanted Marquee**: Dynamic scrolling text effects.
+- **Shader Backgrounds**: GPU-accelerated visual effects.
+- **Responsive Design**: Mobile-first approach.
 
-### Build for Production
-
-```bash
-npm run build
-npm start
-```
+### Functionality
+- **Admin Dashboard**: backend management for admins.
+- **Visitor Logger**: Interaction tracking.
+- **Proshow Showcase**: Special section for celebrity performers.
+- **Auto Show**: Dedicated section for automotive exhibitions.
+- **Gallery**: Masonry/Slanted image galleries.
 
 ---
 
@@ -86,194 +76,92 @@ npm start
 
 ```
 Swastika26/
-├── public/
-│   └── logo.png              # Event logo
+├── public/              # Static assets (images, models)
 ├── src/
-│   └── app/
-│       ├── globals.css       # Global styles & animations
-│       ├── layout.tsx        # Root layout
-│       └── page.tsx          # Main countdown page
-├── package.json
-├── next.config.ts
-├── tsconfig.json
-└── README.md
+│   ├── app/             # Next.js App Router pages
+│   ├── components/      # React components
+│   │   ├── sections/    # Page sections (Hero, Events, etc.)
+│   │   ├── ui/          # Reusable UI elements
+│   │   └── ...
+│   ├── hooks/           # Custom React hooks
+│   ├── lib/             # Utility libraries
+│   ├── scripts/         # Database maintenance scripts
+│   └── styles/          # Global styles
+└── ...
 ```
 
 ---
 
-## 🎨 Design System
+## ⚡ Getting Started
 
-### Typography
-- **Titles:** Cinzel (Royal serif)
-- **Subtitles:** Playfair Display (Elegant serif)
-- **Tech Elements:** Orbitron (Futuristic)
-- **Body:** Space Grotesk (Modern sans-serif)
+### Prerequisites
+- Node.js 18+
+- npm or pnpm
 
-### Color Palette
-- **Primary:** `#ff6b4a` (Warm red-orange)
-- **Background:** `#0d0d0d` (Deep black)
-- **Accents:** Gradient meshes with red tones
-- **Text:** `#fff`, `#999`, `#666` (White to gray scale)
+### Installation
 
----
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/arroward/Swastika26.git
+   cd Swastika26
+   ```
 
-## ⚙️ Scripts
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-- `npm run dev` - Start development server (Turbopack)
-- `npm run build` - Build for production
-- `npm start` - Start production server
-- `npm run lint` - Run ESLint
+3. **Set up Environment Variables**
+   Create a `.env` file in the root with the following:
+   ```env
+   # Database
+   DATABASE_URL=...
+   
+   # Firebase
+   NEXT_PUBLIC_FIREBASE_API_KEY=...
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+   
+   # App Config
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   ```
 
----
-
-## 🌟 Features
-
-### Live Countdown
-Dynamic countdown showing:
-- Days
-- Hours
-- Minutes
-- Seconds
-
-Until the event begins on **February 20, 2026 at 9:00 AM**
-
-### Animations
-- **Mesh Pulse:** 8s infinite background animation
-- **Shimmer:** 3s infinite on theme box
-- **Status Pulse:** 2s infinite on status text
-- **Particle Float:** 6s linear floating particles
-- **Hover Effects:** Smooth transitions on countdown cards
-
-### Responsive Design
-- Mobile: 2-column countdown grid
-- Tablet/Desktop: 4-column countdown grid
-- Fluid typography with `clamp()`
-- Adaptive spacing
+4. **Run Development Server**
+   ```bash
+   npm run dev
+   ```
 
 ---
 
-## 📝 Important Note
+## 📜 Scripts
 
-**The name "Swastika" has no connection to any ancient, religious, or cultural symbol.**  
-It is simply the official name of our college tech fest.
+| Script | Description |
+| :--- | :--- |
+| `npm run dev` | Starts development server |
+| `npm run build` | Builds for production |
+| `npm run start` | runs production server |
+| `npm run seed` | Seeds initial data |
+| `npm run check-env` | Validates environment variables |
+| `npm run verify-db` | Verifies database connection |
 
 ---
 
-## 👥 Contact
+## 🤝 Contributing
 
-**Mar Baselios Christian College of Engineering and Technology**  
+1. Fork the repo.
+2. Create your feature branch (`git checkout -b feature/amazing-feature`).
+3. Commit your changes (`git commit -m 'Add some amazing feature'`).
+4. Push to the branch (`git push origin feature/amazing-feature`).
+5. Open a Pull Request.
+
+---
+
+## 📞 Contact
+
+**MBCCET Tech Team**  
+Mar Baselios Christian College of Engineering and Technology  
 Peermade, Idukki, Kerala
 
-For inquiries about Swastika '26, please contact the college administration.
-
 ---
 
-## 📄 License
-
-This project is for MBCCET's official tech fest. All rights reserved.
-
----
-
-**Built with 💜 for Swastika '26 by the MBCCET Tech Team**
-
----
-
-## 🔗 Proposed App Structure
-
-```text
-┌──────────────────────────────────────────────────────────┐
-│                   INTRO / ENTRY SECTION                  │
-│                                                          │
-│                      [ LOGO MARK ]                       │
-│                                                          │
-│        Animated background (lines / noise / gradient)    │
-│                                                          │
-│               “Entering the Experience”                  │
-│                                                          │
-│           Progress bar / pulse / countdown               │
-│                                                          │
-│     (Scroll or auto-transition to next section)          │
-└──────────────────────────────────────────────────────────┘
-
-
-      ↓ User starts scrolling ↓
-      ↓ Floating Navbar appears ↓
-
-
-┌──────────────────────────────────────────────────────────┐
-│                 FLOATING / STICKY NAVBAR                 │
-│  Logo     About     Proshow     Events     Gallery       │
-│  (Glass / Blur / Shadow | stays on top while scrolling)  │
-└──────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────┐
-│                       ABOUT SECTION                      │
-│                                                          │
-│   ┌──────────────────────┐   ┌──────────────────────┐  │
-│   │   About Content      │   │   Visual / Motion     │  │
-│   │   Event story        │   │   Graphic / Animation │  │
-│   │   Highlights         │   │                      │  │
-│   └──────────────────────┘   └──────────────────────┘  │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────┐
-│                     PROSHOW SECTION                      │
-│                                                          │
-│   ┌──────────────────────────────────────────────────┐  │
-│   │                                                  │  │
-│   │                 PROSHOW TITLE                    │  │
-│   │           Artist / Band / DJ Name                │  │
-│   │           Date • Time • Venue                    │  │
-│   │                                                  │  │
-│   │                [ Know More ]                     │  │
-│   │                                                  │  │
-│   └──────────────────────────────────────────────────┘  │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────┐
-│                      EVENTS SECTION                      │
-│                                                          │
-│   ┌──────────────┐   ┌──────────────┐   ┌────────────┐ │
-│   │   Event 1    │   │   Event 2    │   │  Event 3   │ │
-│   │   Brief info │   │   Brief info │   │ Brief info │ │
-│   │   Date/time  │   │   Date/time  │   │ Date/time  │ │
-│   │  [ View → ]  │   │  [ View → ]  │   │ [ View → ] │ │
-│   └──────────────┘   └──────────────┘   └────────────┘ │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────┐
-│                     GALLERY SECTION                     │
-│                                                          │
-│   ┌───────┐ ┌───────┐ ┌───────┐ ┌───────┐              │
-│   │ Img   │ │ Img   │ │ Img   │ │ Img   │              │
-│   └───────┘ └───────┘ └───────┘ └───────┘              │
-│                                                          │
-│   (Hover zoom / Lightbox / Horizontal scroll)            │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────┐
-│                    FINAL CTA SECTION                     │
-│                                                          │
-│              “Ready to be part of it?”                   │
-│                                                          │
-│                  [ Register Now ]                        │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
-
-
-┌──────────────────────────────────────────────────────────┐
-│                          FOOTER                          │
-│   Event Name | Social Links | Contact Info                │
-│   © Year Event Name                                       │
-└──────────────────────────────────────────────────────────┘
-```
-
+© 2026 Swastika. All rights reserved.
