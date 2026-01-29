@@ -28,21 +28,21 @@ export default function PassPage() {
             artist: proshowContent.artists[0].name,
             genre: proshowContent.artists[0].role,
             description: `Experience the energy of ${proshowContent.artists[0].name} live! Your pass grants you entry to the Day 1 Proshow.`,
-            perks: ["Entry to Day 1 Proshow", "General Access Area", "Food Court Access"]
+           
         },
         day2: {
             title: `Day 2 Access - ${proshowContent.artists[1].date}`,
             artist: proshowContent.artists[1].name,
             genre: proshowContent.artists[1].role,
             description: `Get ready for the electrifying performance of ${proshowContent.artists[1].name}! Don't miss the biggest night of Swastika '26.`,
-            perks: ["Entry to Day 2 Proshow", "General Access Area", "Food Court Access"]
+            
         },
         combo: {
             title: "All Access Combo",
             artist: `${proshowContent.artists[0].name} + ${proshowContent.artists[1].name}`,
             genre: "Full Event Experience",
-            description: "The ultimate Swastika experience! Get seamless access to both proshows at a discounted rate. Save ₹10 and enjoy double the magic.",
-            perks: ["Entry to BOTH Proshows", "Priority Access Lane", "Save ₹10 on Total Price", "Full Event Experience"]
+            description: "The ultimate Swastika experience! Get seamless access to both proshows.",
+           
         }
     };
 
@@ -180,7 +180,7 @@ export default function PassPage() {
                                     <div>
                                         <span className="text-sm font-jost font-bold uppercase text-white/80 block">Day 1</span>
                                         <span className="text-2xl font-cinzel font-black text-white block">₹{PRICES.day1}</span>
-                                        <span className="text-[10px] text-white/40 font-mono block">Single Access</span>
+                                       
                                     </div>
                                     <div className="flex items-center gap-3 bg-black/40 rounded-full p-1 border border-white/10">
                                         <button onClick={() => updateCart('day1', -1)} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white">-</button>
@@ -201,7 +201,7 @@ export default function PassPage() {
                                     <div>
                                         <span className="text-sm font-jost font-bold uppercase text-white/80 block">Day 2</span>
                                         <span className="text-2xl font-cinzel font-black text-white block">₹{PRICES.day2}</span>
-                                        <span className="text-[10px] text-white/40 font-mono block">Single Access</span>
+                                        
                                     </div>
                                     <div className="flex items-center gap-3 bg-black/40 rounded-full p-1 border border-white/10">
                                         <button onClick={() => updateCart('day2', -1)} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white">-</button>
@@ -222,7 +222,6 @@ export default function PassPage() {
                                     <div className="relative z-10">
                                         <span className="text-sm font-jost font-bold uppercase text-white/80 block">Both Days</span>
                                         <span className="text-2xl font-cinzel font-black text-white block">₹{PRICES.combo}</span>
-                                        <span className="text-[10px] text-white/40 font-mono block">Full Access</span>
                                     </div>
                                     <div className="flex items-center gap-3 bg-black/40 rounded-full p-1 border border-white/10 relative z-10">
                                         <button onClick={() => updateCart('combo', -1)} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white">-</button>
@@ -555,14 +554,7 @@ export default function PassPage() {
                             </p>
                         </div>
 
-                        <ul className="space-y-2">
-                            {PASS_DETAILS[activeInfo].perks.map((perk, i) => (
-                                <li key={i} className="flex items-start gap-2 text-sm text-white/60">
-                                    <span className="text-green-500 mt-0.5">✓</span>
-                                    {perk}
-                                </li>
-                            ))}
-                        </ul>
+                        
 
                         <div className="pt-4 mt-2 border-t border-white/10">
                             <button
