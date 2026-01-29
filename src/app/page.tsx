@@ -11,6 +11,7 @@ import Gallery from "@/components/sections/Gallery";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
 import ScrollManager from "@/components/ScrollManager";
+import PassSection from "@/components/sections/PassSection";
 
 export default function Home() {
   return (
@@ -42,6 +43,10 @@ export default function Home() {
       </section>
       <section id="gallery" className="panel snap-start snap-always w-full h-auto">
         <Gallery />
+      </section>
+
+      <section id="pass" className="panel snap-start snap-always w-full h-auto">
+        <PassSection />
       </section>
 
       <section className="panel snap-start snap-always w-full h-auto">

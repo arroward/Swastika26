@@ -32,6 +32,7 @@ export default function Navbar() {
         { title: "Events", href: "/#events" },
         { title: "Proshows", href: "/#proshow" },
         { title: "Gallery", href: "/#gallery" },
+        { title: "Get Pass", href: "/pass" },
         // { title: "Sponsors", href: "/#sponsors" },
     ];
 
@@ -125,18 +126,27 @@ export default function Navbar() {
                     </span>
                 </Link>
 
-                {/* ANIMATED HAMBURGER BUTTON */}
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="pointer-events-auto relative z-[110] p-2 hover:bg-white/10 rounded-full transition-colors group"
-                    aria-label="Toggle Menu"
-                >
-                    <div className="flex flex-col gap-1.5 w-8 items-end justify-center">
-                        <span ref={line1Ref} className="w-8 h-0.5 bg-white block origin-center transition-colors group-hover:bg-accent-main" />
-                        <span ref={line2Ref} className="w-6 h-0.5 bg-white block transition-all group-hover:bg-accent-main" />
-                        <span ref={line3Ref} className="w-8 h-0.5 bg-white block origin-center transition-colors group-hover:bg-accent-main" />
-                    </div>
-                </button>
+                <div className="flex items-center gap-4">
+                    <Link
+                        href="/pass"
+                        className="pointer-events-auto hidden md:flex items-center px-5 py-2 rounded-full bg-red-600/10 border border-red-500/20 hover:bg-red-600 hover:border-red-600 transition-all duration-300 group mr-2"
+                    >
+                        <span className="font-cinzel font-bold text-sm text-red-100 group-hover:text-white tracking-wider">Get Pass</span>
+                    </Link>
+
+                    {/* ANIMATED HAMBURGER BUTTON */}
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="pointer-events-auto relative z-[110] p-2 hover:bg-white/10 rounded-full transition-colors group"
+                        aria-label="Toggle Menu"
+                    >
+                        <div className="flex flex-col gap-1.5 w-8 items-end justify-center">
+                            <span ref={line1Ref} className="w-8 h-0.5 bg-white block origin-center transition-colors group-hover:bg-accent-main" />
+                            <span ref={line2Ref} className="w-6 h-0.5 bg-white block transition-all group-hover:bg-accent-main" />
+                            <span ref={line3Ref} className="w-8 h-0.5 bg-white block origin-center transition-colors group-hover:bg-accent-main" />
+                        </div>
+                    </button>
+                </div>
             </nav>
 
             {/* FULLSCREEN MENU OVERLAY */}

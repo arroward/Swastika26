@@ -1,0 +1,17 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow anyone to submit a pass request
+    match /proshow_passes/{document=**} {
+      allow read, write: if true;
+    }
+    
+    // Default rule: Safe default for other collections
+    match /{document=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
