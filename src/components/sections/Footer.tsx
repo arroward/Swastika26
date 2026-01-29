@@ -181,7 +181,7 @@ export default function Footer() {
                     </div>
 
                     <p className="group relative z-10">
-                        Crafted by <Link href="/credits" className="text-white/60 group-hover:text-red-500 transition-colors cursor-pointer">{footerContent.credits}</Link>
+                        Crafted by <Link href="/credits" className="flame-text cursor-pointer transition-colors">{footerContent.credits}</Link>
                     </p>
                 </div>
             </div>
