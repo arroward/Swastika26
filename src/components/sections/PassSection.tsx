@@ -5,8 +5,7 @@ import { ArrowRight, Ticket } from "lucide-react";
 
 export default function PassSection() {
     return (
-        // Changed: Removed min-h-screen on mobile (min-h-0) and set pb-0
-        <section className="relative min-h-0 md:min-h-screen pt-10 pb-0 md:py-24 w-full bg-black text-white overflow-hidden flex items-start md:items-center">
+        <section className="relative min-h-screen py-16 md:py-24 w-full bg-black text-white overflow-hidden flex items-center">
             {/* Background Effects */}
             <div className="absolute inset-0 bg-grid opacity-10 pointer-events-none" />
             <div className="absolute top-0 right-0 w-64 h-64 md:w-80 md:h-80 bg-red-600/10 blur-[80px] md:blur-[100px] rounded-full pointer-events-none" />
@@ -48,7 +47,7 @@ export default function PassSection() {
 
                         <Link href="/pass" className="block">
                             <div className="glass-panel p-4 md:p-8 rounded-2xl relative overflow-hidden flex flex-col items-center text-center space-y-3 md:space-y-5 border border-white/10 bg-white/5 backdrop-blur-sm">
-                                
+
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-600 to-transparent opacity-50" />
 
                                 <div className="p-3 md:p-4 rounded-full bg-red-600/10 text-red-500 ring-1 ring-red-500/20">

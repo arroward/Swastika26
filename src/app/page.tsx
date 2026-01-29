@@ -14,48 +14,48 @@ import ScrollManager from "@/components/ScrollManager";
 import PassSection from "@/components/sections/PassSection";
 
 export default function Home() {
-  return (
-    <main className="bg-transparent w-full text-white contents">
-      <ScrollManager />
-      {/* Premium Cursor Lighting */}
+    return (
+        <main className="bg-transparent w-full text-white contents">
+            <ScrollManager />
+            {/* Premium Cursor Lighting */}
 
-      <section id="home" className="panel snap-start snap-always w-full h-auto">
-        <Hero />
-      </section>
-      <section id="about" className="panel snap-start snap-always w-full h-auto">
-        <AboutEvent />
-      </section>
-      <section className="panel snap-start snap-always w-full h-auto">
-        <AboutCollege />
-      </section>
-      <section className="panel snap-start snap-always w-full h-auto">
-        <MarqueeSection />
-      </section>
+            <section id="home" className="panel snap-start snap-always w-full h-auto">
+                <Hero />
+            </section>
+            <section id="about" className="panel snap-start snap-always w-full h-auto">
+                <AboutEvent />
+            </section>
+            <section className="panel snap-start snap-always w-full h-auto">
+                <AboutCollege />
+            </section>
+            <section className="panel snap-start snap-always w-full h-auto">
+                <MarqueeSection />
+            </section>
 
-      <Proshow />
+            <Proshow />
 
-      <section id="autoshow" className="panel snap-start snap-always w-full h-auto">
-        <AutoShow />
-      </section>
+            <section id="pass" className="panel snap-start snap-always w-full h-auto">
+                <PassSection />
+            </section>
 
-      <section id="events" className="panel snap-start snap-always w-full h-auto">
-        <Events />
-      </section>
-      <section id="gallery" className="panel snap-start snap-always w-full h-auto">
-        <Gallery />
-      </section>
+            <section id="autoshow" className="panel snap-start snap-always w-full h-auto">
+                <AutoShow />
+            </section>
 
-      <section id="pass" className="panel snap-start snap-always w-full h-auto">
-        <PassSection />
-      </section>
+            <section id="events" className="panel snap-start snap-always w-full h-auto">
+                <Events />
+            </section>
+            <section id="gallery" className="panel snap-start snap-always w-full h-auto">
+                <Gallery />
+            </section>
 
-      <section className="panel snap-start snap-always w-full h-auto">
-        <CTA />
-      </section>
+            <section className="panel snap-start snap-always w-full h-auto">
+                <CTA />
+            </section>
 
-      <section id="footer" className="panel snap-start snap-always w-full h-auto">
-        <Footer />
-      </section>
-    </main>
-  );
+            <section id="footer" className="panel snap-start snap-always w-full h-auto">
+                <Footer />
+            </section>
+        </main>
+    );
 }
