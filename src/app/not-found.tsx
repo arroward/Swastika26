@@ -1,44 +1,60 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { ArrowLeft, RefreshCw } from 'lucide-react';
+import Link from "next/link";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Bug, AlertTriangle, Home } from "lucide-react";
 
 export default function NotFound() {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [glitchText, setGlitchText] = useState('404');
+    const [blameCount, setBlameCount] = useState(0);
+    const [message, setMessage] = useState("Even the Oracle didn't see this coming.");
+    const [debris, setDebris] = useState<Array<{ id: number; left: number; top: number; x: number; y: number; size: number; duration: number }>>([]);
+
+    // Debris generation
+    useEffect(() => {
+        setDebris(
+            [...Array(5)].map((_, i) => ({
+                id: i,
+                left: Math.random() * 100,
+                top: Math.random() * 100,
+                x: Math.random() * 1000,
+                y: Math.random() * 1000,
+                size: 24 + Math.random() * 48,
+                duration: 10 + Math.random() * 20
+            }))
+        );
+    }, []);
 
     // Mouse follower effect
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
             setMousePosition({
                 x: e.clientX,
-                y: e.clientY
+                y: e.clientY,
             });
         };
 
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => window.removeEventListener("mousemove", handleMouseMove);
     }, []);
 
-    // Random glitch effect
-    useEffect(() => {
-        const chars = '014XYZ!?#%';
-        const interval = setInterval(() => {
-            if (Math.random() > 0.9) {
-                const r1 = chars[Math.floor(Math.random() * chars.length)];
-                const r2 = chars[Math.floor(Math.random() * chars.length)];
-                const r3 = chars[Math.floor(Math.random() * chars.length)];
-                setGlitchText(`${r1}${r2}${r3}`);
-                setTimeout(() => setGlitchText('404'), 100);
-            }
-        }, 1000);
-        return () => clearInterval(interval);
-    }, []);
+    const handleBlame = () => {
+        setBlameCount(prev => prev + 1);
+        const excuses = [
+            "It works on my machine!",
+            "Maybe if you refresh 5 more times?",
+            "I swear it was here a second ago.",
+            "A cosmic ray flipped a bit. Unlucky.",
+            "The dog ate the servers.",
+            "Have you tried turning it off and on again?",
+            "Okay, now you're just being mean.",
+        ];
+        setMessage(excuses[blameCount % excuses.length]);
+    };
 
     return (
-        <main className="relative min-h-screen w-full bg-[#050505] text-white flex flex-col items-center justify-center overflow-hidden selection:bg-red-500/30">
+        <main className="relative min-h-screen w-full bg-[#050505] text-white flex flex-col items-center justify-center overflow-hidden selection:bg-red-500/30 font-sans">
 
             {/* Background Grid & Noise */}
             <div className="absolute inset-0 pointer-events-none z-0">
@@ -48,99 +64,108 @@ export default function NotFound() {
 
             {/* Spotlight Effect */}
             <motion.div
-                className="absolute w-[800px] h-[800px] bg-red-600/10 rounded-full blur-[100px] pointer-events-none z-0 mix-blend-screen"
+                className="absolute w-[600px] h-[600px] bg-red-600/10 rounded-full blur-[100px] pointer-events-none z-0 mix-blend-screen"
                 animate={{
-                    x: mousePosition.x - 400,
-                    y: mousePosition.y - 400,
+                    x: mousePosition.x - 300,
+                    y: mousePosition.y - 300,
                 }}
                 transition={{ type: "spring", damping: 30, stiffness: 50, mass: 0.1 }}
             />
 
-            {/* Content Container */}
-            <div className="relative z-10 flex flex-col items-center text-center px-4 w-full max-w-4xl mx-auto">
+            <div className="relative z-10 flex flex-col items-center text-center px-4 w-full max-w-4xl mx-auto space-y-8">
 
-                {/* Glitchy 404 Header */}
-                <div className="relative mb-6 md:mb-10 group">
-                    <h1 className="text-[150px] md:text-[250px] leading-none font-black font-syne tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white/80 to-white/10 select-none relative z-10">
-                        {glitchText}
-                    </h1>
-                    {/* Shadow/Clone for Depth */}
-                    <h1 className="absolute inset-0 text-[150px] md:text-[250px] leading-none font-black font-syne tracking-tighter text-red-600/20 blur-sm select-none z-0 ml-2 mt-2">
+                {/* 404 SVG or Text */}
+                <div className="relative group perspective-1000">
+                    <motion.h1
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="text-[120px] md:text-[200px] font-black font-syne tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-gray-200 to-gray-500 leading-none select-none drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                    >
                         404
-                    </h1>
-
-                    {/* Floating Decorative Elements */}
+                    </motion.h1>
                     <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute -top-10 -right-10 w-24 h-24 md:w-32 md:h-32 border border-red-500/20 rounded-full border-dashed"
-                    />
-                    <motion.div
-                        animate={{ rotate: -360 }}
-                        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                        className="absolute -bottom-5 -left-5 w-16 h-16 md:w-24 md:h-24 border border-white/10 rounded-full border-dotted"
-                    />
+                        animate={{ rotate: [0, 5, -5, 0] }}
+                        transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
+                        className="absolute -top-6 -right-6 md:top-4 md:right-4 bg-red-600 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full border border-red-400 transform rotate-12 shadow-[0_0_20px_rgba(220,38,38,0.5)]"
+                    >
+                        Oops!
+                    </motion.div>
                 </div>
 
-                {/* Text Content */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="space-y-6 max-w-lg"
-                >
-                    <div className="space-y-2">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 mb-2">
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                            <span className="text-[10px] md:text-xs font-mono text-red-400 uppercase tracking-widest">SECTOR UNCHARTED</span>
-                        </div>
-                        <h2 className="text-2xl md:text-3xl font-cinzel font-bold text-white tracking-wide">
-                            THE ORACLE IS SILENT HERE
+                {/* Funny Message */}
+                <div className="space-y-4 max-w-xl mx-auto">
+                    <motion.div
+                        key={message}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="min-h-[60px]"
+                    >
+                        <h2 className="text-2xl md:text-3xl font-cinzel font-bold text-white mb-2">
+                            Lost in the Void?
                         </h2>
-                        <p className="text-white/50 font-jost text-sm md:text-base leading-relaxed">
-                            Even the mightiest warriors drift into the void. This realm is barren, lost to the sands of time and digital static. Realign your spark and return to the arena.
+                        <p className="text-red-400 font-mono text-sm md:text-base border border-red-900/50 bg-red-900/10 p-3 rounded-lg">
+                            {`> ${message}`}
                         </p>
-                    </div>
+                    </motion.div>
 
-                    {/* Action Buttons */}
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 pt-4">
-                        <Link href="/" className="group relative w-full md:w-auto">
-                            <div className="absolute inset-0 bg-red-600 rounded-lg blur opacity-20 group-hover:opacity-40 transition-opacity" />
-                            <div className="relative flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white px-8 py-3.5 rounded-lg font-syne font-bold uppercase tracking-wide transition-all duration-300 transform group-hover:-translate-y-1">
-                                <ArrowLeft size={18} />
-                                <span>RETREAT TO SPARTA</span>
-                            </div>
-                        </Link>
+                    <p className="text-white/50 font-jost text-sm leading-relaxed">
+                        You've reached the edge of the internet. There's nothing here but pixels and regret.
+                        Navigate back to safety before the bugs find you.
+                    </p>
+                </div>
 
-                        <button
-                            onClick={() => window.location.reload()}
-                            className="group flex items-center justify-center gap-2 px-8 py-3.5 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white/70 hover:text-white font-syne font-bold uppercase tracking-wide transition-all duration-300 w-full md:w-auto"
-                        >
-                            <RefreshCw size={18} className="group-hover:rotate-180 transition-transform duration-500" />
-                            <span>REALIGN SPARK</span>
+                {/* Buttons */}
+                <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+                    <Link href="/">
+                        <button className="group relative px-8 py-3 bg-white text-black font-syne font-bold uppercase tracking-wider rounded-lg overflow-hidden transition-all hover:scale-105 active:scale-95">
+                            <div className="absolute inset-0 bg-red-500 w-full transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out origin-left" />
+                            <span className="relative group-hover:text-white flex items-center gap-2">
+                                <Home size={18} />
+                                Teleport Home
+                            </span>
                         </button>
-                    </div>
-                </motion.div>
+                    </Link>
+
+                    <button
+                        onClick={handleBlame}
+                        className="px-8 py-3 border border-white/10 hover:bg-white/5 rounded-lg text-white/70 hover:text-white font-syne font-bold uppercase tracking-wider transition-all flex items-center gap-2 hover:border-red-500/50 hover:text-red-400"
+                    >
+                        <Bug size={18} />
+                        Blame The Dev
+                    </button>
+                </div>
 
             </div>
 
-            {/* Footer Ticker */}
-            <div className="absolute bottom-6 w-full overflow-hidden opacity-30 pointer-events-none select-none">
-                <motion.div
-                    className="flex whitespace-nowrap"
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{ duration: 20, ease: "linear", repeat: Infinity }}
-                >
-                    {[...Array(20)].map((_, i) => (
-                        <span key={i} className="text-[10px] md:text-xs font-mono mx-4 text-red-500/50">
-                            :: SPARTAN_LEGACY :: TRANSFORM_AND_ROLL_OUT :: THE_ARENA_AWAITS :: NO_ENERGON_HERE :: GLORY_CALLS ::
-                        </span>
-                    ))}
-                </motion.div>
+            {/* Floating Elements (Space Debris) */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                {debris.map((item) => (
+                    <motion.div
+                        key={item.id}
+                        className="absolute text-white/5"
+                        initial={{
+                            x: item.x,
+                            y: item.y,
+                            rotate: 0
+                        }}
+                        animate={{
+                            y: [0, -100, 0],
+                            rotate: 360,
+                        }}
+                        transition={{
+                            duration: item.duration,
+                            repeat: Infinity,
+                            ease: "linear"
+                        }}
+                        style={{
+                            left: `${item.left}%`,
+                            top: `${item.top}%`,
+                        }}
+                    >
+                        <AlertTriangle size={item.size} />
+                    </motion.div>
+                ))}
             </div>
         </main>
     );
 }
-
-// Add strict Tailwind animation keyframes if needed in global.css, but standard classes usually suffice.
-// For custom marquee, we might rely on Framer Motion or simple standard CSS if configured.
