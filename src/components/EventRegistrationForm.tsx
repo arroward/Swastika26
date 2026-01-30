@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import FormInput from "./FormInput";
 import { Event } from "@/types/event";
+import { siteConfig } from "@/config/site.config";
+import { QRCodeSVG } from "qrcode.react";
 
 interface EventRegistrationFormProps {
   event: Event;
@@ -19,6 +21,8 @@ export default function EventRegistrationForm({
   const [success, setSuccess] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -81,30 +85,24 @@ export default function EventRegistrationForm({
     setFileError("");
 
     if (file) {
-      // Validate file size (max 10MB)
-      if (file.size > 10 * 1024 * 1024) {
-        setFileError("File size must be less than 10MB");
+      // Validate file size (max 500MB)
+      if (file.size > 500 * 1024 * 1024) {
+        setFileError("File size must be less than 500MB");
         setUploadedFile(null);
         return;
       }
 
-      // Validate file type (pdf, doc, docx, images)
-      const allowedTypes = [
-        "application/pdf",
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "image/jpeg",
-        "image/png",
-        "image/jpg",
-      ];
-
-      if (!allowedTypes.includes(file.type)) {
-        setFileError("Only PDF, DOC, DOCX, JPG, and PNG files are allowed");
+      // Validate file type (Images and Videos)
+      if (!file.type.startsWith('image/') && !file.type.startsWith('video/')) {
+        setFileError("Only Image and Video files are allowed");
         setUploadedFile(null);
         return;
       }
 
       setUploadedFile(file);
+      // Reset progress when new file selected
+      setUploadProgress(0);
+      setIsUploading(false);
     }
   };
 
@@ -178,7 +176,52 @@ export default function EventRegistrationForm({
     setError("");
 
     try {
-      // Prepare form data with file if needed
+      let finalUploadUrl = "";
+
+      // 1. Handle File Upload first if online event
+      if (event.isOnline && uploadedFile) {
+        setIsUploading(true);
+        setUploadProgress(0);
+
+        // Get presigned URL
+        const presignedResponse = await fetch("/api/upload/presigned", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fileName: uploadedFile.name,
+            fileType: uploadedFile.type,
+          }),
+        });
+
+        if (!presignedResponse.ok) {
+          throw new Error("Failed to get upload authorization");
+        }
+
+        const { url, publicUrl } = await presignedResponse.json();
+        finalUploadUrl = publicUrl;
+
+        // Perform real upload with progress tracking
+        await new Promise<void>((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+              setUploadProgress((e.loaded / e.total) * 100);
+            }
+          };
+
+          xhr.onload = () => {
+            if (xhr.status >= 200 && xhr.status < 300) resolve();
+            else reject(new Error("Upload failed"));
+          };
+
+          xhr.onerror = () => reject(new Error("Upload error"));
+          xhr.open("PUT", url);
+          xhr.setRequestHeader("Content-Type", uploadedFile.type);
+          xhr.send(uploadedFile);
+        });
+      }
+
+      // 2. Submit form data to registration API
       const submitData = new FormData();
       submitData.append("eventId", event.id);
       submitData.append("fullName", formData.fullName);
@@ -195,13 +238,11 @@ export default function EventRegistrationForm({
       if (formData.accountHolderName) {
         submitData.append("accountHolderName", formData.accountHolderName);
       }
-
-      // Add file for online events
-      if (event.isOnline && uploadedFile) {
-        submitData.append("file", uploadedFile);
+      if (finalUploadUrl) {
+        submitData.append("uploadFileUrl", finalUploadUrl);
       }
 
-      const response = await fetch("/api/register", {
+      const response = await fetch("/events/api/register", {
         method: "POST",
         body: submitData,
       });
@@ -213,10 +254,13 @@ export default function EventRegistrationForm({
       }
 
       setSuccess(true);
+      setUploadProgress(100);
       setTimeout(() => {
         router.push("/");
       }, 2000);
     } catch (err) {
+      setIsUploading(false);
+      setUploadProgress(0);
       setError(
         err instanceof Error
           ? err.message
@@ -491,15 +535,42 @@ export default function EventRegistrationForm({
               Payment Details
             </h3>
             <div className="mb-6 p-4 bg-black/20 rounded-xl border border-red-500/10">
-              <div className="flex justify-between items-center mb-1">
-                <span className="text-white/70 text-sm">Registration Fee</span>
-                <span className="text-xl font-bold text-white">
-                  ₹{event.registrationFee}
-                </span>
+              <div className="flex flex-col md:flex-row gap-6 items-center">
+                <div className="bg-white p-3 rounded-2xl shadow-lg">
+                  <QRCodeSVG
+                    value={`upi://pay?pa=${siteConfig.payment?.upiId}&am=${event.registrationFee}&cu=INR&tn=EventReg`}
+                    size={150}
+                    level="H"
+                  />
+                  <p className="text-black text-[10px] text-center font-bold mt-2 font-mono">SCAN TO PAY</p>
+                </div>
+                <div className="flex-1 text-center md:text-left">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-white/70 text-sm">Registration Fee</span>
+                    <span className="text-xl font-bold text-white">
+                      ₹{event.registrationFee}
+                    </span>
+                  </div>
+                  <p className="text-xs text-white/50 mb-3">
+                    Scan the QR code or pay to: <span className="text-red-400 font-mono select-all">{siteConfig.payment?.upiId}</span>
+                  </p>
+
+                  {/* UPI App Direct Button */}
+                  <a
+                    href={`upi://pay?pa=${siteConfig.payment?.upiId}&am=${event.registrationFee}&cu=INR&tn=EventReg`}
+                    className="inline-flex items-center gap-2 bg-white text-black px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all hover:scale-105 active:scale-95 mb-3 shadow-xl"
+                  >
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z" />
+                    </svg>
+                    Pay via UPI App
+                  </a>
+
+                  <p className="text-xs text-white/40 italic">
+                    Please complete payment via UPI and enter details below
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-white/50">
-                Please complete payment via UPI and enter details below
-              </p>
             </div>
 
             <div className="space-y-2">
@@ -567,13 +638,30 @@ export default function EventRegistrationForm({
                   type="file"
                   id="fileUpload"
                   onChange={handleFileChange}
-                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  accept="image/*,video/*"
                   className="w-full px-5 py-4 rounded-xl bg-black/20 border border-red-500/20 hover:bg-red-900/10 transition-all text-sm text-gray-300
                     file:mr-4 file:py-2.5 file:px-5 file:rounded-lg file:border-0 
                     file:text-sm file:font-semibold file:bg-red-600 file:text-white 
                     hover:file:bg-red-700 cursor-pointer"
                 />
               </div>
+
+              {/* Upload Progress Bar */}
+              {(isUploading || uploadProgress > 0) && (
+                <div className="mt-4 space-y-2">
+                  <div className="flex justify-between text-xs font-bold uppercase tracking-widest text-white/50">
+                    <span>{uploadProgress === 100 ? 'Upload Complete' : 'Uploading...'}</span>
+                    <span>{Math.round(uploadProgress)}%</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${uploadProgress}%` }}
+                      className="h-full bg-gradient-to-r from-red-600 to-red-400 shadow-[0_0_10px_rgba(220,38,38,0.5)]"
+                    />
+                  </div>
+                </div>
+              )}
 
               {uploadedFile && (
                 <motion.div

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase'; // Ensure this path is correct based on previous view_file
 import Link from 'next/link';
+import { siteConfig } from '@/config/site.config';
 import { proshowContent } from '@/data/content';
 
 export default function PassPage() {
@@ -28,21 +29,21 @@ export default function PassPage() {
             artist: proshowContent.artists[0].name,
             genre: proshowContent.artists[0].role,
             description: `Experience the energy of ${proshowContent.artists[0].name} live! Your pass grants you entry to the Day 1 Proshow.`,
-           
+
         },
         day2: {
             title: `Day 2 Access - ${proshowContent.artists[1].date}`,
             artist: proshowContent.artists[1].name,
             genre: proshowContent.artists[1].role,
             description: `Get ready for the electrifying performance of ${proshowContent.artists[1].name}! Don't miss the biggest night of Swastika '26.`,
-            
+
         },
         combo: {
             title: "All Access Combo",
             artist: `${proshowContent.artists[0].name} + ${proshowContent.artists[1].name}`,
             genre: "Full Event Experience",
             description: "The ultimate Swastika experience! Get seamless access to both proshows.",
-           
+
         }
     };
 
@@ -64,9 +65,8 @@ export default function PassPage() {
     const currentPrice = (cart.day1 * PRICES.day1) + (cart.day2 * PRICES.day2) + (cart.combo * PRICES.combo);
     const totalTickets = cart.day1 + cart.day2 + cart.combo;
 
-    const upiId = "swastika26@ybl";
-    const payeeName = "Swastika26";
-    const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${currentPrice}&cu=INR&tn=SWASTIKA26-PASS`;
+    const upiId = siteConfig.payment.upiId;
+    const upiLink = `upi://pay?pa=${siteConfig.payment?.upiId}&am=${currentPrice}&cu=INR&tn=Swastika-26-Pass`;
 
     const updateCart = (type: 'day1' | 'day2' | 'combo', delta: number) => {
         setCart(prev => ({
@@ -180,7 +180,7 @@ export default function PassPage() {
                                     <div>
                                         <span className="text-sm font-jost font-bold uppercase text-white/80 block">Day 1</span>
                                         <span className="text-2xl font-cinzel font-black text-white block">₹{PRICES.day1}</span>
-                                       
+
                                     </div>
                                     <div className="flex items-center gap-3 bg-black/40 rounded-full p-1 border border-white/10">
                                         <button onClick={() => updateCart('day1', -1)} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white">-</button>
@@ -201,7 +201,7 @@ export default function PassPage() {
                                     <div>
                                         <span className="text-sm font-jost font-bold uppercase text-white/80 block">Day 2</span>
                                         <span className="text-2xl font-cinzel font-black text-white block">₹{PRICES.day2}</span>
-                                        
+
                                     </div>
                                     <div className="flex items-center gap-3 bg-black/40 rounded-full p-1 border border-white/10">
                                         <button onClick={() => updateCart('day2', -1)} className="w-8 h-8 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white">-</button>
@@ -554,7 +554,7 @@ export default function PassPage() {
                             </p>
                         </div>
 
-                        
+
 
                         <div className="pt-4 mt-2 border-t border-white/10">
                             <button

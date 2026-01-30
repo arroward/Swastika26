@@ -1,13 +1,5 @@
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-
-// ============================================
-// CLOUDFLARE R2 STORAGE (NOT AWS S3!)
-// ============================================
-// R2 is Cloudflare's object storage that is S3-compatible.
-// This means we use the AWS SDK to interact with it, but all
-// data is stored on Cloudflare's infrastructure, NOT Amazon's.
-// The endpoint below points to Cloudflare's R2 service.
-// ============================================
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 // Cloudflare R2 configuration
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
@@ -29,14 +21,45 @@ if (
 
 const r2Client = R2_ACCOUNT_ID
   ? new S3Client({
-      region: "auto", // Cloudflare R2 uses 'auto' as the region
-      endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`, // CLOUDFLARE endpoint, NOT AWS!
-      credentials: {
-        accessKeyId: R2_ACCESS_KEY_ID!,
-        secretAccessKey: R2_SECRET_ACCESS_KEY!,
-      },
-    })
+    region: "auto",
+    endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: R2_ACCESS_KEY_ID!,
+      secretAccessKey: R2_SECRET_ACCESS_KEY!,
+    },
+  })
   : null;
+
+export async function getPresignedUrl(
+  fileName: string,
+  contentType: string,
+  folder: string = "uploads",
+): Promise<{ url: string; publicUrl: string; key: string }> {
+  if (!r2Client || !R2_BUCKET_NAME) {
+    throw new Error("Cloudflare R2 is not configured");
+  }
+
+  const timestamp = Date.now();
+  const randomString = Math.random().toString(36).substring(2, 10);
+  const fileExtension = fileName.split(".").pop();
+  const key = `${folder}/${timestamp}-${randomString}.${fileExtension}`;
+
+  const command = new PutObjectCommand({
+    Bucket: R2_BUCKET_NAME,
+    Key: key,
+    ContentType: contentType,
+  });
+
+  // Presigned URL for uploading (valid for 1 hour)
+  const url = await getSignedUrl(r2Client, command, { expiresIn: 3600 });
+
+  // Public URL where the file will be accessible after upload
+  const publicUrl = R2_PUBLIC_URL
+    ? `${R2_PUBLIC_URL}/${key}`
+    : `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${key}`;
+
+  return { url, publicUrl, key };
+}
 
 export async function uploadToR2(
   file: File,

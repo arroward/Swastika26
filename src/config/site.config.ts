@@ -31,5 +31,12 @@ export const siteConfig = {
     },
     gallery: {
         speed: 2 // Higher = Slower (multiplier for the base durations)
+    },
+    payment: {
+        upiId: "8078069928@apl"
+    },
+    contact: {
+        email: "support@swastika.live",
+        phone: "+91 98765 43210"
     }
 };

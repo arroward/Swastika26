@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
     const upiTransactionId = formData.get("upiTransactionId") as string;
     const accountHolderName = formData.get("accountHolderName") as string;
     const file = formData.get("file") as File | null;
+    let uploadFileUrl = formData.get("uploadFileUrl") as string | undefined;
 
     // Validate required fields
     if (
@@ -35,15 +36,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate team size
-    const validTeamSize = teamSize || 1;
-    if (validTeamSize < 1 || validTeamSize > 10) {
-      return NextResponse.json(
-        { error: "Team size must be between 1 and 10" },
-        { status: 400 },
-      );
-    }
-
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
@@ -53,15 +45,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if event exists and if it's online
+    // Check if event exists
     const event = await getEventById(eventId);
     if (!event) {
       return NextResponse.json({ error: "Event not found" }, { status: 404 });
     }
 
-    // Upload file to R2 if event is online and file is provided
-    let uploadFileUrl: string | undefined;
-    if (event.isOnline) {
+    // Upload file to R2 if event is online and no URL is provided yet
+    if (event.isOnline && !uploadFileUrl) {
       if (!file) {
         return NextResponse.json(
           { error: "File upload is required for online events" },
@@ -69,15 +60,12 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      console.log("Uploading file to R2:", {
+      console.log("Uploading file to R2 (Server-side fallback):", {
         fileName: file.name,
-        fileSize: file.size,
-        fileType: file.type,
       });
 
       try {
         uploadFileUrl = await uploadToR2(file, "event-registrations");
-        console.log("File uploaded successfully, URL:", uploadFileUrl);
       } catch (uploadError) {
         console.error("File upload error:", uploadError);
         return NextResponse.json(
