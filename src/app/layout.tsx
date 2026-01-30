@@ -3,14 +3,8 @@ import { Syne, Inter, Cinzel_Decorative, Jost } from "next/font/google";
 import "./globals.css";
 import "./tw-animate.css";
 
-import Preloader from "@/components/Preloader";
-import GradientBackground from "@/components/GradientBackground";
-import NoiseOverlay from "@/components/NoiseOverlay";
+import ClientLayout from "@/components/ClientLayout";
 import { LoadingProvider } from "@/components/LoadingProvider";
-import Navbar from "@/components/Navbar";
-import MainContainer from "@/components/MainContainer";
-import NotificationPermissionRequest from "@/components/NotificationPermissionRequest";
-import VisitorLogger from "@/components/VisitorLogger";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -95,19 +89,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${inter.variable} ${cinzel.variable} ${jost.variable}`} suppressHydrationWarning>
-      <body className="bg-transparent h-[100dvh] w-full overflow-hidden p-2 md:p-4 lg:p-6 flex flex-col gap-2 md:gap-4">
+      <body className="bg-transparent h-[100dvh] w-full overflow-hidden">
         <LoadingProvider>
-          <GradientBackground />
-
-          {/* <InteractiveRedGradient /> */}
-          <NoiseOverlay />
-          <Preloader />
-          <NotificationPermissionRequest />
-          <VisitorLogger />
-          <Navbar />
-          <MainContainer>
+          <ClientLayout>
             {children}
-          </MainContainer>
+          </ClientLayout>
         </LoadingProvider>
       </body>
     </html>
