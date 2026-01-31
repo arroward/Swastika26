@@ -89,7 +89,7 @@ export default function CTA() {
             >
                 {/* 1. DON'T MISS OUT */}
                 <div className="overflow-hidden w-full">
-                    <h2 ref={titleRef} className="text-4xl md:text-6xl lg:text-8xl font-black font-syne text-white tracking-tighter mix-blend-difference hover:text-red-500 transition-colors duration-500">
+                    <h2 ref={titleRef} className="text-4xl md:text-6xl lg:text-[6vw] font-black font-syne text-white tracking-tighter mix-blend-difference hover:text-red-500 transition-colors duration-500">
                         {ctaContent.line1}
                     </h2>
                 </div>
@@ -102,8 +102,8 @@ export default function CTA() {
                 </div>
 
                 {/* 3. SWASTIKA */}
-                <div className="overflow-hidden w-full">
-                    <h1 className="text-5xl md:text-8xl lg:text-[11rem] font-black font-syne text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-neutral-500 tracking-tighter leading-none glow-text drop-shadow-2xl">
+                <div className="overflow-hidden w-full px-4">
+                    <h1 className="text-5xl md:text-8xl lg:text-[10vw] font-black font-syne text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-neutral-500 tracking-tighter leading-tight glow-text drop-shadow-2xl">
                         {ctaContent.main}
                     </h1>
                 </div>

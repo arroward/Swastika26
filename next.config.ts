@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'pub-6ed865235e424323859b654769c59e4e.r2.dev',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.swastika.live',
+      },
     ],
   },
   experimental: {

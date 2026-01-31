@@ -135,28 +135,8 @@ export default function SlantedImageGallery({ images = [] }: { images: string[] 
     const { siteConfig } = config;
     const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
-    useEffect(() => {
-        if (!images.length) return;
-
-        images.forEach((src) => {
-            if (loadedImages.has(src)) return;
-
-            const img = new Image();
-            img.src = src;
-            img.onload = () => {
-                setLoadedImages((prev) => {
-                    const next = new Set(prev);
-                    next.add(src);
-                    return next;
-                });
-            };
-            // Optional: Handle error case if we want to include broken images with fallbacks?
-            // For now, we strictly follow "show only loaded images" to avoid empty cards.
-        });
-    }, [images]);
-
-    // Use only images that have been loaded
-    const visibleImages = images.filter(src => loadedImages.has(src));
+    // Simplified: Just use the images directly, the GalleryImage component handles lazy loading anyway
+    const visibleImages = images;
 
     // Distribute images uniquely across rows using modulo to ensure balance and no duplicates
     const row1 = visibleImages.filter((_, i) => i % 3 === 0);
@@ -166,7 +146,17 @@ export default function SlantedImageGallery({ images = [] }: { images: string[] 
     const baseSpeed = siteConfig.gallery.speed || 1;
 
     if (visibleImages.length === 0) {
-        return null; // Or a loading spinner
+        // Fallback gallery images if R2 list is taking too long or empty
+        const fallbacks = [
+            "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=2000",
+            "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=2000",
+            "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2000"
+        ];
+        return (
+            <div className="flex flex-col gap-0 w-full h-full justify-center">
+                <ImageRow images={fallbacks} direction={1} speed={50} fallback={siteConfig.logos.fallback} />
+            </div>
+        );
     }
 
     return (

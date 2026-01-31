@@ -18,22 +18,35 @@ export default function Events() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort("Request took too long"), 20000); // Increased to 20s for slow DB cold starts
+
     const fetchEvents = async () => {
       try {
-        const response = await fetch("/events/api/events");
+        const response = await fetch("/events/api/events", { signal: controller.signal });
         if (!response.ok) {
           throw new Error("Failed to fetch events");
         }
         const data = await response.json();
         setEvents(data);
-      } catch (error) {
-        console.error("Error loading events:", error);
+      } catch (error: any) {
+        if (error.name === 'AbortError') {
+          console.warn("Events fetch aborted:", controller.signal.reason);
+        } else {
+          console.error("Error loading events:", error);
+        }
       } finally {
+        clearTimeout(timeoutId);
         setIsLoading(false);
       }
     };
 
     fetchEvents();
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort("Component unmounted");
+    };
   }, []);
 
   useGSAP(() => {

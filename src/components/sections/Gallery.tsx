@@ -6,7 +6,7 @@ export default async function Gallery() {
 
     // Maximize viewport usage
     return (
-        <section id="gallery" className="relative w-full h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] overflow-hidden bg-black flex flex-col justify-center border-y border-red-900/20 panel">
+        <section id="gallery" className="relative w-full h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] lg:h-[calc(100dvh-8rem)] overflow-hidden bg-black flex flex-col justify-center border-y border-red-900/20 panel snap-start snap-always">
             {/* Background Texture */}
             <div className="absolute inset-0 z-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]" />
 

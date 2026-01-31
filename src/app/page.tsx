@@ -1,5 +1,6 @@
 
 
+import { Suspense } from "react";
 import Hero from "@/components/sections/Hero";
 import AboutEvent from "@/components/sections/AboutEvent";
 import AboutCollege from "@/components/sections/AboutCollege";
@@ -45,13 +46,11 @@ export default function Home() {
             <section id="events" className="panel snap-start snap-always w-full h-auto">
                 <Events />
             </section>
-            <section id="gallery" className="panel snap-start snap-always w-full h-auto">
+            <Suspense fallback={<div className="h-[50vh] flex items-center justify-center font-cinzel text-white/20 uppercase tracking-widest">Initialising Gallery Assets...</div>}>
                 <Gallery />
-            </section>
+            </Suspense>
 
-            <section className="panel snap-start snap-always w-full h-auto">
-                <CTA />
-            </section>
+            <CTA />
 
             <section id="footer" className="panel snap-start snap-always w-full h-auto">
                 <Footer />

@@ -12,6 +12,9 @@ const R2 = new S3Client({
         accessKeyId: process.env.R2_ACCESS_KEY_ID,
         secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
     },
+    requestHandler: {
+        connectionTimeout: 5000, // 5 seconds timeout
+    }
 });
 
 const fetchGalleryImages = async (): Promise<string[]> => {
@@ -38,7 +41,7 @@ const fetchGalleryImages = async (): Promise<string[]> => {
 
         const sortedContents = data.Contents?.sort((a, b) => (a.Key || '').localeCompare(b.Key || '')) || [];
         const images = sortedContents
-            .map((item) => item.Key ? `${r2Url}/${item.Key}` : null)
+            .map((item) => item.Key ? `${r2Url?.replace(/\/$/, '')}/${item.Key}` : null)
             .filter((url): url is string =>
                 url !== null &&
                 (url.toLowerCase().endsWith('.jpg') ||

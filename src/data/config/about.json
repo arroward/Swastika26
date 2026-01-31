@@ -25,7 +25,7 @@
         "description": "Mar Baselios Christian College of Engineering and Technology is an institution dedicated to providing quality engineering education. The college emphasizes academic excellence, research, and the overall development of students.",
         "images": {
             "campusPath": "/about/DJI_0926.jpg",
-            "envKey": "NEXT_PUBLIC_R2_PUBLIC_URL"
+            "envKey": "NEXT_PUBLIC_ABOUT_COLLEGE_IMAGE_URL"
         },
         "stats": [
             {

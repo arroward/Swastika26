@@ -16,6 +16,7 @@ const R2_BASE = "https://cdn.swastika.live/";
 // Static mapping for environment variables to prevent hydration mismatch
 const envMap: Record<string, string | undefined> = {
     "NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL": process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL,
+    "NEXT_PUBLIC_ABOUT_COLLEGE_IMAGE_URL": process.env.NEXT_PUBLIC_ABOUT_COLLEGE_IMAGE_URL,
     "NEXT_PUBLIC_PROSHOW_1": process.env.NEXT_PUBLIC_PROSHOW_1,
     "NEXT_PUBLIC_PROSHOW_2": process.env.NEXT_PUBLIC_PROSHOW_2,
     "NEXT_PUBLIC_R2_PUBLIC_URL": process.env.NEXT_PUBLIC_R2_PUBLIC_URL,
@@ -24,7 +25,12 @@ const envMap: Record<string, string | undefined> = {
 const withBase = (path: string) => {
     if (!path) return '';
     if (path.startsWith('http')) return path;
-    return `${R2_BASE}${path.startsWith('/') ? '' : '/'}${path}`;
+
+    // Use env override if available, else static
+    const base = (envMap["NEXT_PUBLIC_R2_PUBLIC_URL"] || R2_BASE).replace(/\/$/, '');
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
+
+    return `${base}${cleanPath}`;
 };
 
 // Hydration Functions

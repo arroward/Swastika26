@@ -15,12 +15,13 @@ import pass from './config/pass.json';
 import cta_marquee from './config/cta_marquee.json';
 import eventsData from './config/events.json';
 
-const R2_BASE = "https://pub-6ed865235e424323859b654769c59e4e.r2.dev";
+const R2_BASE = "https://cdn.swastika.live";
 
 // Static mapping for environment variables to prevent hydration mismatch
 // Next.js requires literal access to bundle NEXT_PUBLIC_ variables to the client
 const envMap: Record<string, string | undefined> = {
     "NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL": process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL,
+    "NEXT_PUBLIC_ABOUT_COLLEGE_IMAGE_URL": process.env.NEXT_PUBLIC_ABOUT_COLLEGE_IMAGE_URL,
     "NEXT_PUBLIC_PROSHOW_1": process.env.NEXT_PUBLIC_PROSHOW_1,
     "NEXT_PUBLIC_PROSHOW_2": process.env.NEXT_PUBLIC_PROSHOW_2,
     "NEXT_PUBLIC_R2_PUBLIC_URL": process.env.NEXT_PUBLIC_R2_PUBLIC_URL,
@@ -48,10 +49,16 @@ export const events = eventsData.events;
 export const eventsSectionContent = eventsData.eventsSectionContent;
 
 // 2. Hydration Logic
+// Helper to join paths correctly without double slashes
 const withBase = (path: string) => {
     if (!path) return '';
     if (path.startsWith('http')) return path;
-    return `${R2_BASE}${path.startsWith('/') ? '' : '/'}${path}`;
+
+    // Use env override if available, else static
+    const base = (envMap["NEXT_PUBLIC_R2_PUBLIC_URL"] || R2_BASE).replace(/\/$/, '');
+    const cleanPath = path.startsWith('/') ? path : `/${path}`;
+
+    return `${base}${cleanPath}`;
 };
 
 // Proshows
