@@ -34,8 +34,7 @@ const sampleEvents = [
     ],
     date: "2026-02-19T00:00:00Z",
     location: "Online",
-    imageUrl:
-      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0063.jpg",
+    imageUrl: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/events/online/IMG-20260124-WA0063.jpg`,
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
@@ -59,8 +58,7 @@ const sampleEvents = [
     ],
     date: "2026-02-19T00:00:00Z",
     location: "Online",
-    imageUrl:
-      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0062.jpg",
+    imageUrl: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/events/online/IMG-20260124-WA0062.jpg`,
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
@@ -84,8 +82,7 @@ const sampleEvents = [
     ],
     date: "2026-02-19T00:00:00Z",
     location: "Online",
-    imageUrl:
-      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0061.jpg",
+    imageUrl: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/events/online/IMG-20260124-WA0061.jpg`,
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
@@ -108,8 +105,7 @@ const sampleEvents = [
     ],
     date: "2026-02-19T00:00:00Z",
     location: "Online",
-    imageUrl:
-      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0059.jpg",
+    imageUrl: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/events/online/IMG-20260124-WA0059.jpg`,
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
@@ -131,8 +127,7 @@ const sampleEvents = [
     ],
     date: "2026-02-19T00:00:00Z",
     location: "Online",
-    imageUrl:
-      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0060.jpg",
+    imageUrl: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/events/online/IMG-20260124-WA0060.jpg`,
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,
@@ -157,8 +152,7 @@ const sampleEvents = [
     ],
     date: "2026-02-19T00:00:00Z",
     location: "Online",
-    imageUrl:
-      "https://pub-6ed865235e424323859b654769c59e4e.r2.dev/events/online/IMG-20260124-WA0058.jpg",
+    imageUrl: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/events/online/IMG-20260124-WA0058.jpg`,
     category: "Online Event",
     capacity: 1000,
     registeredCount: 0,

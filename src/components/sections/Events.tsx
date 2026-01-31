@@ -6,10 +6,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Event3DCarousel from "@/components/Event3DCarousel";
 import { Event } from "@/types/event";
+import { useConfig } from "@/contexts/ConfigContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Events() {
+  const { config } = useConfig();
+  const { eventsSectionContent, siteConfig } = config;
   const containerRef = useRef(null);
   const [events, setEvents] = useState<Event[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -71,20 +74,20 @@ export default function Events() {
           <div className="inline-block events-badge">
             <div className="flex items-center justify-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md">
               <img
-                src="/logo/WH_LOGO.svg"
-                alt="Swastika Logo"
+                src={siteConfig.logos.main}
+                alt={siteConfig.name}
                 className="w-4 h-4 md:w-5 md:h-5 opacity-80"
               />
               <span className="text-xs font-mono text-accent-main uppercase tracking-widest">
-                Festival Highlights
+                {eventsSectionContent.badge}
               </span>
             </div>
           </div>
 
           <h2 className="events-title text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-cinzel text-white drop-shadow-2xl">
-            DISCOVER{" "}
+            {eventsSectionContent.title}{" "}
             <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-              EVENTS
+              {eventsSectionContent.highlight}
             </span>
           </h2>
         </div>

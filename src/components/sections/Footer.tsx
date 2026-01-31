@@ -7,9 +7,11 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Instagram, ArrowUpRight } from 'lucide-react';
 
-import { footerContent } from '@/data/content';
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function Footer() {
+    const { config } = useConfig();
+    const { footerContent } = config;
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const glowRef = useRef<HTMLDivElement>(null);
@@ -114,7 +116,7 @@ export default function Footer() {
                     {/* Navigation & Info */}
                     <div className="lg:col-span-4 flex flex-col justify-between gap-[4vh] pt-[1vh]">
                         <div className="animate-item space-y-[2vh]">
-                            <h3 className="font-jost text-sm uppercase tracking-[0.2em] text-red-500 font-semibold">Menu</h3>
+                            <h3 className="font-jost text-sm uppercase tracking-[0.2em] text-red-500 font-semibold">{footerContent.labels.menu}</h3>
                             <nav className="flex flex-col gap-[1vh]">
                                 {footerContent.navLinks.map((link) => (
                                     <Link
@@ -130,7 +132,7 @@ export default function Footer() {
                         </div>
 
                         <div className="animate-item space-y-[2vh]">
-                            <h3 className="font-jost text-sm uppercase tracking-[0.2em] text-red-500 font-semibold">Connect</h3>
+                            <h3 className="font-jost text-sm uppercase tracking-[0.2em] text-red-500 font-semibold">{footerContent.labels.connect}</h3>
 
                             {/* Email Link */}
                             <a
@@ -141,7 +143,7 @@ export default function Footer() {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
                                 </div>
                                 <div>
-                                    <p className="text-xs text-white/40 font-jost uppercase tracking-wider mb-1">Email us</p>
+                                    <p className="text-xs text-white/40 font-jost uppercase tracking-wider mb-1">{footerContent.labels.email}</p>
                                     <p className="text-[clamp(0.9rem,1.2vw,1.2rem)] text-white font-mono group-hover:text-red-100 transition-colors uppercase">{footerContent.email}</p>
                                 </div>
                             </a>
@@ -156,7 +158,7 @@ export default function Footer() {
                                     <Instagram size={24} />
                                 </div>
                                 <div>
-                                    <p className="text-xs text-white/40 font-jost uppercase tracking-wider mb-1">Follow us on</p>
+                                    <p className="text-xs text-white/40 font-jost uppercase tracking-wider mb-1">{footerContent.labels.follow}</p>
                                     <p className="text-[clamp(1rem,1.5vw,1.5rem)] text-white font-cinzel font-bold group-hover:text-red-100 transition-colors">{footerContent.social.instagram.handle}</p>
                                 </div>
                                 <ArrowUpRight className="ml-auto w-6 h-6 text-white/30 group-hover:text-white group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
@@ -181,7 +183,7 @@ export default function Footer() {
                     </div>
 
                     <p className="group relative z-10">
-                        Crafted by <Link href="/credits" className="flame-text cursor-pointer transition-colors">{footerContent.credits}</Link>
+                        {footerContent.labels.crafted} <Link href="/credits" className="flame-text cursor-pointer transition-colors">{footerContent.credits}</Link>
                     </p>
                 </div>
             </div>

@@ -4,8 +4,11 @@ import { useRef } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function CTA() {
+    const { config } = useConfig();
+    const { ctaContent } = config;
     const containerRef = useRef<HTMLElement>(null);
     const textContainerRef = useRef<HTMLDivElement>(null);
 
@@ -87,21 +90,21 @@ export default function CTA() {
                 {/* 1. DON'T MISS OUT */}
                 <div className="overflow-hidden w-full">
                     <h2 ref={titleRef} className="text-4xl md:text-6xl lg:text-8xl font-black font-syne text-white tracking-tighter mix-blend-difference hover:text-red-500 transition-colors duration-500">
-                        DON'T MISS OUT
+                        {ctaContent.line1}
                     </h2>
                 </div>
 
                 {/* 2. BE PART OF */}
                 <div className="overflow-hidden mt-2 md:mt-6">
                     <p className="text-lg md:text-2xl font-cinzel text-red-500 font-bold tracking-[0.3em] uppercase">
-                        BE PART OF
+                        {ctaContent.line2}
                     </p>
                 </div>
 
                 {/* 3. SWASTIKA */}
                 <div className="overflow-hidden w-full">
                     <h1 className="text-5xl md:text-8xl lg:text-[11rem] font-black font-syne text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-neutral-500 tracking-tighter leading-none glow-text drop-shadow-2xl">
-                        SWASTIKA
+                        {ctaContent.main}
                     </h1>
                 </div>
             </div>

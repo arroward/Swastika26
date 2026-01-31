@@ -51,3 +51,5 @@ next-env.d.ts
 **/public/events
 src/app/admin/
 src/app/dev/
+/src/data/config/
+/public/data.json

@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 import MainContainer from "@/components/MainContainer";
 import NotificationPermissionRequest from "@/components/NotificationPermissionRequest";
 import VisitorLogger from "@/components/VisitorLogger";
+import { ConfigProvider } from "@/contexts/ConfigContext";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -28,10 +29,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             <Preloader />
             <NotificationPermissionRequest />
             <VisitorLogger />
-            <Navbar />
-            <MainContainer>
-                {children}
-            </MainContainer>
+            <ConfigProvider>
+                <Navbar />
+                <MainContainer>
+                    {children}
+                </MainContainer>
+            </ConfigProvider>
         </div>
     );
 }

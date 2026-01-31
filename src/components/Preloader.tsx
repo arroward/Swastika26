@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLoading } from '@/components/LoadingProvider';
+import { useConfig } from '@/contexts/ConfigContext';
 import { usePathname } from 'next/navigation';
 import CinematicIntro from '@/components/splash-screens/CinematicIntro';
 import ClassicSplash from '@/components/splash-screens/ClassicSplash';
@@ -11,6 +12,7 @@ import { events } from '@/data/events';
 
 export default function Preloader() {
     const { isLoading, setIsLoading } = useLoading();
+    const { refreshConfig } = useConfig();
     const pathname = usePathname();
     const [introType, setIntroType] = useState<'classic' | 'cinematic'>(() => {
         if (appConfig.splashScreen.type === 'cinematic') return 'cinematic';
@@ -82,6 +84,7 @@ export default function Preloader() {
             });
 
             await Promise.all([
+                refreshConfig(), // Fetch dynamic config while preloading assets
                 Promise.all(preloadImages),
                 windowLoad,
                 new Promise(resolve => setTimeout(resolve, 2500)) // Min wait time

@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Ticket, Calendar, Clock, MapPin, User, Hash, Download, Share2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { ticketContent } from '@/data/content';
+
 // --- Individual Ticket Card Component ---
 
 interface TicketCardProps {
@@ -21,19 +23,19 @@ const TicketCard: React.FC<TicketCardProps> = ({
 }) => {
     const getTicketLabel = (type: string) => {
         switch (type) {
-            case 'combo': return 'ALL ACCESS PASS';
-            case 'day1': return 'DAY 1 PASS';
-            case 'day2': return 'DAY 2 PASS';
-            default: return 'EVENT PASS';
+            case 'combo': return ticketContent.types.combo;
+            case 'day1': return ticketContent.types.day1;
+            case 'day2': return ticketContent.types.day2;
+            default: return ticketContent.types.default;
         }
     };
 
     const getDateLabel = (type: string) => {
         switch (type) {
-            case 'combo': return 'FEB 20-21';
-            case 'day1': return 'FEB 20';
-            case 'day2': return 'FEB 21';
-            default: return 'FEB 20-21';
+            case 'combo': return ticketContent.dates.combo;
+            case 'day1': return ticketContent.dates.day1;
+            case 'day2': return ticketContent.dates.day2;
+            default: return ticketContent.dates.combo;
         }
     };
 
@@ -73,7 +75,7 @@ const TicketCard: React.FC<TicketCardProps> = ({
                         <div className="text-right">
                             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/5">
                                 <span className="text-[10px] font-bold text-white tracking-widest uppercase">
-                                    Ticket {index + 1} of {totalTickets}
+                                    {ticketContent.labels.ticket} {index + 1} of {totalTickets}
                                 </span>
                             </div>
                         </div>
@@ -81,7 +83,7 @@ const TicketCard: React.FC<TicketCardProps> = ({
 
                     {/* Main Title Area */}
                     <div className="mt-8">
-                        <p className="text-white/50 text-xs font-mono tracking-widest uppercase mb-2">SWASTIKA 26</p>
+                        <p className="text-white/50 text-xs font-mono tracking-widest uppercase mb-2">{ticketContent.eventTitle}</p>
                         <h2 className="text-3xl font-black text-white leading-none tracking-tighter uppercase break-words drop-shadow-lg">
                             {getTicketLabel(ticketType)}
                         </h2>
@@ -120,14 +122,14 @@ const TicketCard: React.FC<TicketCardProps> = ({
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1 flex items-center gap-1">
-                                    <User className="w-3 h-3" /> Name
+                                    <User className="w-3 h-3" /> {ticketContent.labels.name}
                                 </p>
                                 <p className="text-white text-sm font-bold truncate">{userName}</p>
                             </div>
 
                             <div>
                                 <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1 flex items-center gap-1">
-                                    <Calendar className="w-3 h-3" /> Date
+                                    <Calendar className="w-3 h-3" /> {ticketContent.labels.date}
                                 </p>
                                 <p className="text-white text-sm font-bold">{getDateLabel(ticketType)}</p>
                             </div>
@@ -135,15 +137,15 @@ const TicketCard: React.FC<TicketCardProps> = ({
                             <div className="col-span-2 pt-2 border-t border-white/5 flex justify-between items-center">
                                 <div>
                                     <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1 flex items-center gap-1">
-                                        <Clock className="w-3 h-3" /> Time
+                                        <Clock className="w-3 h-3" /> {ticketContent.labels.time}
                                     </p>
-                                    <p className="text-white text-sm font-bold">09:00 AM</p>
+                                    <p className="text-white text-sm font-bold">{ticketContent.time}</p>
                                 </div>
                                 <div className="text-right">
                                     <p className="text-[10px] text-white/40 uppercase tracking-wider mb-1">
-                                        Venue
+                                        {ticketContent.labels.venue}
                                     </p>
-                                    <p className="text-white text-sm font-bold">MBCET</p>
+                                    <p className="text-white text-sm font-bold">{ticketContent.venue}</p>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +153,7 @@ const TicketCard: React.FC<TicketCardProps> = ({
 
                     {/* Barcode Strip */}
                     <div className="mt-6 flex flex-col items-center">
-                        <p className="font-mono text-[10px] text-white/40 tracking-wider mb-1">BOOKING ID</p>
+                        <p className="font-mono text-[10px] text-white/40 tracking-wider mb-1">{ticketContent.labels.bookingId}</p>
                         <p className="text-center text-sm text-white font-mono tracking-widest">{uniqueId}</p>
                     </div>
                 </div>
@@ -212,8 +214,8 @@ const TicketWallet: React.FC<TicketTemplateProps> = ({
     return (
         <div className="flex flex-col items-center w-full max-w-5xl mx-auto">
             <div className="w-full text-center mb-8">
-                <h1 className="text-2xl md:text-3xl font-black text-white mb-2">YOUR WALLET</h1>
-                <p className="text-white/50 text-sm">Swipe to view your passes</p>
+                <h1 className="text-2xl md:text-3xl font-black text-white mb-2">{ticketContent.walletTitle}</h1>
+                <p className="text-white/50 text-sm">{ticketContent.walletSubtitle}</p>
             </div>
 
             {/* Scrollable Container (Horizontal Snap) */}
@@ -251,11 +253,11 @@ const TicketWallet: React.FC<TicketTemplateProps> = ({
             {/* Action Buttons */}
             <div className="flex gap-4 w-full justify-center max-w-sm px-4">
                 <button className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-colors shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-                    <Download className="w-5 h-5" /> Download All
+                    <Download className="w-5 h-5" /> {ticketContent.downloadButton}
                 </button>
             </div>
             <p className="text-white/40 text-xs text-center mt-6 max-w-md px-4">
-                Verify each ticket at the entrance. Swiping works best on mobile devices.
+                {ticketContent.footerMessage}
             </p>
         </div>
     );

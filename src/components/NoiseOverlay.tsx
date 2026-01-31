@@ -1,6 +1,6 @@
 'use client';
 
-import { siteConfig } from '@/config/site.config';
+import { siteConfig } from '@/data/content';
 
 export default function NoiseOverlay() {
     if (!siteConfig.effects.noise.enabled) return null;

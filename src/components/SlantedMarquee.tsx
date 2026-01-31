@@ -1,16 +1,7 @@
 'use client';
 
 import { motion } from "framer-motion";
-
-const defaultItems = [
-    "SWASTIKA.26",
-    "2026",
-    "FEB",
-    "20",
-    "21",
-    "NATIONAL LEVEL TECH FEST",
-    "MBCCET"
-];
+import { useConfig } from "@/contexts/ConfigContext";
 
 interface MarqueeRowProps {
     items: string[];
@@ -66,6 +57,8 @@ const MarqueeRow = ({ items, direction = 1, speed = 20 }: MarqueeRowProps) => {
 };
 
 export default function SlantedMarquee() {
+    const { config } = useConfig();
+    const defaultItems = config.marqueeContent;
     return (
         <div className="w-full h-full flex items-center justify-center overflow-hidden relative bg-black/20">
             {/* Background enhancement */}

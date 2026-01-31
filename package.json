@@ -12,7 +12,8 @@
     "verify-db": "dotenv -e .env -- tsx src/scripts/verify-database.ts",
     "fix-db": "dotenv -e .env -- tsx src/scripts/fix-database.ts",
     "test-db": "dotenv -e .env -- tsx src/scripts/test-relationships.ts",
-    "check-env": "dotenv -e .env -- tsx src/scripts/check-env.ts"
+    "check-env": "dotenv -e .env -- tsx src/scripts/check-env.ts",
+    "upload-config": "dotenv -e .env -- tsx scripts/upload-config.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.975.0",

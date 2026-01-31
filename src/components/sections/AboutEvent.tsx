@@ -4,11 +4,13 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { aboutEventContent } from '@/data/content';
+import { useConfig } from '@/contexts/ConfigContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AboutEvent() {
+    const { config } = useConfig();
+    const { aboutEventContent } = config;
     const containerRef = useRef(null);
     const titleRef = useRef(null);
     const yearRef = useRef(null);

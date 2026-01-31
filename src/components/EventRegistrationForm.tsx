@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import FormInput from "./FormInput";
 import { Event } from "@/types/event";
-import { siteConfig } from "@/config/site.config";
+import { siteConfig } from '@/data/content';
 import { QRCodeSVG } from "qrcode.react";
 
 interface EventRegistrationFormProps {

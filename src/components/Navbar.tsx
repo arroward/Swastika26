@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
+import { useConfig } from '@/contexts/ConfigContext';
 import { useGSAP } from '@gsap/react';
 
 export default function Navbar() {
@@ -25,16 +26,13 @@ export default function Navbar() {
 
 
 
+
+    // Use dynamic config
+    const { config } = useConfig();
+    const { siteConfig, footerContent } = config;
+
     // Menu Items
-    const menuItems = [
-        { title: "Home", href: "/#home" },
-        { title: "About", href: "/#about" },
-        { title: "Events", href: "/#events" },
-        { title: "Proshows", href: "/#proshow" },
-        { title: "Gallery", href: "/#gallery" },
-        { title: "Get Pass", href: "/pass" },
-        // { title: "Sponsors", href: "/#sponsors" },
-    ];
+    const menuItems = siteConfig.navigation;
 
     // Initial Entrance Animation
     useGSAP(() => {
@@ -122,7 +120,7 @@ export default function Navbar() {
                         className="w-7 h-7 md:w-8 md:h-8 opacity-90 group-hover:opacity-100 transition-opacity"
                     />
                     <span className="font-cinzel font-black text-lg md:text-xl tracking-tighter text-white group-hover:text-accent-main transition-colors duration-300">
-                        SWASTIKA<span className="text-accent-main text-2xl md:text-3xl leading-none">.</span>26
+                        {siteConfig.name}<span className="text-accent-main text-2xl md:text-3xl leading-none">.</span>{siteConfig.year.slice(-2)}
                     </span>
                 </Link>
 
@@ -174,12 +172,12 @@ export default function Navbar() {
                     <div ref={footerRef} className="absolute bottom-10 left-6 md:left-20 flex gap-8 text-white/40 font-mono text-xs md:text-sm">
                         <div className="flex flex-col">
                             <span className="text-white mb-1">CONTACT</span>
-                            <a href="mailto:swastika26@mbcpeermade.com" className="hover:text-accent-main transition-colors">swastika26@mbcpeermade.com</a>
+                            <a href={`mailto:${siteConfig.contact?.email || footerContent.email}`} className="hover:text-accent-main transition-colors">{siteConfig.contact?.email || footerContent.email}</a>
                         </div>
                         <div className="flex flex-col">
                             <span className="text-white mb-1">FOLLOW US</span>
                             <div className="flex gap-4">
-                                <a href="https://instagram.com/swastika_2k26" target="_blank" rel="noopener noreferrer" className="hover:text-accent-main transition-colors">IG</a>
+                                <a href={footerContent.social.instagram.url} target="_blank" rel="noopener noreferrer" className="hover:text-accent-main transition-colors">IG</a>
                             </div>
                         </div>
                     </div>

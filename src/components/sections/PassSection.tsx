@@ -6,10 +6,13 @@ import { ArrowRight, Ticket, Sparkles, Calendar, Music } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useConfig } from "@/contexts/ConfigContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function PassSection() {
+    const { config } = useConfig();
+    const { passSectionContent } = config;
     const container = useRef<HTMLElement>(null);
 
     useGSAP(() => {
@@ -48,14 +51,14 @@ export default function PassSection() {
 
                     {/* Content */}
                     <div className="space-y-6 text-center md:text-left w-full md:w-1/2">
-                        
+
                         {/* Heading */}
                         <h2 className="pass-title font-cinzel font-black text-3xl sm:text-4xl md:text-5xl leading-[0.95] tracking-tight">
-                            UNLOCK THE
+                            {passSectionContent.title.line1}
                             <br />
                             <span className="relative inline-block mt-1">
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-red-600 to-red-800">
-                                    EXPERIENCE
+                                    {passSectionContent.title.line2}
                                 </span>
                                 <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-red-600 via-red-500 to-transparent rounded-full" />
                             </span>
@@ -63,18 +66,18 @@ export default function PassSection() {
 
                         {/* Description */}
                         <p className="pass-desc text-gray-400 text-sm sm:text-base leading-relaxed max-w-lg mx-auto md:mx-0">
-                            Join for two unforgettable nights of music, energy, and pure celebration at Swastika 2026.
+                            {passSectionContent.description}
                         </p>
 
                         {/* Features */}
                         <div className="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start">
                             <div className="pass-feature flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                                 <Calendar className="w-3.5 h-3.5 text-red-500" />
-                                <span className="text-xs font-medium">2 Days</span>
+                                <span className="text-xs font-medium">{passSectionContent.features[0].text}</span>
                             </div>
                             <div className="pass-feature flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                                 <Music className="w-3.5 h-3.5 text-red-500" />
-                                <span className="text-xs font-medium">All Access</span>
+                                <span className="text-xs font-medium">{passSectionContent.features[1].text}</span>
                             </div>
                         </div>
 
@@ -84,7 +87,7 @@ export default function PassSection() {
                                 href="/pass"
                                 className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 font-bold text-sm overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] hover:scale-105 active:scale-95"
                             >
-                                <span className="relative z-10">Get Your Pass</span>
+                                <span className="relative z-10">{passSectionContent.cta}</span>
                                 <ArrowRight className="w-4 h-4 relative z-10 transition-transform group-hover:translate-x-1" />
                                 <div className="absolute inset-0 bg-gradient-to-r from-red-700 to-red-800 opacity-0 group-hover:opacity-100 transition-opacity" />
                             </Link>
@@ -120,9 +123,9 @@ export default function PassSection() {
                                         {/* Title */}
                                         <div className="text-center space-y-0.5">
                                             <h3 className="font-cinzel font-bold text-2xl tracking-tight">
-                                                Proshow Pass
+                                                {passSectionContent.card.title}
                                             </h3>
-                                            <p className="text-[10px] text-gray-500 uppercase tracking-widest">Swastika 2026</p>
+                                            <p className="text-[10px] text-gray-500 uppercase tracking-widest">{passSectionContent.card.subtitle}</p>
                                         </div>
 
                                         {/* Divider */}
@@ -133,15 +136,16 @@ export default function PassSection() {
                                             <div className="relative group/card">
                                                 <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity" />
                                                 <div className="relative p-2.5 rounded-xl bg-white/5 border border-white/10 text-center space-y-0.5 transition-transform hover:scale-105">
-                                                    <div className="font-cinzel font-black text-2xl sm:text-3xl">02</div>
-                                                    <div className="text-[9px] tracking-[0.2em] uppercase text-red-500 font-bold">Nights</div>
+                                                    <div className="font-cinzel font-black text-2xl sm:text-3xl">{passSectionContent.card.nights}</div>
+                                                    <div className="text-[9px] tracking-[0.2em] uppercase text-red-500 font-bold">{passSectionContent.card.nightsLabel}</div>
                                                 </div>
                                             </div>
 
 
                                         </div>
 
-                                        
+
+
                                     </div>
 
                                     {/* Bottom Accent */}

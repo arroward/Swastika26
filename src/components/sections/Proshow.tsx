@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import ProshowPanel from '@/components/ProshowPanel';
 
-import { proshowContent } from '@/data/content';
-
-const artists = proshowContent.artists;
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function Proshow() {
+    const { config } = useConfig();
+    const { proshowContent } = config;
+    const artists = proshowContent.artists;
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     return (

@@ -4,9 +4,11 @@ import { useRef, useState, useEffect } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { autoShowContent } from '@/data/content';
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function AutoShow() {
+    const { config } = useConfig();
+    const { autoShowContent } = config;
     const containerRef = useRef<HTMLElement>(null);
     const textRef = useRef<HTMLDivElement>(null);
     const [currentImageIdx, setCurrentImageIdx] = useState(0);
@@ -96,12 +98,12 @@ export default function AutoShow() {
                     </span>
 
                     <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-cinzel text-white tracking-tighter leading-[0.85] mb-6">
-                        AUTO<br className="hidden md:block" />
+                        {autoShowContent.displayTitle.line1}<br className="hidden md:block" />
                         <span
                             className="text-transparent bg-clip-text bg-gradient-to-b from-white to-white/20"
                             style={{ WebkitTextStroke: '1px rgba(255,255,255,0.1)' }}
                         >
-                            SHOW
+                            {autoShowContent.displayTitle.line2}
                         </span>
                     </h2>
 

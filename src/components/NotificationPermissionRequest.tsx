@@ -4,7 +4,7 @@ import { useFCM } from "@/hooks/use-fcm";
 import { Bell, Calendar, Zap } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { useLoading } from "@/components/LoadingProvider";
-import { siteConfig } from "@/config/site.config";
+import { siteConfig } from '@/data/content';
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 

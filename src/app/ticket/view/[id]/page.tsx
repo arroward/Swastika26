@@ -6,7 +6,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { Ticket, Calendar, CheckCircle2, XCircle, Clock, Share2, Download } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { siteConfig } from "@/config/site.config";
+import { siteConfig } from '@/data/content';
 
 interface TicketData {
     ticketId: string;

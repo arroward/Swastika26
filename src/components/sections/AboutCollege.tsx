@@ -4,9 +4,11 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 
-import { aboutCollegeContent } from '@/data/content';
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function AboutCollege() {
+    const { config } = useConfig();
+    const { aboutCollegeContent } = config;
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true, margin: "-20%" });
 
@@ -55,7 +57,7 @@ export default function AboutCollege() {
 
                         <div className="flex items-center gap-4">
                             <div className="h-[1px] w-20 bg-blue-500/50" />
-                            <span className="text-sm font-mono text-blue-300 uppercase tracking-widest">Est. {aboutCollegeContent.established}</span>
+                            <span className="text-sm font-mono text-blue-300 uppercase tracking-widest">{aboutCollegeContent.labels.est} {aboutCollegeContent.established}</span>
                         </div>
                     </motion.div>
 

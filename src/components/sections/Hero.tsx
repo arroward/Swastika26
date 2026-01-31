@@ -7,12 +7,13 @@ import { useLoading } from '@/components/LoadingProvider';
 import Countdown from '@/components/Countdown';
 
 import BackgroundGlows from '@/components/BackgroundGlows';
-import { siteConfig } from '@/config/site.config';
-import { heroContent } from '@/data/hero';
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function Hero() {
     const container = useRef(null);
     const { isLoading } = useLoading();
+    const { config } = useConfig();
+    const { siteConfig, heroContent } = config;
 
     useGSAP(() => {
         // Hero Text Reveal

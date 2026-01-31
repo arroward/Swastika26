@@ -10,7 +10,7 @@ interface ImageRowProps {
     speed?: number; // Duration in seconds
 }
 
-const GalleryImage = ({ src }: { src: string }) => {
+const GalleryImage = ({ src, fallback }: { src: string, fallback: string }) => {
     return (
         <img
             src={src}
@@ -19,13 +19,13 @@ const GalleryImage = ({ src }: { src: string }) => {
             loading="lazy"
             decoding="async"
             onError={(e) => {
-                e.currentTarget.src = process.env.NEXT_PUBLIC_FALLBACK_IMAGE_URL || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop';
+                e.currentTarget.src = fallback;
             }}
         />
     );
 };
 
-const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
+const ImageRow = ({ images, direction = 1, speed = 20, fallback }: ImageRowProps & { fallback: string }) => {
     const rowRef = useRef<HTMLDivElement>(null);
     const firstPartRef = useRef<HTMLDivElement>(null);
     const secondPartRef = useRef<HTMLDivElement>(null);
@@ -83,7 +83,7 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
                         className="relative h-[40vh] min-h-[220px] md:h-[45vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
                     >
                         <div className="w-full h-full transition-transform duration-500 group-hover:scale-110">
-                            <GalleryImage src={src} />
+                            <GalleryImage src={src} fallback={fallback} />
                         </div>
 
                         {/* Tech Overlays */}
@@ -110,7 +110,7 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
                         className="relative h-[40vh] min-h-[220px] md:h-[45vh] aspect-[16/10] overflow-hidden border border-white/5 bg-gray-900 group"
                     >
                         <div className="w-full h-full transition-transform duration-500 group-hover:scale-110">
-                            <GalleryImage src={src} />
+                            <GalleryImage src={src} fallback={fallback} />
                         </div>
 
                         {/* Tech Overlays */}
@@ -128,9 +128,11 @@ const ImageRow = ({ images, direction = 1, speed = 20 }: ImageRowProps) => {
     );
 };
 
-import { siteConfig } from "@/config/site.config";
+import { useConfig } from '@/contexts/ConfigContext';
 
 export default function SlantedImageGallery({ images = [] }: { images: string[] }) {
+    const { config } = useConfig();
+    const { siteConfig } = config;
     const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
     useEffect(() => {
@@ -169,9 +171,9 @@ export default function SlantedImageGallery({ images = [] }: { images: string[] 
 
     return (
         <div className="flex flex-col gap-0 w-full h-full justify-center">
-            {row1.length > 0 && <ImageRow images={row1} direction={1} speed={50 * baseSpeed} />}
-            {row2.length > 0 && <ImageRow images={row2} direction={-1} speed={40 * baseSpeed} />}
-            {row3.length > 0 && <ImageRow images={row3} direction={1} speed={60 * baseSpeed} />}
+            {row1.length > 0 && <ImageRow images={row1} direction={1} speed={50 * baseSpeed} fallback={siteConfig.logos.fallback} />}
+            {row2.length > 0 && <ImageRow images={row2} direction={-1} speed={40 * baseSpeed} fallback={siteConfig.logos.fallback} />}
+            {row3.length > 0 && <ImageRow images={row3} direction={1} speed={60 * baseSpeed} fallback={siteConfig.logos.fallback} />}
         </div>
     );
 }

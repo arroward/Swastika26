@@ -1,42 +1,4 @@
-export const siteConfig = {
-    name: "Swastika",
-    year: "2026",
-    tagline: "Techno Cultural Fest",
-    fullname: "SWASTIKA 2026",
-    dates: {
-        display: "Feb 20 • 21",
-        start: "2026-02-20T00:00:00",
-        end: "2026-02-21T23:59:59"
-    },
-    logos: {
-        main: "/logo/WH_LOGO.svg",
-        alt: "/logo/BL_LOGO.svg", // Assuming BL_LOGO exists based on Preloader
-        preload: [
-            '/logo/WH_LOGO.svg',
-            '/logo/BL_LOGO.svg',
-            '/logo/wh_sw.png',
-        ]
-    },
-    meta: {
-        title: "Swastika 2026 - Techno Cultural Fest",
-        description: "National Level Techno-Cultural Fest ",
-        themeColor: "#dc2626"
-    },
-    effects: {
-        noise: {
-            enabled: true,
-            opacity: 0.01,
-            pattern: "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"
-        }
-    },
-    gallery: {
-        speed: 2 // Higher = Slower (multiplier for the base durations)
-    },
-    payment: {
-        upiId: "8078069928@apl"
-    },
-    contact: {
-        email: "support@swastika.live",
-        phone: "+91 98765 43210"
-    }
-};
+
+import data from '@/data/data.json';
+
+export const siteConfig = data.siteConfig;
