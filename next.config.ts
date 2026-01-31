@@ -43,6 +43,10 @@ export default withPWA({
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
+  fallbacks: {
+    document: "/offline.html",
+    image: "/logo/wh_sw.png",
+  },
   workboxOptions: {
     disableDevLogs: true,
     skipWaiting: true,
