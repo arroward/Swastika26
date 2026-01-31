@@ -1,0 +1,30 @@
+{
+    "ticketContent": {
+        "walletTitle": "YOUR WALLET",
+        "walletSubtitle": "Swipe to view your passes",
+        "downloadButton": "Download All",
+        "footerMessage": "Verify each ticket at the entrance. Swiping works best on mobile devices.",
+        "eventTitle": "SWASTIKA 26",
+        "venue": "MBCET",
+        "time": "09:00 AM",
+        "labels": {
+            "bookingId": "BOOKING ID",
+            "venue": "Venue",
+            "time": "Time",
+            "date": "Date",
+            "name": "Name",
+            "ticket": "Ticket"
+        },
+        "types": {
+            "combo": "ALL ACCESS PASS",
+            "day1": "DAY 1 PASS",
+            "day2": "DAY 2 PASS",
+            "default": "EVENT PASS"
+        },
+        "dates": {
+            "combo": "FEB 20-21",
+            "day1": "FEB 20",
+            "day2": "FEB 21"
+        }
+    }
+}

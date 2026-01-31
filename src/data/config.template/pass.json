@@ -1,0 +1,111 @@
+{
+    "passSectionContent": {
+        "badge": "Limited Passes",
+        "title": {
+            "line1": "UNLOCK THE",
+            "line2": "EXPERIENCE"
+        },
+        "description": "Join for two unforgettable nights of music, energy, and pure celebration at Swastika 2026.",
+        "features": [
+            {
+                "icon": "Calendar",
+                "text": "2 Days"
+            },
+            {
+                "icon": "Music",
+                "text": "All Access"
+            }
+        ],
+        "cta": "Get Your Pass",
+        "card": {
+            "title": "Proshow Pass",
+            "subtitle": "Swastika 2026",
+            "nights": "02",
+            "nightsLabel": "Nights",
+            "badge": "Available Now"
+        }
+    },
+    "passPageContent": {
+        "header": {
+            "title": "Get Your Pass",
+            "subtitle": "Proshow Access • Swastika '26"
+        },
+        "steps": [
+            "Selection",
+            "Details",
+            "Preview",
+            "Payment"
+        ],
+        "selection": {
+            "title": "Select Tickets",
+            "subtitle": "Choose passes for you and your friends",
+            "options": {
+                "day1": {
+                    "id": "day1",
+                    "label": "Day 1",
+                    "price": 50,
+                    "details": {
+                        "title": "Day 1 Access - February 20",
+                        "artist": "MQUBE BAND",
+                        "genre": "Live Music Performance",
+                        "description": "Experience the energy of MQUBE BAND live! Your pass grants you entry to the Day 1 Proshow."
+                    }
+                },
+                "day2": {
+                    "id": "day2",
+                    "label": "Day 2",
+                    "price": 60,
+                    "details": {
+                        "title": "Day 2 Access - February 21",
+                        "artist": "FEJO",
+                        "genre": "Rap Music Performance",
+                        "description": "Get ready for the electrifying performance of FEJO! Don't miss the biggest night of Swastika '26."
+                    }
+                },
+                "combo": {
+                    "id": "combo",
+                    "label": "Both Days",
+                    "price": 110,
+                    "details": {
+                        "title": "All Access Combo",
+                        "artist": "MQUBE BAND + FEJO",
+                        "genre": "Full Event Experience",
+                        "description": "The ultimate Swastika experience! Get seamless access to both proshows."
+                    }
+                }
+            }
+        },
+        "details": {
+            "title": "Your Details",
+            "labels": {
+                "name": "Full Name",
+                "email": "Email Address",
+                "phone": "Phone Number",
+                "emailHint": "Your pass will be sent here."
+            }
+        },
+        "preview": {
+            "title": "Order Summary",
+            "subtitle": "Please review your details before payment",
+            "passDetailsLabel": "Pass Details",
+            "totalLabel": "Total",
+            "attendeeLabel": "Attendee Info"
+        },
+        "payment": {
+            "title": "Payment",
+            "instructions": "Scan the QR or click below to pay",
+            "transactionLabel": "Transaction ID / UTR",
+            "transactionHint": "After payment, enter the Reference ID / UTR number found in your UPI app.",
+            "buttons": {
+                "verify": "Verifying...",
+                "complete": "Complete Booking"
+            }
+        },
+        "success": {
+            "title": "Booking Submitted!",
+            "message": "Thank you, {name}. We have received your payment details.",
+            "subMessage": "Your pass will be sent to {email} within 24 hours after verification.",
+            "homeButton": "Return Home"
+        }
+    }
+}
