@@ -15,6 +15,17 @@ import pass from './config/pass.json';
 import cta_marquee from './config/cta_marquee.json';
 import eventsData from './config/events.json';
 
+const R2_BASE = "https://pub-6ed865235e424323859b654769c59e4e.r2.dev";
+
+// Static mapping for environment variables to prevent hydration mismatch
+// Next.js requires literal access to bundle NEXT_PUBLIC_ variables to the client
+const envMap: Record<string, string | undefined> = {
+    "NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL": process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL,
+    "NEXT_PUBLIC_PROSHOW_1": process.env.NEXT_PUBLIC_PROSHOW_1,
+    "NEXT_PUBLIC_PROSHOW_2": process.env.NEXT_PUBLIC_PROSHOW_2,
+    "NEXT_PUBLIC_R2_PUBLIC_URL": process.env.NEXT_PUBLIC_R2_PUBLIC_URL,
+};
+
 // Icon Map
 const iconMap: { [key: string]: LucideIcon } = {
     Trophy,
@@ -36,27 +47,33 @@ export const marqueeContent = cta_marquee.marqueeContent;
 export const events = eventsData.events;
 export const eventsSectionContent = eventsData.eventsSectionContent;
 
-// 2. Hydration Logic (Using local paths from JSON without R2 prefixing)
+// 2. Hydration Logic
+const withBase = (path: string) => {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    return `${R2_BASE}${path.startsWith('/') ? '' : '/'}${path}`;
+};
+
 // Proshows
 export const proshowContent = {
     ...proshows.proshowContent,
     artists: proshows.proshowContent.artists.map(artist => ({
         ...artist,
-        image: process.env[artist.envKey as keyof NodeJS.ProcessEnv] || artist.imagePath
+        image: envMap[artist.envKey] || withBase(artist.imagePath)
     }))
 };
 
 // About Event
 export const aboutEventContent = {
     ...about.aboutEventContent,
-    image: process.env[about.aboutEventContent.envKey as keyof NodeJS.ProcessEnv] || about.aboutEventContent.imagePath
+    image: envMap[about.aboutEventContent.envKey] || withBase(about.aboutEventContent.imagePath)
 };
 
 // About College
 export const aboutCollegeContent = {
     ...about.aboutCollegeContent,
     images: {
-        campus: process.env[about.aboutCollegeContent.images.envKey as keyof NodeJS.ProcessEnv] || about.aboutCollegeContent.images.campusPath
+        campus: envMap[about.aboutCollegeContent.images.envKey] || withBase(about.aboutCollegeContent.images.campusPath)
     },
     stats: about.aboutCollegeContent.stats.map(stat => ({
         ...stat,
@@ -67,11 +84,14 @@ export const aboutCollegeContent = {
 // Auto Show
 export const autoShowContent = {
     ...autoshow.autoShowContent,
-    images: autoshow.autoShowContent.images
+    images: autoshow.autoShowContent.images.map(path => withBase(path))
 };
 
 // Developers
-export const developers = developersData.developers;
+export const developers = developersData.developers.map(dev => ({
+    ...dev,
+    image: withBase(dev.image)
+}));
 
 // 3. Final Unified Export
 const finalData = {

@@ -11,39 +11,46 @@ const iconMap: { [key: string]: LucideIcon } = {
     Calendar, Music, MapPin, Clock, Ticket
 };
 
+const R2_BASE = "https://cdn.swastika.live/";
+
+// Static mapping for environment variables to prevent hydration mismatch
+const envMap: Record<string, string | undefined> = {
+    "NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL": process.env.NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL,
+    "NEXT_PUBLIC_PROSHOW_1": process.env.NEXT_PUBLIC_PROSHOW_1,
+    "NEXT_PUBLIC_PROSHOW_2": process.env.NEXT_PUBLIC_PROSHOW_2,
+    "NEXT_PUBLIC_R2_PUBLIC_URL": process.env.NEXT_PUBLIC_R2_PUBLIC_URL,
+};
+
+const withBase = (path: string) => {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    return `${R2_BASE}${path.startsWith('/') ? '' : '/'}${path}`;
+};
+
 // Hydration Functions
 
 export const hydrateProshow = (content: any) => ({
     ...content,
     artists: content.artists.map((artist: any) => ({
         ...artist,
-        image: (artist.envKey && process.env[artist.envKey]) || artist.imagePath
+        image: (artist.envKey && envMap[artist.envKey]) || withBase(artist.imagePath)
     }))
 });
 
 export const hydrateAboutEvent = (content: any) => ({
     ...content,
-    image: (content.envKey && process.env[content.envKey]) || content.imagePath
+    image: (content.envKey && envMap[content.envKey]) || withBase(content.imagePath)
 });
 
 export const hydrateAboutCollege = (content: any) => ({
     ...content,
     images: {
-        campus: (content.images.envKey && process.env[content.images.envKey]) || content.images.campusPath
+        campus: (content.images.envKey && envMap[content.images.envKey]) || withBase(content.images.campusPath)
     },
     stats: content.stats.map((stat: any) => ({
         ...stat,
         icon: iconMap[stat.icon] || Trophy
     }))
-});
-
-export const hydrateAutoShow = (content: any) => ({
-    ...content,
-    images: content.images
-});
-
-export const hydratePassSection = (content: any) => ({
-    ...content
 });
 
 export const hydrateAll = (data: any) => {
@@ -52,7 +59,5 @@ export const hydrateAll = (data: any) => {
         proshowContent: hydrateProshow(data.proshowContent),
         aboutEventContent: hydrateAboutEvent(data.aboutEventContent),
         aboutCollegeContent: hydrateAboutCollege(data.aboutCollegeContent),
-        autoShowContent: hydrateAutoShow(data.autoShowContent),
-        passSectionContent: hydratePassSection(data.passSectionContent)
     };
 };

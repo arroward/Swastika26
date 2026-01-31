@@ -22,10 +22,7 @@ export default function Navbar() {
     const defaultPatternRef = useRef<HTMLDivElement>(null);
 
     // Timeline reference
-    const tl = useRef<any>(null);
-
-
-
+    const tl = useRef<gsap.core.Timeline | null>(null);
 
     // Use dynamic config
     const { config } = useConfig();
@@ -47,50 +44,58 @@ export default function Navbar() {
     useGSAP(() => {
         if (!overlayRef.current) return;
 
-        // Create timeline only once
-        if (!tl.current) {
-            const menuLinks = menuListRef.current?.querySelectorAll('a');
+        // Recreate timeline only when menu items change
+        const menuLinks = menuListRef.current?.querySelectorAll('a');
 
-            tl.current = gsap.timeline({ paused: true })
-                .to(overlayRef.current, {
-                    autoAlpha: 1,
+        tl.current = gsap.timeline({ paused: true })
+            .to(overlayRef.current, {
+                autoAlpha: 1,
+                duration: 0.4,
+                ease: "power2.inOut"
+            })
+            .fromTo(menuLinks || [],
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
                     duration: 0.4,
-                    ease: "power2.inOut"
-                })
-                .fromTo(menuLinks || [],
-                    { y: 50, opacity: 0 },
-                    {
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.4,
-                        stagger: 0.05,
-                        ease: "power3.out"
-                    },
-                    "-=0.15"
-                )
-                .fromTo(footerRef.current,
-                    { opacity: 0, y: 20 },
-                    { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
-                    "-=0.3"
-                );
-        }
+                    stagger: 0.05,
+                    ease: "power3.out"
+                },
+                "-=0.15"
+            )
+            .fromTo(footerRef.current,
+                { opacity: 0, y: 20 },
+                { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+                "-=0.3"
+            );
 
-        // Icon Animation
+        return () => {
+            if (tl.current) {
+                tl.current.kill();
+                tl.current = null;
+            }
+        };
+    }, { dependencies: [menuItems] });
+
+    // Handle Open/Close state
+    useGSAP(() => {
+        if (!tl.current) return;
+
         if (isOpen) {
             tl.current.timeScale(1.5).play();
             gsap.to(line1Ref.current, { rotate: 45, y: 8, duration: 0.3, ease: "back.out(1.7)" });
             gsap.to(line2Ref.current, { opacity: 0, x: 20, duration: 0.2 });
             gsap.to(line3Ref.current, { rotate: -45, y: -8, duration: 0.3, ease: "back.out(1.7)" });
-            document.body.style.overflow = 'hidden'; // Lock Body Scroll
+            document.body.style.overflow = 'hidden';
         } else {
             tl.current.timeScale(2.0).reverse();
             gsap.to(line1Ref.current, { rotate: 0, y: 0, duration: 0.3, ease: "power2.out" });
             gsap.to(line2Ref.current, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" });
             gsap.to(line3Ref.current, { rotate: 0, y: 0, duration: 0.3, ease: "power2.out" });
-            document.body.style.overflow = ''; // Unlock Body Scroll
+            document.body.style.overflow = '';
         }
-
-    }, { dependencies: [isOpen] });
+    }, { dependencies: [isOpen, menuItems] });
 
     // Hover Image Reveal Animation
     useGSAP(() => {
