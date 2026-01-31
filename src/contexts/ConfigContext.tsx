@@ -10,12 +10,12 @@ type ConfigType = typeof staticContent;
 
 interface ConfigContextType {
     config: ConfigType;
-    refreshConfig: () => Promise<void>;
+    refreshConfig: (force?: boolean) => Promise<ConfigType | null>;
 }
 
 const ConfigContext = createContext<ConfigContextType>({
     config: staticContent,
-    refreshConfig: async () => { },
+    refreshConfig: async () => null,
 });
 
 export const useConfig = () => useContext(ConfigContext);
@@ -29,7 +29,7 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
         refreshConfig(true);
     }, []);
 
-    const refreshConfig = async (force: boolean = false) => {
+    const refreshConfig = async (force: boolean = false): Promise<ConfigType | null> => {
         try {
             // Check cache (5 minutes)
             const CACHE_KEY = 'site_config_cache';
@@ -40,8 +40,7 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
                 const { timestamp, data } = JSON.parse(cached);
                 if (Date.now() - timestamp < CACHE_DURATION) {
                     console.log("Using cached configuration.");
-                    hydrateAndSet(data);
-                    return;
+                    return hydrateAndSet(data);
                 }
             }
 
@@ -50,7 +49,7 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
 
             if (!REMOTE_URL) {
                 console.log("Using local static configuration.");
-                return;
+                return config;
             }
 
             console.log(`Syncing from remote: ${REMOTE_URL}`);
@@ -65,19 +64,23 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
                 data: rawData
             }));
 
-            hydrateAndSet(rawData);
             console.log("✅ Configuration successfully synced from remote.");
+            return hydrateAndSet(rawData);
         } catch (err) {
             console.warn("⚠️ Remote sync failed. Using local static content.", err);
+            return config;
         }
     };
 
     const hydrateAndSet = (rawData: any) => {
         const hydratedData = hydrateAll(rawData);
-        setConfig(prev => ({
-            ...prev,
+        const nextConfig = {
+            ...staticContent, // Base static stuff (icons, etc)
             ...hydratedData
-        }));
+        } as ConfigType;
+
+        setConfig(nextConfig);
+        return nextConfig;
     };
 
     return (

@@ -11,10 +11,10 @@ import { proshowContent, aboutEventContent, aboutCollegeContent, autoShowContent
 
 export default function Preloader() {
     const { isLoading, setIsLoading } = useLoading();
-    const { refreshConfig } = useConfig();
+    const { config, refreshConfig } = useConfig();
     const pathname = usePathname();
     const [introType, setIntroType] = useState<'classic' | 'cinematic'>(() => {
-        if (appConfig.splashScreen.type === 'cinematic') return 'cinematic';
+        if (config.appConfig.splashScreen.type === 'cinematic') return 'cinematic';
         return 'classic';
     });
     const [progress, setProgress] = useState(0);
@@ -22,14 +22,13 @@ export default function Preloader() {
 
     // Handle Random Splash Selection
     useEffect(() => {
-        if (appConfig.splashScreen.type === 'random') {
+        if (config.appConfig.splashScreen.type === 'random') {
             const lastType = localStorage.getItem('last_splash_type') as 'classic' | 'cinematic' | null;
-            // Alternate between cinematic and classic
             const nextType = lastType === 'cinematic' ? 'classic' : 'cinematic';
             setIntroType(nextType);
             localStorage.setItem('last_splash_type', nextType);
         }
-    }, []);
+    }, [config.appConfig.splashScreen.type]);
 
     // Skip preloader on dev route
     useEffect(() => {
@@ -38,62 +37,104 @@ export default function Preloader() {
         }
     }, [pathname, setIsLoading]);
 
-    // Asset Loading Logic (Runs regardless of intro type, but mainly drives Classic)
+    // Enhanced Asset Loading System
     useEffect(() => {
         if (!isLoading) return;
 
-        const loadAssets = async () => {
-            const imagesToPreload = [
-                '/logo/WH_LOGO.svg',
-                '/logo/BL_LOGO.svg',
-                '/logo/wh_sw.png',
-                ...(proshowContent.artists.map((a) => a.image).filter(Boolean) as string[]),
-                aboutEventContent.image,
-                aboutCollegeContent.images.campus,
-                ...autoShowContent.images,
-                ...events.map((e) => e.image),
-            ].filter(Boolean) as string[];
+        const loadAllResources = async () => {
+            try {
+                // 1. First, sync the dynamic configuration (Data Preload)
+                // This ensures we have the latest image URLs from R2 before we start preloading them
 
-            let loadedCount = 0;
-            const totalResources = imagesToPreload.length;
+                const [refreshedConfig, galleryImages] = await Promise.all([
+                    refreshConfig(),
+                    fetch('/api/gallery').then(res => res.ok ? res.json() : []).catch(() => [])
+                ]);
 
-            const preloadImages = imagesToPreload.map((src) => {
-                return new Promise((resolve) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        loadedCount++;
-                        setProgress(Math.round((loadedCount / totalResources) * 100));
-                        resolve(src);
-                    };
-                    img.onerror = () => {
-                        loadedCount++;
-                        setProgress(Math.round((loadedCount / totalResources) * 100));
-                        resolve(src);
-                    };
-                    img.src = src;
+                const latestConfig = refreshedConfig || config;
+
+                // 2. Extract all discoverable assets from the hydrated config
+                const {
+                    proshowContent,
+                    aboutEventContent,
+                    aboutCollegeContent,
+                    autoShowContent,
+                    events,
+                    siteConfig
+                } = latestConfig;
+
+                const criticalAssets = new Set<string>([
+                    siteConfig.logos.main,
+                    siteConfig.logos.alt,
+                    ...(siteConfig.logos.preload || []),
+                    aboutEventContent.image,
+                    aboutCollegeContent.images.campus,
+                    ...(Array.isArray(galleryImages) ? galleryImages.slice(0, 15) : [])
+                ]);
+
+                // Add secondary assets
+                proshowContent.artists.forEach(a => { if (a.image) criticalAssets.add(a.image); });
+                autoShowContent.images.forEach(img => { if (img) criticalAssets.add(img); });
+                events.forEach(e => { if (e.image) criticalAssets.add(e.image); });
+
+                const assetsArray = Array.from(criticalAssets).filter(Boolean);
+                const totalResources = assetsArray.length + 1; // +1 for fonts
+                let loadedCount = 0;
+
+                const updateProgress = () => {
+                    loadedCount++;
+                    setProgress(Math.round((loadedCount / totalResources) * 100));
+                };
+
+                // 3. Parallel Preloading: Images + Fonts + Min Wait
+                const imagePromises = assetsArray.map(src => {
+                    return new Promise((resolve) => {
+                        const img = new Image();
+                        img.src = src;
+
+                        const handleLoad = async () => {
+                            try {
+                                // Modern browser optimization: pre-decode image to offload main thread
+                                if ('decode' in img) {
+                                    await img.decode();
+                                }
+                            } catch (e) {
+                                // Ignore decode errors
+                            }
+                            updateProgress();
+                            resolve(src);
+                        };
+
+                        img.onload = handleLoad;
+                        img.onerror = () => {
+                            updateProgress();
+                            resolve(src);
+                        };
+                    });
                 });
-            });
 
-            const windowLoad = new Promise((resolve) => {
-                if (document.readyState === 'complete') {
-                    resolve(true);
-                } else {
-                    window.addEventListener('load', () => resolve(true));
-                }
-            });
+                const fontPromise = document.fonts ? document.fonts.ready.then(() => {
+                    updateProgress();
+                    return true;
+                }) : Promise.resolve(true).then(updateProgress);
 
-            await Promise.all([
-                refreshConfig(), // Fetch dynamic config while preloading assets
-                Promise.all(preloadImages),
-                windowLoad,
-                new Promise(resolve => setTimeout(resolve, 2500)) // Min wait time
-            ]);
+                const minWait = new Promise(resolve => setTimeout(resolve, 2800)); // Minimum cinematic beat
 
-            setIsAssetsLoaded(true);
+                await Promise.all([
+                    ...imagePromises,
+                    fontPromise,
+                    minWait
+                ]);
+
+                setIsAssetsLoaded(true);
+            } catch (err) {
+                console.error("Critical preloading failure:", err);
+                setIsAssetsLoaded(true); // Fallback to let user in
+            }
         };
 
-        loadAssets();
-    }, [isLoading]);
+        loadAllResources();
+    }, [isLoading, refreshConfig]); // refreshConfig is stable from context
 
     if (!isLoading) return null;
 
