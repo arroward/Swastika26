@@ -22,7 +22,7 @@ function initConfig() {
     console.log('Configuration initialized for build.');
 }
 
+initConfig();
+
 // Also run the merge script to update public/data.json
 require('./merge-config.js');
-
-initConfig();

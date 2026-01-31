@@ -7,8 +7,7 @@ import { usePathname } from 'next/navigation';
 import CinematicIntro from '@/components/splash-screens/CinematicIntro';
 import ClassicSplash from '@/components/splash-screens/ClassicSplash';
 
-import { proshowContent, aboutEventContent, aboutCollegeContent, autoShowContent, appConfig } from '@/data/content';
-import { events } from '@/data/events';
+import { proshowContent, aboutEventContent, aboutCollegeContent, autoShowContent, appConfig, events } from '@/data/content';
 
 export default function Preloader() {
     const { isLoading, setIsLoading } = useLoading();
