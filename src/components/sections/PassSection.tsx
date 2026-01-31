@@ -1,11 +1,36 @@
 "use client";
 
+import { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, Ticket, Sparkles, Calendar, Music } from "lucide-react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function PassSection() {
+    const container = useRef<HTMLElement>(null);
+
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: container.current,
+                start: "top 60%",
+                toggleActions: "play none none reverse"
+            }
+        });
+
+        tl.from(".pass-badge", { y: -20, opacity: 0, duration: 0.6, ease: "back.out(1.7)" })
+            .from(".pass-title", { y: 30, opacity: 0, duration: 0.8, ease: "power3.out" }, "-=0.4")
+            .from(".pass-desc", { y: 20, opacity: 0, duration: 0.8, ease: "power2.out" }, "-=0.6")
+            .from(".pass-feature", { y: 20, opacity: 0, duration: 0.6, stagger: 0.1, ease: "power2.out" }, "-=0.6")
+            .from(".pass-cta", { scale: 0.9, opacity: 0, duration: 0.6, ease: "back.out(1.7)" }, "-=0.4")
+            .from(".pass-card", { x: 50, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.8");
+    }, { scope: container });
+
     return (
-        <section className="w-full relative h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] flex items-center justify-center overflow-hidden bg-[#050505] panel snap-start snap-always">
+        <section ref={container} className="w-full relative h-[calc(100dvh-5rem)] md:h-[calc(100dvh-7rem)] flex items-center justify-center overflow-hidden bg-[#050505] panel snap-start snap-always">
             {/* Animated Background Gradients */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(220,38,38,0.15),transparent_50%)]" />
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(153,27,27,0.12),transparent_50%)]" />
@@ -19,18 +44,13 @@ export default function PassSection() {
             <div className="absolute bottom-32 left-[20%] w-2.5 h-2.5 bg-red-600/20 rounded-full animate-pulse delay-700" />
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10 w-full">
-                <div className="flex flex-col items-center gap-8 sm:gap-10 max-w-5xl mx-auto">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">
 
                     {/* Content */}
-                    <div className="space-y-4 sm:space-y-5 text-center w-full">
-                        {/* Badge
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-950/30 border border-red-900/50 backdrop-blur-sm">
-                            <Sparkles className="w-3 h-3 text-red-500" />
-                            <span className="text-[10px] font-semibold tracking-wider uppercase text-red-400">Limited Passes</span>
-                        </div> */}
-
+                    <div className="space-y-6 text-center md:text-left w-full md:w-1/2">
+                        
                         {/* Heading */}
-                        <h2 className="font-cinzel font-black text-3xl sm:text-4xl md:text-5xl leading-[0.95] tracking-tight">
+                        <h2 className="pass-title font-cinzel font-black text-3xl sm:text-4xl md:text-5xl leading-[0.95] tracking-tight">
                             UNLOCK THE
                             <br />
                             <span className="relative inline-block mt-1">
@@ -42,24 +62,24 @@ export default function PassSection() {
                         </h2>
 
                         {/* Description */}
-                        <p className="text-gray-400 text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
+                        <p className="pass-desc text-gray-400 text-sm sm:text-base leading-relaxed max-w-lg mx-auto md:mx-0">
                             Join for two unforgettable nights of music, energy, and pure celebration at Swastika 2026.
                         </p>
 
                         {/* Features */}
-                        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center md:justify-start">
+                            <div className="pass-feature flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                                 <Calendar className="w-3.5 h-3.5 text-red-500" />
                                 <span className="text-xs font-medium">2 Days</span>
                             </div>
-                            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                            <div className="pass-feature flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                                 <Music className="w-3.5 h-3.5 text-red-500" />
                                 <span className="text-xs font-medium">All Access</span>
                             </div>
                         </div>
 
                         {/* CTA Button */}
-                        <div className="flex justify-center pt-2">
+                        <div className="pass-cta flex justify-center md:justify-start pt-2">
                             <Link
                                 href="/pass"
                                 className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-red-600 to-red-700 font-bold text-sm overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] hover:scale-105 active:scale-95"
@@ -72,7 +92,7 @@ export default function PassSection() {
                     </div>
 
                     {/* Ticket Card */}
-                    <div className="flex justify-center items-center w-full">
+                    <div className="pass-card flex justify-center items-center w-full md:w-1/2">
                         <div className="relative group">
                             {/* Glow Effect */}
                             <div className="absolute -inset-2 sm:-inset-3 bg-gradient-to-r from-red-600 via-red-500 to-red-700 rounded-3xl opacity-30 blur-xl group-hover:opacity-50 transition-opacity duration-500" />
@@ -109,7 +129,7 @@ export default function PassSection() {
                                         <div className="relative h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
                                         {/* Info Grid */}
-                                        <div className="grid grid-cols-2 gap-2.5">
+                                        <div className="grid grid-cols-1 gap-2.5">
                                             <div className="relative group/card">
                                                 <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity" />
                                                 <div className="relative p-2.5 rounded-xl bg-white/5 border border-white/10 text-center space-y-0.5 transition-transform hover:scale-105">
@@ -118,20 +138,10 @@ export default function PassSection() {
                                                 </div>
                                             </div>
 
-                                            <div className="relative group/card">
-                                                <div className="absolute inset-0 bg-gradient-to-br from-red-600/10 to-transparent rounded-xl opacity-0 group-hover/card:opacity-100 transition-opacity" />
-                                                <div className="relative p-2.5 rounded-xl bg-white/5 border border-white/10 text-center space-y-0.5 transition-transform hover:scale-105">
-                                                    <div className="font-cinzel font-black text-2xl sm:text-3xl">∞</div>
-                                                    <div className="text-[9px] tracking-[0.2em] uppercase text-red-500 font-bold">Access</div>
-                                                </div>
-                                            </div>
+
                                         </div>
 
-                                        {/* Bottom Badge
-                                        <div className="flex items-center justify-center gap-1.5 pt-0.5">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                                            <span className="text-[10px] text-gray-400 font-medium">Available Now</span>
-                                        </div> */}
+                                        
                                     </div>
 
                                     {/* Bottom Accent */}
