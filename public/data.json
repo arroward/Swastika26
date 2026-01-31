@@ -1,0 +1,609 @@
+{
+    "siteConfig": {
+        "name": "Swastika",
+        "year": "2026",
+        "tagline": "Techno Cultural Fest",
+        "fullname": "SWASTIKA 2026",
+        "dates": {
+            "display": "Feb 20 • 21",
+            "start": "2026-02-20T00:00:00",
+            "end": "2026-02-21T23:59:59"
+        },
+        "logos": {
+            "main": "/logo/WH_LOGO.svg",
+            "alt": "/logo/BL_LOGO.svg",
+            "preload": [
+                "/logo/WH_LOGO.svg",
+                "/logo/BL_LOGO.svg",
+                "/logo/wh_sw.png"
+            ],
+            "fallback": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2670&auto=format&fit=crop"
+        },
+        "meta": {
+            "title": "Swastika 2026 - Techno Cultural Fest",
+            "description": "National Level Techno-Cultural Fest ",
+            "themeColor": "#dc2626"
+        },
+        "effects": {
+            "noise": {
+                "enabled": true,
+                "opacity": 0.01,
+                "pattern": "data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"
+            }
+        },
+        "gallery": {
+            "speed": 2
+        },
+        "payment": {
+            "upiId": "8078069928@apl"
+        },
+        "contact": {
+            "email": "support@swastika.live",
+            "phone": "+91 98765 43210"
+        },
+        "navigation": [
+            {
+                "title": "Home",
+                "href": "/#home"
+            },
+            {
+                "title": "About",
+                "href": "/#about"
+            },
+            {
+                "title": "Events",
+                "href": "/#events"
+            },
+            {
+                "title": "Proshows",
+                "href": "/#proshow"
+            },
+            {
+                "title": "Gallery",
+                "href": "/#gallery"
+            },
+            {
+                "title": "Get Pass",
+                "href": "/pass"
+            }
+        ]
+    },
+    "appConfig": {
+        "splashScreen": {
+            "type": "random"
+        }
+    },
+    "heroContent": {
+        "title": "SWASTIKA",
+        "year": "2026",
+        "subtitle": "Techno Cultural Fest",
+        "dates": "Feb 20 • 21",
+        "label": "National Level Techno Cultural Fest"
+    },
+    "proshowContent": {
+        "title": "PROSHOW",
+        "subtitle": "Featured Performances",
+        "artists": [
+            {
+                "name": "MQUBE BAND",
+                "role": "Live Music Performance",
+                "date": "February 20",
+                "imagePath": "/Proshow/IMG_20260124_231343.jpg",
+                "envKey": "NEXT_PUBLIC_PROSHOW_1",
+                "tags": [
+                    "Live",
+                    "Band",
+                    "Fusion"
+                ]
+            },
+            {
+                "name": "FEJO",
+                "role": "Rap Music Performance",
+                "date": "February 21",
+                "imagePath": "/Proshow/572096521_18544823974041491_1124277227909786857_n.jpg",
+                "envKey": "NEXT_PUBLIC_PROSHOW_2",
+                "tags": [
+                    "Rap",
+                    "Hip Hop",
+                    "Malayalam"
+                ]
+            }
+        ]
+    },
+    "aboutEventContent": {
+        "heading": {
+            "text": "THE",
+            "highlight": "EVENT"
+        },
+        "label": "Overview",
+        "description1": "Swastika is a national-level techno-cultural festival organized by Mar Baselios Christian College of Engineering and Technology, Peermade. The event brings together students from institutions across India to participate in a wide range of technical and cultural activities.",
+        "description2": "The festival provides a platform for collaboration, creativity, and knowledge sharing among participants from various engineering disciplines. It includes technical competitions, cultural programs, and interactive sessions designed to encourage innovation and teamwork.",
+        "visualTitle": "SWASTIKA",
+        "yearText": "2026 Edition",
+        "imagePath": "/about/DJI_0926.jpg",
+        "envKey": "NEXT_PUBLIC_ABOUT_EVENT_IMAGE_URL"
+    },
+    "aboutCollegeContent": {
+        "location": "Peermade, Kerala",
+        "title": {
+            "line1": "Mar Baselios",
+            "highlight": "Christian College of Engineering and Technology"
+        },
+        "established": "2001",
+        "labels": {
+            "est": "Est."
+        },
+        "description": "Mar Baselios Christian College of Engineering and Technology is an institution dedicated to providing quality engineering education. The college emphasizes academic excellence, research, and the overall development of students.",
+        "images": {
+            "campusPath": "/about/DJI_0926.jpg",
+            "envKey": "NEXT_PUBLIC_R2_PUBLIC_URL"
+        },
+        "stats": [
+            {
+                "label": "Years of Operation",
+                "value": "25+",
+                "icon": "Trophy"
+            },
+            {
+                "label": "Students and Alumni",
+                "value": "10,000+",
+                "icon": "Users"
+            },
+            {
+                "label": "Academic Programs",
+                "value": "50+",
+                "icon": "GraduationCap"
+            },
+            {
+                "label": "Research Focus",
+                "value": "Strong",
+                "icon": "BookOpen"
+            }
+        ]
+    },
+    "footerContent": {
+        "brandTitle": "SWASTIKA",
+        "edition": "2026 Edition",
+        "navLinks": [
+            {
+                "name": "Events",
+                "href": "/events"
+            },
+            {
+                "name": "Proshow",
+                "href": "/#proshow"
+            },
+            {
+                "name": "Gallery",
+                "href": "/#gallery"
+            }
+        ],
+        "email": "swastika26@mbcpeermade.com",
+        "labels": {
+            "menu": "Menu",
+            "connect": "Connect",
+            "email": "Email us",
+            "follow": "Follow us on",
+            "crafted": "Crafted by"
+        },
+        "social": {
+            "instagram": {
+                "url": "https://instagram.com/swastika_2k26",
+                "handle": "@swastika_2k26"
+            }
+        },
+        "tickerText": "Swastika 2026 —",
+        "credits": "Swastika 2026 Technical Team"
+    },
+    "autoShowContent": {
+        "title": "AUTO SHOW",
+        "description": "Experience the adrenaline of precision driving and automotive excellence. Witness the finest collection of modified cars.",
+        "images": [
+            "/autoshow/AU-(1).jpeg",
+            "/autoshow/AU.jpeg"
+        ],
+        "location": "Main Ground",
+        "date": "February 20",
+        "organizer": "Conducted by Dept. of Mechanical Engineering",
+        "displayTitle": {
+            "line1": "AUTO",
+            "line2": "SHOW"
+        }
+    },
+    "ticketContent": {
+        "walletTitle": "YOUR WALLET",
+        "walletSubtitle": "Swipe to view your passes",
+        "downloadButton": "Download All",
+        "footerMessage": "Verify each ticket at the entrance. Swiping works best on mobile devices.",
+        "eventTitle": "SWASTIKA 26",
+        "venue": "MBCET",
+        "time": "09:00 AM",
+        "labels": {
+            "bookingId": "BOOKING ID",
+            "venue": "Venue",
+            "time": "Time",
+            "date": "Date",
+            "name": "Name",
+            "ticket": "Ticket"
+        },
+        "types": {
+            "combo": "ALL ACCESS PASS",
+            "day1": "DAY 1 PASS",
+            "day2": "DAY 2 PASS",
+            "default": "EVENT PASS"
+        },
+        "dates": {
+            "combo": "FEB 20-21",
+            "day1": "FEB 20",
+            "day2": "FEB 21"
+        }
+    },
+    "developers": [
+        {
+            "id": 1,
+            "name": "Bibin Raju",
+            "role": "Lead Architect",
+            "image": "/devs/IMG-20260125-WA0019.jpg",
+            "bio": "Orchestrating the digital symphony. Specialist in scalable architecture and performance optimization.",
+            "tech": [
+                "Next.js",
+                "GSAP",
+                "Node.js"
+            ],
+            "socials": {
+                "github": "https://github.com/bbinxx",
+                "instagram": "https://www.instagram.com/ibxbin/"
+            }
+        },
+        {
+            "id": 2,
+            "name": "Mathews Vinoy",
+            "role": "Creative Developer",
+            "image": "/devs/IMG-20251201-WA0018.jpg",
+            "bio": "Blurring the line between code and art. Passionate about micro-interactions and immersive UI.",
+            "tech": [
+                "WebGL",
+                "Three.js",
+                "React"
+            ],
+            "socials": {
+                "github": "https://github.com/MathewsVinoy",
+                "instagram": "https://www.instagram.com/mathews_vinoy/"
+            }
+        }
+    ],
+    "passSectionContent": {
+        "badge": "Limited Passes",
+        "title": {
+            "line1": "UNLOCK THE",
+            "line2": "EXPERIENCE"
+        },
+        "description": "Join for two unforgettable nights of music, energy, and pure celebration at Swastika 2026.",
+        "features": [
+            {
+                "icon": "Calendar",
+                "text": "2 Days"
+            },
+            {
+                "icon": "Music",
+                "text": "All Access"
+            }
+        ],
+        "cta": "Get Your Pass",
+        "card": {
+            "title": "Proshow Pass",
+            "subtitle": "Swastika 2026",
+            "nights": "02",
+            "nightsLabel": "Nights",
+            "badge": "Available Now"
+        }
+    },
+    "passPageContent": {
+        "header": {
+            "title": "Get Your Pass",
+            "subtitle": "Proshow Access • Swastika '26"
+        },
+        "steps": [
+            "Selection",
+            "Details",
+            "Preview",
+            "Payment"
+        ],
+        "selection": {
+            "title": "Select Tickets",
+            "subtitle": "Choose passes for you and your friends",
+            "options": {
+                "day1": {
+                    "id": "day1",
+                    "label": "Day 1",
+                    "price": 50,
+                    "details": {
+                        "title": "Day 1 Access - February 20",
+                        "artist": "MQUBE BAND",
+                        "genre": "Live Music Performance",
+                        "description": "Experience the energy of MQUBE BAND live! Your pass grants you entry to the Day 1 Proshow."
+                    }
+                },
+                "day2": {
+                    "id": "day2",
+                    "label": "Day 2",
+                    "price": 60,
+                    "details": {
+                        "title": "Day 2 Access - February 21",
+                        "artist": "FEJO",
+                        "genre": "Rap Music Performance",
+                        "description": "Get ready for the electrifying performance of FEJO! Don't miss the biggest night of Swastika '26."
+                    }
+                },
+                "combo": {
+                    "id": "combo",
+                    "label": "Both Days",
+                    "price": 110,
+                    "details": {
+                        "title": "All Access Combo",
+                        "artist": "MQUBE BAND + FEJO",
+                        "genre": "Full Event Experience",
+                        "description": "The ultimate Swastika experience! Get seamless access to both proshows."
+                    }
+                }
+            }
+        },
+        "details": {
+            "title": "Your Details",
+            "labels": {
+                "name": "Full Name",
+                "email": "Email Address",
+                "phone": "Phone Number",
+                "emailHint": "Your pass will be sent here."
+            }
+        },
+        "preview": {
+            "title": "Order Summary",
+            "subtitle": "Please review your details before payment",
+            "passDetailsLabel": "Pass Details",
+            "totalLabel": "Total",
+            "attendeeLabel": "Attendee Info"
+        },
+        "payment": {
+            "title": "Payment",
+            "instructions": "Scan the QR or click below to pay",
+            "transactionLabel": "Transaction ID / UTR",
+            "transactionHint": "After payment, enter the Reference ID / UTR number found in your UPI app.",
+            "buttons": {
+                "verify": "Verifying...",
+                "complete": "Complete Booking"
+            }
+        },
+        "success": {
+            "title": "Booking Submitted!",
+            "message": "Thank you, {name}. We have received your payment details.",
+            "subMessage": "Your pass will be sent to {email} within 24 hours after verification.",
+            "homeButton": "Return Home"
+        }
+    },
+    "ctaContent": {
+        "line1": "DON'T MISS OUT",
+        "line2": "BE PART OF",
+        "main": "SWASTIKA"
+    },
+    "marqueeContent": [
+        "SWASTIKA.26",
+        "2026",
+        "FEB",
+        "20",
+        "21",
+        "NATIONAL LEVEL TECH FEST",
+        "MBCCET"
+    ],
+    "eventsSectionContent": {
+        "badge": "Festival Highlights",
+        "title": "DISCOVER",
+        "highlight": "EVENTS"
+    },
+    "events": [
+        {
+            "slug": "cyber-warfare",
+            "title": "Cyber Warfare",
+            "tagline": "Breach the Firewall, Secure the Future.",
+            "category": "Technical",
+            "date": "Feb 20, 2026",
+            "time": "10:00 AM",
+            "venue": "Main Auditorium",
+            "mode": "Offline",
+            "teamSize": "1-3 Members",
+            "eligibility": "Open to all students",
+            "deadline": "Feb 18, 2026",
+            "description": "A high-stakes hacking competition where only the elite survive. Test your penetration testing skills in a simulated corporate environment using industry-standard tools and techniques. Capture the Flag style challenges await.",
+            "rules": [
+                "Team size: 1-3 members",
+                "No use of automated tools like SQLMap for Level 1",
+                "Bring your own laptop (Kali Linux recommended)",
+                "Internet access will be provided via restricted gateway",
+                "Any form of DoS/DDoS is strictly prohibited"
+            ],
+            "timeline": [
+                {
+                    "time": "09:00 AM",
+                    "activity": "Registration & Setup"
+                },
+                {
+                    "time": "10:00 AM",
+                    "activity": "Round 1: CTF Basics"
+                },
+                {
+                    "time": "01:00 PM",
+                    "activity": "Lunch Break"
+                },
+                {
+                    "time": "02:00 PM",
+                    "activity": "Round 2: Advanced Pen Testing"
+                },
+                {
+                    "time": "05:00 PM",
+                    "activity": "Result Declaration"
+                }
+            ],
+            "prizes": [
+                "₹15,000 First Prize",
+                "₹10,000 Second Prize",
+                "Certificates for all finalists"
+            ],
+            "coordinator": {
+                "name": "Aditya Kumar",
+                "role": "Lead Security Researcher",
+                "contact": "aditya@swastika.com"
+            },
+            "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2070&auto=format&fit=crop"
+        },
+        {
+            "slug": "robo-wars",
+            "title": "Robo Wars",
+            "tagline": "Steel against Steel. May the best bot win.",
+            "category": "Technical",
+            "date": "Feb 21, 2026",
+            "time": "02:00 PM",
+            "venue": "Open Arena",
+            "mode": "Offline",
+            "teamSize": "3-5 Members",
+            "eligibility": "Engineering Students",
+            "deadline": "Feb 15, 2026",
+            "description": "Steel meets steel in this adrenaline-pumping combat robotics tournament. Build your bot, enter the arena, and destroy the competition. Only one machine will remain standing.",
+            "rules": [
+                "Weight limit: 15kg",
+                "Dimensions: 50x50x50cm max",
+                "No EMP or liquid projectiles",
+                "Safety kill switch is mandatory",
+                "Arena hazards will be active"
+            ],
+            "timeline": [
+                {
+                    "time": "12:00 PM",
+                    "activity": "Bot Inspection"
+                },
+                {
+                    "time": "02:00 PM",
+                    "activity": "Qualifying Matches"
+                },
+                {
+                    "time": "04:00 PM",
+                    "activity": "Semi-Finals"
+                },
+                {
+                    "time": "05:30 PM",
+                    "activity": "Grand Finale"
+                }
+            ],
+            "prizes": [
+                "₹25,000 Winner",
+                "₹15,000 Runner Up",
+                "Best Design Award"
+            ],
+            "coordinator": {
+                "name": "Sarah Jenkins",
+                "role": "Robotics Club Head",
+                "contact": "sarah@swastika.com"
+            },
+            "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=2070&auto=format&fit=crop"
+        },
+        {
+            "slug": "code-fest",
+            "title": "Code Fest",
+            "tagline": "Code the Impossible.",
+            "category": "Technical",
+            "date": "Feb 20, 2026",
+            "time": "09:00 AM",
+            "venue": "Lab Complex 2",
+            "mode": "Hybrid",
+            "teamSize": "2-4 Members",
+            "eligibility": "Open to all",
+            "deadline": "Feb 19, 2026",
+            "description": "24-hour coding marathon to solve real-world problems. Innovation, efficiency, and creativity will be tested to the limit.",
+            "rules": [
+                "Team size: 2-4 members",
+                "Open theme",
+                "Submissions via GitHub",
+                "Presentation time: 5 mins",
+                "Plagiarism will lead to disqualification"
+            ],
+            "timeline": [
+                {
+                    "time": "09:00 AM",
+                    "activity": "Problem Statement Release"
+                },
+                {
+                    "time": "09:30 AM",
+                    "activity": "Coding Begins"
+                },
+                {
+                    "time": "09:00 AM (Next Day)",
+                    "activity": "Submission Deadline"
+                },
+                {
+                    "time": "11:00 AM",
+                    "activity": "Presentations"
+                }
+            ],
+            "prizes": [
+                "₹20,000 Winner",
+                "Internship Opportunities",
+                "Cloud Credits"
+            ],
+            "coordinator": {
+                "name": "Davib Webb",
+                "role": "Tech Lead",
+                "contact": "david@swastika.com"
+            },
+            "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop"
+        },
+        {
+            "slug": "design-summit",
+            "title": "Design Summit",
+            "tagline": "Crafting Digital Experiences.",
+            "category": "Creative",
+            "date": "Feb 21, 2026",
+            "time": "11:00 AM",
+            "venue": "Creative Studio",
+            "mode": "Online",
+            "teamSize": "Individual",
+            "eligibility": "Design Enthusiasts",
+            "deadline": "Feb 18, 2026",
+            "description": "For the visionaries and the creators. A design challenge focusing on UI/UX and brand identity. Push the boundaries of visual communication.",
+            "rules": [
+                "Individual participation",
+                "Software: Figma, Adobe XD, or Sketch",
+                "Assets provided at start",
+                "3 hour duration",
+                "Submit prototype link"
+            ],
+            "timeline": [
+                {
+                    "time": "11:00 AM",
+                    "activity": "Briefing"
+                },
+                {
+                    "time": "11:30 AM",
+                    "activity": "Design Sprint"
+                },
+                {
+                    "time": "02:30 PM",
+                    "activity": "Submission"
+                },
+                {
+                    "time": "03:00 PM",
+                    "activity": "Review"
+                }
+            ],
+            "prizes": [
+                "Wacom Tablet",
+                "Adobe Creative Cloud Subscription",
+                "Featured on Website"
+            ],
+            "coordinator": {
+                "name": "Elena Rose",
+                "role": "Design Lead",
+                "contact": "elena@swastika.com"
+            },
+            "image": "https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=2000&auto=format&fit=crop"
+        }
+    ]
+}

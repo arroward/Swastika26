@@ -1,0 +1,7 @@
+{
+    "appConfig": {
+        "splashScreen": {
+            "type": "random"
+        }
+    }
+}

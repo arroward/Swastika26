@@ -1,0 +1,32 @@
+{
+    "proshowContent": {
+        "title": "PROSHOW",
+        "subtitle": "Featured Performances",
+        "artists": [
+            {
+                "name": "MQUBE BAND",
+                "role": "Live Music Performance",
+                "date": "February 20",
+                "imagePath": "/Proshow/IMG_20260124_231343.jpg",
+                "envKey": "NEXT_PUBLIC_PROSHOW_1",
+                "tags": [
+                    "Live",
+                    "Band",
+                    "Fusion"
+                ]
+            },
+            {
+                "name": "FEJO",
+                "role": "Rap Music Performance",
+                "date": "February 21",
+                "imagePath": "/Proshow/572096521_18544823974041491_1124277227909786857_n.jpg",
+                "envKey": "NEXT_PUBLIC_PROSHOW_2",
+                "tags": [
+                    "Rap",
+                    "Hip Hop",
+                    "Malayalam"
+                ]
+            }
+        ]
+    }
+}

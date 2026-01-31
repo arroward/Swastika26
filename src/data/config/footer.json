@@ -1,0 +1,36 @@
+{
+    "footerContent": {
+        "brandTitle": "SWASTIKA",
+        "edition": "2026 Edition",
+        "navLinks": [
+            {
+                "name": "Events",
+                "href": "/events"
+            },
+            {
+                "name": "Proshow",
+                "href": "/#proshow"
+            },
+            {
+                "name": "Gallery",
+                "href": "/#gallery"
+            }
+        ],
+        "email": "swastika26@mbcpeermade.com",
+        "labels": {
+            "menu": "Menu",
+            "connect": "Connect",
+            "email": "Email us",
+            "follow": "Follow us on",
+            "crafted": "Crafted by"
+        },
+        "social": {
+            "instagram": {
+                "url": "https://instagram.com/swastika_2k26",
+                "handle": "@swastika_2k26"
+            }
+        },
+        "tickerText": "Swastika 2026 —",
+        "credits": "Swastika 2026 Technical Team"
+    }
+}

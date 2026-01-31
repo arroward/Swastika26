@@ -1,0 +1,17 @@
+{
+    "autoShowContent": {
+        "title": "AUTO SHOW",
+        "description": "Experience the adrenaline of precision driving and automotive excellence. Witness the finest collection of modified cars.",
+        "images": [
+            "/autoshow/AU-(1).jpeg",
+            "/autoshow/AU.jpeg"
+        ],
+        "location": "Main Ground",
+        "date": "February 20",
+        "organizer": "Conducted by Dept. of Mechanical Engineering",
+        "displayTitle": {
+            "line1": "AUTO",
+            "line2": "SHOW"
+        }
+    }
+}

@@ -45,21 +45,16 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
                 }
             }
 
-            // Determine URL: Prefer Remote > Local
-            const R2_PUBLIC_URL = process.env.NEXT_PUBLIC_R2_PUBLIC_URL;
+            // Prefer Remote Override if provided, else fallback to static
             const REMOTE_URL = process.env.NEXT_PUBLIC_REMOTE_CONFIG_URL;
 
-            // Build fetch URL: Remote Override > R2 config/data.json > Local Public data.json
-            let fetchUrl = `/data.json?t=${Date.now()}`;
-            if (R2_PUBLIC_URL) {
-                fetchUrl = `${R2_PUBLIC_URL}/config/data.json?t=${Date.now()}`;
-            }
-            if (REMOTE_URL) {
-                fetchUrl = `${REMOTE_URL}?t=${Date.now()}`;
+            if (!REMOTE_URL) {
+                console.log("Using local static configuration.");
+                return;
             }
 
-            console.log(`Fetching config from: ${fetchUrl}`);
-            const res = await fetch(fetchUrl);
+            console.log(`Syncing from remote: ${REMOTE_URL}`);
+            const res = await fetch(`${REMOTE_URL}?t=${Date.now()}`);
 
             if (!res.ok) throw new Error(`Server returned ${res.status}: ${res.statusText}`);
             const rawData = await res.json();
@@ -71,9 +66,9 @@ export const ConfigProvider = ({ children }: { children: ReactNode }) => {
             }));
 
             hydrateAndSet(rawData);
-            console.log("✅ Configuration successfully synced from R2.");
+            console.log("✅ Configuration successfully synced from remote.");
         } catch (err) {
-            console.warn("⚠️ Remote sync failed. Falling back to local static content.", err);
+            console.warn("⚠️ Remote sync failed. Using local static content.", err);
         }
     };
 
