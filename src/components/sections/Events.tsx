@@ -30,8 +30,8 @@ export default function Events() {
         const data = await response.json();
         setEvents(data);
       } catch (error: any) {
-        if (error.name === 'AbortError' || error.message === 'Component unmounted') {
-          console.warn("Events fetch aborted:", controller.signal.reason || error.message);
+        if (error.name === 'AbortError' || controller.signal.aborted) {
+          console.warn("Events fetch aborted:", controller.signal.reason || error.message || error);
         } else {
           console.error("Error loading events:", error);
         }
