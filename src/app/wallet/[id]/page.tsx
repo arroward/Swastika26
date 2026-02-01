@@ -307,7 +307,7 @@ export default function WalletPage() {
                     <div className="mt-8 text-center pb-12">
                         <p className="font-jost text-[10px] text-zinc-600 uppercase tracking-[0.3em]">
                             Need assistance with your purchase?
-                            <a href="mailto:support@swastika.live" className="text-zinc-400 ml-2 hover:text-white transition-colors">Contact Support</a>
+                            <a href="mailto:swastika26@mbcpeermade.com" className="text-zinc-400 ml-2 hover:text-white transition-colors">Contact Support</a>
                         </p>
                     </div>
                 </div>
