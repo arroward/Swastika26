@@ -143,7 +143,7 @@ export default async function EventRegisterPage({ params }: PageProps) {
                       </div>
                       <div className="min-w-0">
                         <p className="font-semibold text-white/70 text-[10px] md:text-xs uppercase tracking-wide">
-                          Date & Time
+                          Deadline
                         </p>
                         <p className="text-white font-bold mt-0.5 md:mt-1 text-xs md:text-sm break-words">
                           {new Date(event.date).toLocaleDateString("en-US", {
@@ -181,7 +181,7 @@ export default async function EventRegisterPage({ params }: PageProps) {
                       </div>
                       <div className="min-w-0">
                         <p className="font-semibold text-white/70 text-[10px] md:text-xs uppercase tracking-wide">
-                          Location
+                          Event Type
                         </p>
                         <p className="text-white font-bold mt-0.5 md:mt-1 text-xs md:text-sm break-words">
                           {event.location}
@@ -189,7 +189,7 @@ export default async function EventRegisterPage({ params }: PageProps) {
                       </div>
                     </div>
 
-                  
+
 
                     {/* Price Detail */}
                     <div className="flex gap-3 items-start group/item cursor-default">

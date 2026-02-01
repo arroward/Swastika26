@@ -147,6 +147,8 @@ export default function EventRegistrationForm({
     if (hasRegistrationFee) {
       if (!formData.upiTransactionId.trim()) {
         newErrors.upiTransactionId = "UPI Transaction ID is required";
+      } else if (!/^\d{12}$/.test(formData.upiTransactionId.trim())) {
+        newErrors.upiTransactionId = "Enter the correct UPI Transaction ID ";
       }
 
       if (!formData.accountHolderName.trim()) {
