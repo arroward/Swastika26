@@ -31,8 +31,8 @@ export default function OnlineEvents() {
                 // Filter for Online events
                 setEvents(data.filter((e: Event) => e.isOnline));
             } catch (error: any) {
-                if (error.name === 'AbortError' || error.message === 'Component unmounted') {
-                    console.warn("Online Events fetch aborted:", controller.signal.reason || error.message);
+                if (error.name === 'AbortError' || error.message?.includes('Component unmounted') || error === 'Component unmounted') {
+                    // Ignore abort errors
                 } else {
                     console.error("Error loading events:", error);
                 }

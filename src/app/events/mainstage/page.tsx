@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function MainstageEventsPage() {
     // Fetch events from database
     const allEvents = await getEvents();
-    const events = allEvents.filter(e => !e.isOnline);
+    const events = allEvents.filter(e => e.isOnline !== true);
 
     return (
         <div className="min-h-screen relative bg-gradient-to-b from-black via-red-950/5 to-black overflow-hidden">
