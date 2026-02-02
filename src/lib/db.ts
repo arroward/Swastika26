@@ -131,6 +131,27 @@ export async function getEventById(id: string): Promise<Event | null> {
   }
 }
 
+export async function getEventBySlug(slug: string): Promise<Event | null> {
+  try {
+    // Since we don't have a slug column, we fetch all events and filter.
+    // In a production app with many events, we should add a slug column and index it.
+    const events = await getEvents();
+
+    // Simple slug generation logic matching the one in utils
+    const createSlug = (text: string) => text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/--+/g, '-')
+      .trim();
+
+    return events.find(e => createSlug(e.title) === slug) || null;
+  } catch (error) {
+    console.error("Error fetching event by slug:", error);
+    return null;
+  }
+}
+
 export async function registerForEvent(registration: {
   eventId: string;
   fullName: string;

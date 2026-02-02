@@ -110,12 +110,14 @@ export default function Event3DCarousel({ events }: Event3DCarouselProps) {
   );
 }
 
+import { createSlug } from "@/lib/utils";
+
 function CarouselCard({ event, index }: { event: Event; index: number }) {
   const title = event.title || "Event";
 
   return (
     <Link
-      href={`/events/${event.id}/register`}
+      href={event.isOnline ? `/events/online/${createSlug(event.title)}` : `/events/mainstage/${createSlug(event.title)}`}
       className="snap-center shrink-0 w-[80vw] md:w-[360px] h-[75%] md:h-[90%] mx-3 md:mx-6 relative group rounded-[var(--site-radius)] overflow-hidden cursor-pointer shadow-2xl ring-1 ring-white/10"
     >
       {/* Background Image with improved visibility */}
