@@ -7,7 +7,8 @@ import AboutCollege from "@/components/sections/AboutCollege";
 import MarqueeSection from "@/components/sections/MarqueeSection";
 import Proshow from "@/components/sections/Proshow";
 import AutoShow from "@/components/sections/AutoShow";
-import Events from "@/components/sections/Events";
+import OnlineEvents from "@/components/sections/OnlineEvents";
+import MainstageEvents from "@/components/sections/MainstageEvents";
 import Gallery from "@/components/sections/Gallery";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
@@ -43,9 +44,8 @@ export default function Home() {
                 <AutoShow />
             </section>
 
-            <section id="events" className="panel snap-start snap-always w-full h-auto">
-                <Events />
-            </section>
+            <OnlineEvents />
+            <MainstageEvents />
             <Suspense fallback={<div className="h-[50vh] flex items-center justify-center font-cinzel text-white/20 uppercase tracking-widest">Initialising Gallery Assets...</div>}>
                 <Gallery />
             </Suspense>
