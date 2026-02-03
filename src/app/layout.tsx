@@ -68,9 +68,19 @@ export const metadata: Metadata = {
     description: "National Level Techno-Cultural Fest",
     images: ["/logo/wh_sw.png"],
   },
+  alternates: {
+    canonical: './',
+  },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 

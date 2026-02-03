@@ -1,0 +1,7 @@
+name = "swastika26"
+compatibility_date = "2024-02-03"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+[site]
+bucket = ".vercel/output/static"
