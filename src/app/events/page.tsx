@@ -40,7 +40,7 @@ export default function EventsLandingPage() {
           >
             <div className="absolute inset-0 bg-red-600/5 group-hover:bg-red-600/10 transition-colors duration-500"></div>
             <div className="relative z-10">
-              <span className="block text-sm font-mono text-red-400 mb-2 tracking-widest uppercase">Global</span>
+              {/* <span className="block text-sm font-mono text-red-400 mb-2 tracking-widest uppercase">Global</span> */}
               <h2 className="text-3xl sm:text-4xl font-bold font-cinzel text-white group-hover:text-red-200 transition-colors">Online Events</h2>
               <div className="mt-4 inline-flex items-center text-white/60 group-hover:text-white transition-colors">
                 <span>View all</span>
@@ -55,7 +55,7 @@ export default function EventsLandingPage() {
           >
             <div className="absolute inset-0 bg-red-600/5 group-hover:bg-red-600/10 transition-colors duration-500"></div>
             <div className="relative z-10">
-              <span className="block text-sm font-mono text-red-400 mb-2 tracking-widest uppercase">Live</span>
+              {/* <span className="block text-sm font-mono text-red-400 mb-2 tracking-widest uppercase">Live</span> */}
               <h2 className="text-3xl sm:text-4xl font-bold font-cinzel text-white group-hover:text-red-200 transition-colors">Mainstage Events</h2>
               <div className="mt-4 inline-flex items-center text-white/60 group-hover:text-white transition-colors">
                 <span>View all</span>
