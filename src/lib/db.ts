@@ -1,4 +1,10 @@
 import { neon } from "@neondatabase/serverless";
+import dns from "node:dns";
+
+// Force IPv4 for Neon calls to avoid timeout issues in some environments (like Digital Ocean)
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder("ipv4first");
+}
 import { Event, AdminRole } from "@/types/event";
 
 if (!process.env.DATABASE_URL) {
