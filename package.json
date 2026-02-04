@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "seed": "dotenv -e .env -- tsx src/scripts/seed.ts",
@@ -13,7 +13,10 @@
     "fix-db": "dotenv -e .env -- tsx src/scripts/fix-database.ts",
     "test-db": "dotenv -e .env -- tsx src/scripts/test-relationships.ts",
     "check-env": "dotenv -e .env -- tsx src/scripts/check-env.ts",
-    "upload-config": "dotenv -e .env -- tsx scripts/upload-config.ts"
+    "upload-config": "dotenv -e .env -- tsx scripts/upload-config.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:db:push": "prisma db push",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.975.0",
@@ -21,6 +24,7 @@
     "@ducanh2912/next-pwa": "^10.2.9",
     "@fingerprintjs/fingerprintjs": "^5.0.1",
     "@gsap/react": "^2.1.2",
+    "@neo4j/graphql": "^7.4.3",
     "@neondatabase/serverless": "^1.0.2",
     "@paper-design/shaders-react": "^0.0.71",
     "@react-three/drei": "^10.7.7",
@@ -43,6 +47,7 @@
     "lucide-react": "^0.562.0",
     "meshline": "^3.3.1",
     "motion": "^12.28.1",
+    "neo4j-driver": "^6.0.1",
     "next": "16.1.4",
     "ogl": "^1.0.11",
     "qrcode.react": "^4.2.0",
@@ -55,6 +60,7 @@
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
+    "@prisma/client": "^5.14.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -64,6 +70,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.4",
     "nodemon": "^3.1.11",
+    "prisma": "^5.14.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0"
   }
