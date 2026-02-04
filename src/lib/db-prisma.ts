@@ -1,5 +1,5 @@
 import prisma from "./prisma";
-import { Event, EventRegistration } from "@prisma/client";
+import { Event, EventRegistration, Prisma } from "@prisma/client";
 
 /**
  * Initialize database - ensures schema is ready
@@ -22,9 +22,12 @@ export async function initDatabase() {
 export async function createEvent(
   eventData: Omit<Event, "id" | "createdAt" | "updatedAt" | "registeredCount">,
 ): Promise<Event> {
+  const { rules, ...rest } = eventData;
   return prisma.event.create({
     data: {
-      ...eventData,
+      ...rest,
+      id: crypto.randomUUID(), // Explicitly generate ID to satisfy strict types
+      rules: rules === null ? Prisma.JsonNull : rules ?? undefined,
     },
   });
 }
@@ -54,9 +57,14 @@ export async function updateEvent(
   id: string,
   data: Partial<Omit<Event, "id" | "createdAt" | "updatedAt">>,
 ): Promise<Event> {
+  const { rules, ...rest } = data;
+  const updateData: Prisma.EventUpdateInput = { ...rest };
+  if (rules !== undefined) {
+    updateData.rules = rules === null ? Prisma.JsonNull : rules;
+  }
   return prisma.event.update({
     where: { id },
-    data,
+    data: updateData,
   });
 }
 
@@ -75,8 +83,12 @@ export async function deleteEvent(id: string): Promise<Event> {
 export async function registerForEvent(
   registrationData: Omit<EventRegistration, "id" | "createdAt" | "updatedAt">,
 ): Promise<EventRegistration> {
+  const { team_members, ...rest } = registrationData;
   return prisma.eventRegistration.create({
-    data: registrationData,
+    data: {
+      ...rest,
+      team_members: team_members === null ? Prisma.JsonNull : team_members ?? undefined,
+    },
   });
 }
 
@@ -87,8 +99,8 @@ export async function getEventRegistrations(
   eventId: string,
 ): Promise<EventRegistration[]> {
   return prisma.eventRegistration.findMany({
-    where: { eventId },
-    orderBy: { registrationDate: "desc" },
+    where: { event_id: eventId },
+    orderBy: { registration_date: "desc" },
   });
 }
 
@@ -100,7 +112,7 @@ export async function getUserRegistrations(
 ): Promise<EventRegistration[]> {
   return prisma.eventRegistration.findMany({
     where: { email },
-    orderBy: { registrationDate: "desc" },
+    orderBy: { registration_date: "desc" },
   });
 }
 
@@ -108,12 +120,17 @@ export async function getUserRegistrations(
  * Update registration
  */
 export async function updateRegistration(
-  id: string,
+  id: string | number,
   data: Partial<Omit<EventRegistration, "id" | "createdAt" | "updatedAt">>,
 ): Promise<EventRegistration> {
+  const { team_members, ...rest } = data;
+  const updateData: Prisma.EventRegistrationUpdateInput = { ...rest };
+  if (team_members !== undefined) {
+    updateData.team_members = team_members === null ? Prisma.JsonNull : team_members;
+  }
   return prisma.eventRegistration.update({
-    where: { id },
-    data,
+    where: { id: Number(id) },
+    data: updateData,
   });
 }
 
@@ -121,10 +138,10 @@ export async function updateRegistration(
  * Delete registration
  */
 export async function deleteRegistration(
-  id: string,
+  id: string | number,
 ): Promise<EventRegistration> {
   return prisma.eventRegistration.delete({
-    where: { id },
+    where: { id: Number(id) },
   });
 }
 
@@ -138,9 +155,15 @@ export async function getAdmins(role?: string) {
 /**
  * Create admin
  */
-export async function createAdmin(email: string, role: string = "user") {
+export async function createAdmin(email: string, role: string = "user", name: string = "Admin", password: string = "change-me") {
   return prisma.admin.create({
-    data: { email, role },
+    data: {
+      id: crypto.randomUUID(), // Explicitly generate ID to satisfy strict types
+      email,
+      role,
+      name,
+      password
+    },
   });
 }
 
