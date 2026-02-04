@@ -40,14 +40,24 @@ if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-// 4. Force usages of Connection Pooling parameters
-function getConnectionUrl(originalUrl: string): string {
+// 4. connection string cleanup for HTTP driver
+function getHttpConnectionUrl(originalUrl: string): string {
   try {
     const url = new URL(originalUrl);
+
+    // START FIX: Remove -pooler from hostname for HTTP connections
+    // The HTTP driver (neon() function) hits the Neon Proxy which manages pooling internally.
+    // The -pooler endpoint (PgBouncer) typically listens for TCP/WebSockets, not HTTP APIs,
+    // leading to timeouts when accessed via fetch.
+    if (url.hostname.includes("-pooler")) {
+      url.hostname = url.hostname.replace("-pooler", "");
+    }
+    // Remove pooler param if present as it's implicit for HTTP proxy or not needed
+    url.searchParams.delete("pooler");
+    // END FIX
+
     // Enforce SSL
     url.searchParams.set("sslmode", "require");
-    // Signal usage of pooler (if supported/configured on URL host)
-    url.searchParams.set("pooler", "true");
     return url.toString();
   } catch (error) {
     console.warn("Could not parse DATABASE_URL, using original", error);
@@ -55,8 +65,8 @@ function getConnectionUrl(originalUrl: string): string {
   }
 }
 
-// Export the SQL query builder
-export const sql = neon(getConnectionUrl(process.env.DATABASE_URL));
+// Export the SQL query builder using the HTTP-optimized URL
+export const sql = neon(getHttpConnectionUrl(process.env.DATABASE_URL));
 
 // -----------------------------------------------------------------------------
 // Database initialization and Helper Functions
