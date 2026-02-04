@@ -1,19 +1,67 @@
-import { neon } from "@neondatabase/serverless";
+import { neon, neonConfig } from "@neondatabase/serverless";
 import dns from "node:dns";
+import https from "node:https";
+import { Event, AdminRole } from "@/types/event";
 
-// Force IPv4 for Neon calls to avoid timeout issues in some environments (like Digital Ocean)
+// -----------------------------------------------------------------------------
+// NEON DATABASE CONNECTION FIXES FOR AWS / DIGITAL OCEAN
+// -----------------------------------------------------------------------------
+
+// 1. Force IPv4 DNS resolution
+// AWS/DO often attempt IPv6 first which can time out or fail with Neon
 if (dns.setDefaultResultOrder) {
   dns.setDefaultResultOrder("ipv4first");
 }
-import { Event, AdminRole } from "@/types/event";
+
+// 2. Configurable HTTP Agent with Keep-Alive
+// Prevents ETIMEDOUT errors by keeping the TCP connection open
+const keepAliveAgent = new https.Agent({
+  keepAlive: true,
+  // 60 seconds timeout to prevent premature socket closure
+  timeout: 60000,
+});
+
+// 3. Custom Fetch Injection
+// Injects the keep-alive agent into the fetch calls made by the Neon driver
+const customFetch = (url: RequestInfo | URL, init?: RequestInit) => {
+  return fetch(url, {
+    ...init,
+    // @ts-ignore - agent is supported by node-fetch and some environments, 
+    // mandated for fixing connection stability in this setup.
+    agent: keepAliveAgent,
+    // Optional: add cache control if needed, but agent is the priority
+  } as any);
+};
+
+// Apply the custom fetch globally for Neon
+neonConfig.fetchFunction = customFetch;
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-export const sql = neon(process.env.DATABASE_URL);
+// 4. Force usages of Connection Pooling parameters
+function getConnectionUrl(originalUrl: string): string {
+  try {
+    const url = new URL(originalUrl);
+    // Enforce SSL
+    url.searchParams.set("sslmode", "require");
+    // Signal usage of pooler (if supported/configured on URL host)
+    url.searchParams.set("pooler", "true");
+    return url.toString();
+  } catch (error) {
+    console.warn("Could not parse DATABASE_URL, using original", error);
+    return originalUrl;
+  }
+}
 
-// Database initialization
+// Export the SQL query builder
+export const sql = neon(getConnectionUrl(process.env.DATABASE_URL));
+
+// -----------------------------------------------------------------------------
+// Database initialization and Helper Functions
+// -----------------------------------------------------------------------------
+
 export async function initDatabase() {
   try {
     // Create events table
