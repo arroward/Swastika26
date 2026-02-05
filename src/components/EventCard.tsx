@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { createSlug } from "@/lib/utils";
 
 // Mock Event type for demonstration
 interface Event {
@@ -25,7 +26,11 @@ interface EventCardProps {
 export default function EventCard({ event }: EventCardProps) {
   return (
     <Link
-      href={event.isOnline ? `/events/online/${event.id}` : `/events/mainstage/${event.id}`}
+      href={
+        event.isOnline
+          ? `/events/online/${event.id}`
+          : `/events/mainstage/${createSlug(event.title)}`
+      }
       className="group relative bg-black rounded-[var(--site-radius)] overflow-hidden hover:shadow-2xl transition-all duration-500 cursor-pointer aspect-[3/4] max-w-sm block"
     >
       {/* Event Image */}
