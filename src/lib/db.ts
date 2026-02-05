@@ -15,8 +15,20 @@ if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
+// Clean connection string to remove sslmode param which causes warnings with pg
+// because we are explicitly setting the ssl config object below.
+const getSafeConnectionString = (url: string) => {
+  try {
+    const parsed = new URL(url);
+    parsed.searchParams.delete("sslmode");
+    return parsed.toString();
+  } catch {
+    return url;
+  }
+};
+
 export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: getSafeConnectionString(process.env.DATABASE_URL),
   ssl: {
     rejectUnauthorized: false, // Required for some cloud providers like Neon/AWS
   },
