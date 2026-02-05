@@ -1,19 +1,77 @@
-import { neon } from "@neondatabase/serverless";
+import { neon, neonConfig } from "@neondatabase/serverless";
 import dns from "node:dns";
+import https from "node:https";
+import { Event, AdminRole } from "@/types/event";
 
-// Force IPv4 for Neon calls to avoid timeout issues in some environments (like Digital Ocean)
+// -----------------------------------------------------------------------------
+// NEON DATABASE CONNECTION FIXES FOR AWS / DIGITAL OCEAN
+// -----------------------------------------------------------------------------
+
+// 1. Force IPv4 DNS resolution
+// AWS/DO often attempt IPv6 first which can time out or fail with Neon
 if (dns.setDefaultResultOrder) {
   dns.setDefaultResultOrder("ipv4first");
 }
-import { Event, AdminRole } from "@/types/event";
+
+// 2. Configurable HTTP Agent with Keep-Alive
+// Prevents ETIMEDOUT errors by keeping the TCP connection open
+const keepAliveAgent = new https.Agent({
+  keepAlive: true,
+  // 60 seconds timeout to prevent premature socket closure
+  timeout: 60000,
+});
+
+// 3. Custom Fetch Injection
+// Injects the keep-alive agent into the fetch calls made by the Neon driver
+const customFetch = (url: RequestInfo | URL, init?: RequestInit) => {
+  return fetch(url, {
+    ...init,
+    // @ts-ignore - agent is supported by node-fetch and some environments, 
+    // mandated for fixing connection stability in this setup.
+    agent: keepAliveAgent,
+    // Optional: add cache control if needed, but agent is the priority
+  } as any);
+};
+
+// Apply the custom fetch globally for Neon
+neonConfig.fetchFunction = customFetch;
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-export const sql = neon(process.env.DATABASE_URL);
+// 4. connection string cleanup for HTTP driver
+function getHttpConnectionUrl(originalUrl: string): string {
+  try {
+    const url = new URL(originalUrl);
 
-// Database initialization
+    // START FIX: Remove -pooler from hostname for HTTP connections
+    // The HTTP driver (neon() function) hits the Neon Proxy which manages pooling internally.
+    // The -pooler endpoint (PgBouncer) typically listens for TCP/WebSockets, not HTTP APIs,
+    // leading to timeouts when accessed via fetch.
+    if (url.hostname.includes("-pooler")) {
+      url.hostname = url.hostname.replace("-pooler", "");
+    }
+    // Remove pooler param if present as it's implicit for HTTP proxy or not needed
+    url.searchParams.delete("pooler");
+    // END FIX
+
+    // Enforce SSL
+    url.searchParams.set("sslmode", "require");
+    return url.toString();
+  } catch (error) {
+    console.warn("Could not parse DATABASE_URL, using original", error);
+    return originalUrl;
+  }
+}
+
+// Export the SQL query builder using the HTTP-optimized URL
+export const sql = neon(getHttpConnectionUrl(process.env.DATABASE_URL));
+
+// -----------------------------------------------------------------------------
+// Database initialization and Helper Functions
+// -----------------------------------------------------------------------------
+
 export async function initDatabase() {
   try {
     // Create events table
