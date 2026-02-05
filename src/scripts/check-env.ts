@@ -1,6 +1,6 @@
 
 import { config } from 'dotenv';
-import { neon } from '@neondatabase/serverless';
+import { Client } from 'pg';
 import { S3Client, ListBucketsCommand, HeadBucketCommand } from '@aws-sdk/client-s3';
 import * as admin from 'firebase-admin';
 
@@ -49,10 +49,16 @@ async function checkEnv() {
     if (process.env.DATABASE_URL) {
         console.log('🗄️  Testing Database Connection:');
         try {
-            const sql = neon(process.env.DATABASE_URL);
-            const result = await sql`SELECT 1 as result`;
-            if (result[0].result === 1) {
-                console.log('  ✅ Database connected successfully (Neon Postgres)');
+            const client = new Client({
+                connectionString: process.env.DATABASE_URL,
+                ssl: { rejectUnauthorized: false }
+            });
+            await client.connect();
+            const result = await client.query('SELECT 1 as result');
+            await client.end();
+
+            if (result.rows[0].result === 1) {
+                console.log('  ✅ Database connected successfully (PG)');
             } else {
                 console.log('  ❌ Database connected but returned unexpected result.');
                 allPassed = false;

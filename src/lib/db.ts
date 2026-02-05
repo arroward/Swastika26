@@ -1,72 +1,51 @@
-import { neon, neonConfig } from "@neondatabase/serverless";
-import dns from "node:dns";
-import https from "node:https";
+import { Pool, QueryResultRow } from "pg";
 import { Event, AdminRole } from "@/types/event";
 
 // -----------------------------------------------------------------------------
-// NEON DATABASE CONNECTION FIXES FOR AWS / DIGITAL OCEAN
+// POSTGRES DATABASE CONNECTION
 // -----------------------------------------------------------------------------
-
-// 1. Force IPv4 DNS resolution
-// AWS/DO often attempt IPv6 first which can time out or fail with Neon
-if (dns.setDefaultResultOrder) {
-  dns.setDefaultResultOrder("ipv4first");
-}
-
-// 2. Configurable HTTP Agent with Keep-Alive
-// Prevents ETIMEDOUT errors by keeping the TCP connection open
-const keepAliveAgent = new https.Agent({
-  keepAlive: true,
-  // 60 seconds timeout to prevent premature socket closure
-  timeout: 60000,
-});
-
-// 3. Custom Fetch Injection
-// Injects the keep-alive agent into the fetch calls made by the Neon driver
-const customFetch = (url: RequestInfo | URL, init?: RequestInit) => {
-  return fetch(url, {
-    ...init,
-    // @ts-ignore - agent is supported by node-fetch and some environments, 
-    // mandated for fixing connection stability in this setup.
-    agent: keepAliveAgent,
-    // Optional: add cache control if needed, but agent is the priority
-  } as any);
-};
-
-// Apply the custom fetch globally for Neon
-neonConfig.fetchFunction = customFetch;
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
-// 4. connection string cleanup for HTTP driver
-function getHttpConnectionUrl(originalUrl: string): string {
+export const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false, // Required for some cloud providers like Neon/AWS
+  },
+  max: 20, // Connection pool size
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 10000,
+});
+
+// Helper for template literal SQL to mimic the previous 'neon' sql tag behavior
+// This allows us to keep most of the codebase without rewriting every query,
+// while switching the underlying driver to 'pg'.
+export async function sql<T extends QueryResultRow = any>(
+  strings: TemplateStringsArray,
+  ...values: any[]
+) {
+  let text = strings[0];
+  const queryValues = [];
+
+  for (let i = 0; i < values.length; i++) {
+    const value = values[i];
+
+    // Handle cases where the value might be another sql fragment (not supported here simple implementation)
+    // or undefined. For strict parameterized queries, we just push the value.
+    queryValues.push(value);
+    text += `$${queryValues.length}${strings[i + 1]}`;
+  }
+
   try {
-    const url = new URL(originalUrl);
-
-    // START FIX: Remove -pooler from hostname for HTTP connections
-    // The HTTP driver (neon() function) hits the Neon Proxy which manages pooling internally.
-    // The -pooler endpoint (PgBouncer) typically listens for TCP/WebSockets, not HTTP APIs,
-    // leading to timeouts when accessed via fetch.
-    if (url.hostname.includes("-pooler")) {
-      url.hostname = url.hostname.replace("-pooler", "");
-    }
-    // Remove pooler param if present as it's implicit for HTTP proxy or not needed
-    url.searchParams.delete("pooler");
-    // END FIX
-
-    // Enforce SSL
-    url.searchParams.set("sslmode", "require");
-    return url.toString();
+    const res = await pool.query<T>(text, queryValues);
+    return res.rows;
   } catch (error) {
-    console.warn("Could not parse DATABASE_URL, using original", error);
-    return originalUrl;
+    console.error("SQL Error:", error);
+    throw error;
   }
 }
-
-// Export the SQL query builder using the HTTP-optimized URL
-export const sql = neon(getHttpConnectionUrl(process.env.DATABASE_URL));
 
 // -----------------------------------------------------------------------------
 // Database initialization and Helper Functions
@@ -197,19 +176,17 @@ export async function getEventById(id: string): Promise<Event | null> {
 
 export async function getEventBySlug(slug: string): Promise<Event | null> {
   try {
-    // Since we don't have a slug column, we fetch all events and filter.
-    // In a production app with many events, we should add a slug column and index it.
     const events = await getEvents();
 
-    // Simple slug generation logic matching the one in utils
-    const createSlug = (text: string) => text
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/--+/g, '-')
-      .trim();
+    const createSlug = (text: string) =>
+      text
+        .toLowerCase()
+        .replace(/[^\w\s-]/g, "")
+        .replace(/\s+/g, "-")
+        .replace(/--+/g, "-")
+        .trim();
 
-    return events.find(e => createSlug(e.title) === slug) || null;
+    return events.find((e) => createSlug(e.title) === slug) || null;
   } catch (error) {
     console.error("Error fetching event by slug:", error);
     return null;
@@ -230,6 +207,10 @@ export async function registerForEvent(registration: {
   uploadFileUrl?: string;
 }) {
   try {
+    // Note: complex nested objects like string array for teamMembers need JSON.stringify
+    // The previous implementation did this explicitly in the template string
+    const teamMembersJson = JSON.stringify(registration.teamMembers || []);
+
     const result = await sql`
       INSERT INTO event_registrations (
         event_id, 
@@ -252,7 +233,7 @@ export async function registerForEvent(registration: {
         ${registration.collegeName}, 
         ${registration.universityName}, 
         ${registration.teamSize}, 
-        ${JSON.stringify(registration.teamMembers || [])},
+        ${teamMembersJson},
         ${registration.upiTransactionId || null},
         ${registration.accountHolderName || null},
         ${registration.uploadFileUrl || null}
@@ -539,6 +520,7 @@ export async function updateAdminEventAssignments(
 
     // Add new assignments
     if (eventIds.length > 0) {
+      // Manual loop for separate inserts, as bulk insert is tricky with simple sql helper
       for (const eventId of eventIds) {
         await sql`
           INSERT INTO admin_events (admin_id, event_id)
@@ -575,6 +557,7 @@ export async function getAllAdmins() {
 }
 
 // Update admin details (for superadmin)
+// Refactored to use dynamic query building for pg
 export async function updateAdmin(
   adminId: string,
   updates: {
@@ -585,41 +568,35 @@ export async function updateAdmin(
   },
 ) {
   try {
-    const setFields = [];
-    const values = [];
+    const setParts: string[] = [];
+    const values: any[] = [];
+    let idx = 1;
 
     if (updates.email) {
-      setFields.push(`email = $${setFields.length + 1}`);
+      setParts.push(`email = $${idx++}`);
       values.push(updates.email);
     }
     if (updates.password) {
-      setFields.push(`password = $${setFields.length + 1}`);
+      setParts.push(`password = $${idx++}`);
       values.push(updates.password);
     }
     if (updates.role) {
-      setFields.push(`role = $${setFields.length + 1}`);
+      setParts.push(`role = $${idx++}`);
       values.push(updates.role);
     }
     if (updates.name) {
-      setFields.push(`name = $${setFields.length + 1}`);
+      setParts.push(`name = $${idx++}`);
       values.push(updates.name);
     }
 
-    if (setFields.length === 0) {
+    if (setParts.length === 0) {
       return false;
     }
 
     values.push(adminId);
+    const query = `UPDATE admins SET ${setParts.join(", ")} WHERE id = $${idx}`;
 
-    await sql`
-      UPDATE admins
-      SET email = ${updates.email || sql`email`},
-          password = ${updates.password || sql`password`},
-          role = ${updates.role || sql`role`},
-          name = ${updates.name || sql`name`}
-      WHERE id = ${adminId}
-    `;
-
+    await pool.query(query, values);
     return true;
   } catch (error) {
     console.error("Error updating admin:", error);
@@ -677,17 +654,47 @@ export async function updateEvent(
   },
 ) {
   try {
-    await sql`
-      UPDATE events
-      SET title = ${updates.title || sql`title`},
-          description = ${updates.description || sql`description`},
-          date = ${updates.date || sql`date`},
-          location = ${updates.location || sql`location`},
-          image_url = ${updates.imageUrl || sql`image_url`},
-          category = ${updates.category || sql`category`},
-          capacity = ${updates.capacity !== undefined ? updates.capacity : sql`capacity`}
-      WHERE id = ${eventId}
-    `;
+    const setParts: string[] = [];
+    const values: any[] = [];
+    let idx = 1;
+
+    if (updates.title) {
+      setParts.push(`title = $${idx++}`);
+      values.push(updates.title);
+    }
+    if (updates.description) {
+      setParts.push(`description = $${idx++}`);
+      values.push(updates.description);
+    }
+    if (updates.date) {
+      setParts.push(`date = $${idx++}`);
+      values.push(updates.date);
+    }
+    if (updates.location) {
+      setParts.push(`location = $${idx++}`);
+      values.push(updates.location);
+    }
+    if (updates.imageUrl) {
+      setParts.push(`image_url = $${idx++}`);
+      values.push(updates.imageUrl);
+    }
+    if (updates.category) {
+      setParts.push(`category = $${idx++}`);
+      values.push(updates.category);
+    }
+    if (updates.capacity !== undefined) {
+      setParts.push(`capacity = $${idx++}`);
+      values.push(updates.capacity);
+    }
+
+    if (setParts.length === 0) {
+      return false;
+    }
+
+    values.push(eventId);
+    const query = `UPDATE events SET ${setParts.join(", ")} WHERE id = $${idx}`;
+
+    await pool.query(query, values);
     return true;
   } catch (error) {
     console.error("Error updating event:", error);

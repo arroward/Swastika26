@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { neon } from "@neondatabase/serverless";
+import { Client } from "pg";
 import crypto from "crypto";
 
 function hashPassword(password: string): string {
@@ -8,7 +8,11 @@ function hashPassword(password: string): string {
 
 async function testLogin() {
   try {
-    const sql = neon(process.env.DATABASE_URL!);
+    const client = new Client({
+      connectionString: process.env.DATABASE_URL!,
+      ssl: { rejectUnauthorized: false }
+    });
+    await client.connect();
 
     const email = "mathewsvinoy@gmail.com";
     const password = "admin123";
@@ -17,18 +21,20 @@ async function testLogin() {
     console.log("Testing login for:", email);
     console.log("Hashed password:", hashedPassword);
 
-    const result = await sql`
+    const result = await client.query(`
       SELECT id, email, role, name, password
       FROM admins 
-      WHERE email = ${email}
-    `;
+      WHERE email = $1
+    `, [email]);
 
-    if (result.length === 0) {
+    await client.end();
+
+    if (result.rows.length === 0) {
       console.log("\n❌ Admin not found");
       process.exit(1);
     }
 
-    const admin = result[0];
+    const admin = result.rows[0];
     console.log("\n✅ Admin found:", admin.email, "-", admin.role);
     console.log("Password in DB:", admin.password);
     console.log(
