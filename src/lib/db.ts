@@ -1,9 +1,15 @@
+import dns from "node:dns";
 import { Pool, QueryResultRow } from "pg";
 import { Event, AdminRole } from "@/types/event";
 
 // -----------------------------------------------------------------------------
 // POSTGRES DATABASE CONNECTION
 // -----------------------------------------------------------------------------
+
+// Force IPv4 DNS resolution to prevent timeouts on some networks/AWS/DigitalOcean
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder("ipv4first");
+}
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
@@ -14,9 +20,9 @@ export const pool = new Pool({
   ssl: {
     rejectUnauthorized: false, // Required for some cloud providers like Neon/AWS
   },
-  max: 20, // Connection pool size
+  max: 10, // Reduced from 20 to prevent excessive connections in dev/serverless
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 10000,
+  connectionTimeoutMillis: 20000, // Increased timeout
 });
 
 // Helper for template literal SQL to mimic the previous 'neon' sql tag behavior
@@ -119,33 +125,41 @@ export async function initDatabase() {
   }
 }
 
+import { unstable_cache } from "next/cache";
+
+// ... (keep previous code)
+
 // Helper functions for events
-export async function getEvents(): Promise<Event[]> {
-  try {
-    const events = await sql`
-      SELECT 
-        id,
-        title,
-        description,
-        date,
-        location,
-        image_url as "imageUrl",
-        category,
-        capacity,
-        registered_count as "registeredCount",
-        price_amount as "price",
-        COALESCE(registration_fee, price_amount, 0) as "registrationFee",
-        is_online as "isOnline",
-        "rules"
-      FROM events
-      ORDER BY date ASC
-    `;
-    return events as Event[];
-  } catch (error) {
-    console.error("Error fetching events:", error);
-    return [];
-  }
-}
+export const getEvents = unstable_cache(
+  async (): Promise<Event[]> => {
+    try {
+      const events = await sql`
+        SELECT 
+          id,
+          title,
+          description,
+          date,
+          location,
+          image_url as "imageUrl",
+          category,
+          capacity,
+          registered_count as "registeredCount",
+          price_amount as "price",
+          COALESCE(registration_fee, price_amount, 0) as "registrationFee",
+          is_online as "isOnline",
+          "rules"
+        FROM events
+        ORDER BY date ASC
+      `;
+      return events as Event[];
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      return [];
+    }
+  },
+  ["all_events"],
+  { revalidate: 60, tags: ["events"] }
+);
 
 export async function getEventById(id: string): Promise<Event | null> {
   try {
