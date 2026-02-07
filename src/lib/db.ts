@@ -47,19 +47,32 @@ export async function sql<T extends QueryResultRow = any>(
 
   for (let i = 0; i < values.length; i++) {
     const value = values[i];
-
-    // Handle cases where the value might be another sql fragment (not supported here simple implementation)
-    // or undefined. For strict parameterized queries, we just push the value.
     queryValues.push(value);
     text += `$${queryValues.length}${strings[i + 1]}`;
   }
 
-  try {
-    const res = await pool.query<T>(text, queryValues);
-    return res.rows;
-  } catch (error) {
-    console.error("SQL Error:", error);
-    throw error;
+  let retries = 3;
+  while (retries > 0) {
+    try {
+      const res = await pool.query<T>(text, queryValues);
+      return res.rows;
+    } catch (error: any) {
+      const isNetworkError =
+        error.code === 'ETIMEDOUT' ||
+        error.code === 'ECONNRESET' ||
+        error.code === '57P01' || // administrator command: terminating connection due to administrator command
+        (error.message && error.message.includes('closed'));
+
+      if (isNetworkError && retries > 1) {
+        console.warn(`Database connection error (${error.code || 'unknown'}), retrying... (${retries - 1} attempts left)`);
+        retries--;
+        await new Promise(resolve => setTimeout(resolve, 1000 * (4 - retries))); // Exponential backoff: 1s, 2s, 3s
+        continue;
+      }
+
+      console.error("SQL Error:", error);
+      throw error;
+    }
   }
 }
 
@@ -200,7 +213,7 @@ export async function getEventById(id: string): Promise<Event | null> {
 
 export async function getEventBySlug(slug: string): Promise<Event | null> {
   try {
-    const events = await getEvents();
+    const events = (await getEvents()) || [];
 
     const createSlug = (text: string) =>
       text
@@ -263,7 +276,7 @@ export async function registerForEvent(registration: {
         ${registration.uploadFileUrl || null}
       )
       RETURNING id
-    `;
+    `) || [];
 
     // Update registered count
     await sql`
@@ -282,7 +295,7 @@ export async function registerForEvent(registration: {
 // Admin authentication
 export async function getAdminByEmail(email: string) {
   try {
-    const result = await sql`
+    const result = (await sql`
       SELECT 
         id,
         email,
@@ -291,7 +304,7 @@ export async function getAdminByEmail(email: string) {
         name
       FROM admins
       WHERE email = ${email}
-    `;
+    `) || [];
     return result[0] || null;
   } catch (error) {
     console.error("Error fetching admin:", error);
@@ -518,11 +531,11 @@ export async function assignEventToCoordinator(
 // Get event IDs assigned to an admin
 export async function getAdminEventIds(adminId: string): Promise<string[]> {
   try {
-    const result = await sql`
+    const result = (await sql`
       SELECT event_id
       FROM admin_events
       WHERE admin_id = ${adminId}
-    `;
+    `) || [];
     return result.map((row: any) => row.event_id);
   } catch (error) {
     console.error("Error fetching admin event IDs:", error);
