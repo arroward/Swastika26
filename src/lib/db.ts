@@ -1,15 +1,14 @@
-import dns from "node:dns";
-import { Pool, QueryResultRow } from "pg";
+import { Pool, neonConfig, QueryResultRow } from "@neondatabase/serverless";
+import ws from "ws";
+
+// Configure WebSocket for Node.js environment (required for serverless/Edge functions that use WS)
+neonConfig.webSocketConstructor = ws;
+
 import { Event, AdminRole } from "@/types/event";
 
 // -----------------------------------------------------------------------------
 // POSTGRES DATABASE CONNECTION
 // -----------------------------------------------------------------------------
-
-// Force IPv4 DNS resolution to prevent timeouts on some networks/AWS/DigitalOcean
-if (dns.setDefaultResultOrder) {
-  dns.setDefaultResultOrder("ipv4first");
-}
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL environment variable is not set");
@@ -29,17 +28,16 @@ const getSafeConnectionString = (url: string) => {
 
 export const pool = new Pool({
   connectionString: getSafeConnectionString(process.env.DATABASE_URL),
-  ssl: {
-    rejectUnauthorized: false, // Required for some cloud providers like Neon/AWS
-  },
-  max: 10, // Reduced from 20 to prevent excessive connections in dev/serverless
+  // ssl: true, // @neondatabase/serverless handles SSL automatically, but explicit config can be safe
+  // connectionString usually implies SSL for Neon.
+  max: 2, // Reduced to 2 for optimal serverless performance (avoids connection exhaustion)
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 20000, // Increased timeout
+  connectionTimeoutMillis: 15000, // Slightly reduced timeout
 });
 
 // Helper for template literal SQL to mimic the previous 'neon' sql tag behavior
 // This allows us to keep most of the codebase without rewriting every query,
-// while switching the underlying driver to 'pg'.
+// and leverages the serverless-friendly Pool
 export async function sql<T extends QueryResultRow = any>(
   strings: TemplateStringsArray,
   ...values: any[]

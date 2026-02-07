@@ -1,6 +1,9 @@
 
 import { config } from 'dotenv';
-import { Client } from 'pg';
+import { Client, neonConfig } from '@neondatabase/serverless';
+import ws from 'ws';
+
+neonConfig.webSocketConstructor = ws;
 import { S3Client, ListBucketsCommand, HeadBucketCommand } from '@aws-sdk/client-s3';
 import * as admin from 'firebase-admin';
 

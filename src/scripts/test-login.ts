@@ -1,5 +1,8 @@
 import "dotenv/config";
-import { Client } from "pg";
+import { Client, neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
+
+neonConfig.webSocketConstructor = ws;
 import crypto from "crypto";
 
 function hashPassword(password: string): string {

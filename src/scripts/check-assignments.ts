@@ -1,4 +1,7 @@
-import { Client } from "pg";
+import { Client, neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
+
+neonConfig.webSocketConstructor = ws;
 import "dotenv/config";
 
 async function checkAssignments() {
