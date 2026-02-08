@@ -30,7 +30,7 @@ export default function EventRegistrationForm({
     phone: "",
     collegeName: "",
     universityName: "",
-    teamSize: 1,
+    teamSize: 1 as number | string,
     teamMembers: [] as string[],
     upiTransactionId: "",
     accountHolderName: "",
@@ -54,11 +54,21 @@ export default function EventRegistrationForm({
     const { name, value } = e.target;
 
     if (name === "teamSize") {
-      const size = Math.max(parseInt(value) || 1, 1);
+      // Allow empty string for better typing experience
+      if (value === "") {
+        setFormData((prev) => ({ ...prev, teamSize: "" }));
+        return;
+      }
+
+      const size = parseInt(value);
+      if (isNaN(size)) return;
+
+      const validSize = Math.max(size, 1);
       // For team size n, we need n-1 additional member fields (excluding the main registrant)
-      const newTeamMembers = Array(Math.max(size - 1, 0))
+      const newTeamMembers = Array(Math.max(validSize - 1, 0))
         .fill("")
         .map((_, i) => formData.teamMembers[i] || "");
+
       setFormData((prev) => ({
         ...prev,
         teamSize: size,
@@ -78,6 +88,28 @@ export default function EventRegistrationForm({
     const newTeamMembers = [...formData.teamMembers];
     newTeamMembers[index] = value;
     setFormData((prev) => ({ ...prev, teamMembers: newTeamMembers }));
+  };
+
+  const incrementTeamSize = () => {
+    const currentSize = typeof formData.teamSize === 'string' ? parseInt(formData.teamSize) || 0 : formData.teamSize;
+    const newSize = Math.min(currentSize + 1, 10); // Max 10 members
+
+    // Trigger update logic
+    const e = {
+      target: { name: "teamSize", value: newSize.toString() }
+    } as React.ChangeEvent<HTMLInputElement>;
+    handleChange(e);
+  };
+
+  const decrementTeamSize = () => {
+    const currentSize = typeof formData.teamSize === 'string' ? parseInt(formData.teamSize) || 0 : formData.teamSize;
+    const newSize = Math.max(currentSize - 1, 1); // Min 1 member
+
+    // Trigger update logic
+    const e = {
+      target: { name: "teamSize", value: newSize.toString() }
+    } as React.ChangeEvent<HTMLInputElement>;
+    handleChange(e);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -454,27 +486,51 @@ export default function EventRegistrationForm({
             Number of Team Members
             <span className="text-red-500 ml-1">*</span>
           </label>
-          <div className="relative group">
-            <input
-              type="number"
-              id="teamSize"
-              name="teamSize"
-              min="1"
-              max="10"
-              value={formData.teamSize}
-              onChange={handleChange}
-              required
-              className="w-full px-5 py-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm transition-all duration-300 text-white placeholder-white/30 outline-none focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10"
-            />
-            <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-gradient-to-r from-red-500 via-white to-red-500 transition-all duration-500 group-focus-within:w-full opacity-0 group-focus-within:opacity-100"></div>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={decrementTeamSize}
+              className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 flex items-center justify-center text-white transition-all active:scale-95 disabled:opacity-50"
+              disabled={Number(formData.teamSize) <= 1}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4" />
+              </svg>
+            </button>
+
+            <div className="relative group flex-1">
+              <input
+                type="number"
+                id="teamSize"
+                name="teamSize"
+                min="1"
+                max="10"
+                value={formData.teamSize}
+                onChange={handleChange}
+                required
+                className="w-full px-5 py-3 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm transition-all duration-300 text-white placeholder-white/30 outline-none focus:border-red-500/50 focus:ring-4 focus:ring-red-500/10 text-center font-bold text-lg"
+              />
+              <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-gradient-to-r from-red-500 via-white to-red-500 transition-all duration-500 group-focus-within:w-full opacity-0 group-focus-within:opacity-100"></div>
+            </div>
+
+            <button
+              type="button"
+              onClick={incrementTeamSize}
+              className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 flex items-center justify-center text-white transition-all active:scale-95 disabled:opacity-50"
+              disabled={Number(formData.teamSize) >= 10}
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
           </div>
-          <p className="mt-2 text-xs text-white/40 italic">
+          <p className="mt-2 text-xs text-white/40 italic text-center">
             Including yourself (Leader + Members)
           </p>
         </motion.div>
 
         <AnimatePresence>
-          {formData.teamSize > 1 && (
+          {Number(formData.teamSize) > 1 && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
