@@ -120,9 +120,9 @@ export default function Home() {
 
             <CTA />
 
-            <section id="route" className="panel snap-start snap-always w-full h-auto">
+            {/* <section id="route" className="panel snap-start snap-always w-full h-auto">
                 <RouteMap />
-            </section>
+            </section> */}
 
             <section id="footer" className="panel snap-start snap-always w-full h-auto">
                 <Footer />
