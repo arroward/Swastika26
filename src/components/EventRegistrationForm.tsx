@@ -92,7 +92,7 @@ export default function EventRegistrationForm({
 
   const incrementTeamSize = () => {
     const currentSize = typeof formData.teamSize === 'string' ? parseInt(formData.teamSize) || 0 : formData.teamSize;
-    const newSize = Math.min(currentSize + 1, 10); // Max 10 members
+    const newSize = Math.min(currentSize + 1, 30); // Max 10 members
 
     // Trigger update logic
     const e = {
