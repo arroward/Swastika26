@@ -14,6 +14,7 @@ import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
 import ScrollManager from "@/components/ScrollManager";
 import PassSection from "@/components/sections/PassSection";
+import RouteMap from "@/components/sections/RouteMap";
 
 export default function Home() {
     const structuredData = {
@@ -118,6 +119,10 @@ export default function Home() {
             </Suspense>
 
             <CTA />
+
+            <section id="route" className="panel snap-start snap-always w-full h-auto">
+                <RouteMap />
+            </section>
 
             <section id="footer" className="panel snap-start snap-always w-full h-auto">
                 <Footer />

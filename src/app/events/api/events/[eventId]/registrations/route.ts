@@ -10,7 +10,7 @@ export async function GET(
 
     console.log("Fetching registrations for event ID:", eventId);
 
-    const registrations = await getRegistrationsByEvent(eventId);
+    const registrations = (await getRegistrationsByEvent(eventId)) ?? [];
 
     console.log("Found registrations:", registrations.length);
 

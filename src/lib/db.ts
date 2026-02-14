@@ -74,6 +74,7 @@ export async function sql<T extends QueryResultRow = any>(
       throw error;
     }
   }
+  return [] as T[];
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +205,7 @@ export async function getEventById(id: string): Promise<Event | null> {
       FROM events
       WHERE id = ${id}
     `;
-    return (events[0] as Event) || null;
+    return (events?.[0] as Event) || null;
   } catch (error) {
     console.error("Error fetching event:", error);
     return null;
