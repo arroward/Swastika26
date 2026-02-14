@@ -248,7 +248,7 @@ export async function registerForEvent(registration: {
     // The previous implementation did this explicitly in the template string
     const teamMembersJson = JSON.stringify(registration.teamMembers || []);
 
-    const result = await sql`
+    const result = (await sql`
       INSERT INTO event_registrations (
         event_id, 
         full_name, 

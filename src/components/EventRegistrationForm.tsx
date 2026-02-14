@@ -23,6 +23,7 @@ export default function EventRegistrationForm({
   const [fileError, setFileError] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [paymentWarning, setPaymentWarning] = useState("");
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -74,6 +75,9 @@ export default function EventRegistrationForm({
         teamSize: size,
         teamMembers: newTeamMembers,
       }));
+    } else if (name === "phone") {
+      const digitsOnly = value.replace(/\D/g, "").slice(0, 10);
+      setFormData((prev) => ({ ...prev, phone: digitsOnly }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -161,8 +165,8 @@ export default function EventRegistrationForm({
 
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required";
-    } else if (!/^\+?[\d\s-()]+$/.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid phone number";
+    } else if (!/^\d{10}$/.test(formData.phone.trim())) {
+      newErrors.phone = "Enter a valid 10-digit phone number (without country code)";
     }
 
     if (!formData.collegeName.trim()) {
@@ -452,7 +456,7 @@ export default function EventRegistrationForm({
           value={formData.phone}
           onChange={handleChange}
           required
-          placeholder="+91 98765 43210"
+          placeholder="9876543210"
           error={errors.phone}
         />
 
@@ -596,7 +600,7 @@ export default function EventRegistrationForm({
               <div className="flex flex-col md:flex-row gap-6 items-center">
                 <div className="bg-white p-3 rounded-2xl shadow-lg">
                   <QRCodeSVG
-                    value={`upi://pay?pa=${siteConfig.payment?.upiId}&am=${event.registrationFee}&cu=INR&tn=EventReg`}
+                    value={`upi://pay?pa=${siteConfig.payment?.upiId}&am=${event.registrationFee}&cu=INR&tn=SWASTIKA26-${encodeURIComponent(event.title)}`}
                     size={150}
                     level="H"
                   />
@@ -614,15 +618,38 @@ export default function EventRegistrationForm({
                   </p>
 
                   {/* UPI App Direct Button */}
-                  <a
-                    href={`upi://pay?pa=${siteConfig.payment?.upiId}&am=${event.registrationFee}&cu=INR&tn=EventReg`}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const missing: string[] = [];
+                      if (!formData.fullName.trim()) missing.push("Full Name");
+                      if (!formData.email.trim()) missing.push("Email");
+                      if (!formData.phone.trim()) missing.push("Phone Number");
+                      if (!formData.collegeName.trim()) missing.push("College Name");
+                      if (!formData.universityName.trim()) missing.push("University Name");
+                      if (missing.length > 0) {
+                        setPaymentWarning(`Please fill: ${missing.join(", ")} before paying`);
+                        return;
+                      }
+                      setPaymentWarning("");
+                      window.location.href = `upi://pay?pa=${siteConfig.payment?.upiId}&am=${event.registrationFee}&cu=INR&tn=SWASTIKA26-${encodeURIComponent(event.title)}`;
+                    }}
                     className="inline-flex items-center gap-2 bg-white text-black px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all hover:scale-105 active:scale-95 mb-3 shadow-xl"
                   >
                     <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5z" />
                     </svg>
                     Pay via UPI App
-                  </a>
+                  </button>
+
+                  {paymentWarning && (
+                    <p className="text-xs text-yellow-400 font-medium mt-1 flex items-center gap-1">
+                      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {paymentWarning}
+                    </p>
+                  )}
 
                   <p className="text-xs text-white/40 italic">
                     Please complete payment via UPI and enter details below
