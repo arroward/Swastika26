@@ -92,7 +92,7 @@ export default function EventRegistrationForm({
 
   const incrementTeamSize = () => {
     const currentSize = typeof formData.teamSize === 'string' ? parseInt(formData.teamSize) || 0 : formData.teamSize;
-    const newSize = Math.min(currentSize + 1, 30); // Max 10 members
+    const newSize = Math.min(currentSize + 1, 30); // Max 30 members
 
     // Trigger update logic
     const e = {
@@ -504,7 +504,7 @@ export default function EventRegistrationForm({
                 id="teamSize"
                 name="teamSize"
                 min="1"
-                max="10"
+                max="30"
                 value={formData.teamSize}
                 onChange={handleChange}
                 required
@@ -517,7 +517,7 @@ export default function EventRegistrationForm({
               type="button"
               onClick={incrementTeamSize}
               className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 flex items-center justify-center text-white transition-all active:scale-95 disabled:opacity-50"
-              disabled={Number(formData.teamSize) >= 10}
+              disabled={Number(formData.teamSize) >= 30}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
