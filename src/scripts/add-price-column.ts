@@ -1,7 +1,4 @@
-import { Client, neonConfig } from "@neondatabase/serverless";
-import ws from "ws";
-
-neonConfig.webSocketConstructor = ws;
+import { Client } from "pg";
 import { config } from "dotenv";
 import { resolve } from "path";
 
@@ -15,7 +12,7 @@ if (!process.env.DATABASE_URL) {
 async function addPriceColumn() {
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
   });
 
   try {

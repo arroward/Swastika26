@@ -1,8 +1,5 @@
 import "dotenv/config";
-import { Client, neonConfig } from "@neondatabase/serverless";
-import ws from "ws";
-
-neonConfig.webSocketConstructor = ws;
+import { Client } from "pg";
 import crypto from "crypto";
 
 function hashPassword(password: string): string {
@@ -13,7 +10,7 @@ async function testLogin() {
   try {
     const client = new Client({
       connectionString: process.env.DATABASE_URL!,
-      ssl: { rejectUnauthorized: false }
+      ssl: { rejectUnauthorized: false },
     });
     await client.connect();
 
@@ -24,11 +21,14 @@ async function testLogin() {
     console.log("Testing login for:", email);
     console.log("Hashed password:", hashedPassword);
 
-    const result = await client.query(`
+    const result = await client.query(
+      `
       SELECT id, email, role, name, password
       FROM admins 
       WHERE email = $1
-    `, [email]);
+    `,
+      [email],
+    );
 
     await client.end();
 

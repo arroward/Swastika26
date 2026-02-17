@@ -1,7 +1,4 @@
-import { Client, neonConfig } from "@neondatabase/serverless";
-import ws from "ws";
-
-neonConfig.webSocketConstructor = ws;
+import { Client } from "pg";
 import "dotenv/config";
 
 if (!process.env.DATABASE_URL) {
@@ -11,7 +8,7 @@ if (!process.env.DATABASE_URL) {
 async function updateSchema() {
   const client = new Client({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
   });
 
   try {

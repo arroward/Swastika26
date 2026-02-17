@@ -1,9 +1,4 @@
-import { Pool, neonConfig, QueryResultRow } from "@neondatabase/serverless";
-import ws from "ws";
-
-// Configure WebSocket for Node.js environment (required for serverless/Edge functions that use WS)
-neonConfig.webSocketConstructor = ws;
-
+import { Pool, QueryResult, QueryResultRow } from "pg";
 import { Event, AdminRole } from "@/types/event";
 
 // -----------------------------------------------------------------------------
@@ -28,11 +23,12 @@ const getSafeConnectionString = (url: string) => {
 
 export const pool = new Pool({
   connectionString: getSafeConnectionString(process.env.DATABASE_URL),
-  // ssl: true, // @neondatabase/serverless handles SSL automatically, but explicit config can be safe
-  // connectionString usually implies SSL for Neon.
-  max: 2, // Reduced to 2 for optimal serverless performance (avoids connection exhaustion)
+  ssl: {
+    rejectUnauthorized: false
+  },
+  max: 10, // Standard pool size for PostgreSQL
   idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 15000, // Slightly reduced timeout
+  connectionTimeoutMillis: 15000,
 });
 
 // Helper for template literal SQL to mimic the previous 'neon' sql tag behavior
