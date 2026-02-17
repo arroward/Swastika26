@@ -22,7 +22,13 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     serverActions: {
-      allowedOrigins: ["10.3.4.71:3000", "localhost:3000"],
+      allowedOrigins: [
+        "swastika.live",
+        "www.swastika.live",
+        "*.ondigitalocean.app",
+        "10.3.4.71:3000",
+        "localhost:3000",
+      ],
     },
   },
   async headers() {

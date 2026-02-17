@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "next build && cp -r public .next/standalone/public && cp -r .next/static .next/standalone/.next/static",
+    "start": "HOSTNAME=0.0.0.0 PORT=3000 node .next/standalone/server.js",
     "lint": "eslint",
     "seed": "dotenv -e .env -- tsx src/scripts/seed.ts",
     "seed:admins": "dotenv -e .env -- tsx src/scripts/seed-admins.ts",
