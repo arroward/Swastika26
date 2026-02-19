@@ -15,9 +15,12 @@ interface Event3DCarouselProps {
   events: Event[];
 }
 
-export default function Event3DCarousel({ events }: Event3DCarouselProps) {
+import AlertModal from "@/components/AlertModal";
+
+export default function Event3DCarousel({ events, disableClick = false }: Event3DCarouselProps & { disableClick?: boolean }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [showRegistrationAlert, setShowRegistrationAlert] = useState(false);
 
   // Extend items for infinite scroll effect (tripling the array)
   const extendedEvents = events?.length
@@ -78,48 +81,56 @@ export default function Event3DCarousel({ events }: Event3DCarouselProps) {
   }
 
   return (
-    <div className="relative w-full h-full flex items-center group/nav">
-      <div
-        ref={scrollContainerRef}
-        onScroll={handleScroll}
-        className="relative w-full h-full flex items-center overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide px-4 md:px-[30vw]"
-      >
-        {extendedEvents.map((event, index) => (
-          <CarouselCard
-            key={`${index}-${event.id}`}
-            event={event}
-            index={index % totalItemsCount}
-          />
-        ))}
+    <>
+      <div className="relative w-full h-full flex items-center group/nav">
+        <div
+          ref={scrollContainerRef}
+          onScroll={handleScroll}
+          className="relative w-full h-full flex items-center overflow-x-auto overflow-y-hidden snap-x snap-mandatory scrollbar-hide px-4 md:px-[30vw]"
+        >
+          {extendedEvents.map((event, index) => (
+            <CarouselCard
+              key={`${index}-${event.id}`}
+              event={event}
+              index={index % totalItemsCount}
+              disableClick={disableClick}
+              onDisabledClick={() => setShowRegistrationAlert(true)}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={scrollPrev}
+          className="absolute left-2 md:left-8 z-30 p-3 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:bg-white/20 hover:scale-110 active:scale-95 transition-all flex"
+        >
+          <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+        </button>
+
+        <button
+          onClick={scrollNext}
+          className="absolute right-2 md:right-8 z-30 p-3 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:bg-white/20 hover:scale-110 active:scale-95 transition-all flex"
+        >
+          <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+        </button>
       </div>
 
-      <button
-        onClick={scrollPrev}
-        className="absolute left-2 md:left-8 z-30 p-3 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:bg-white/20 hover:scale-110 active:scale-95 transition-all flex"
-      >
-        <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
-      </button>
-
-      <button
-        onClick={scrollNext}
-        className="absolute right-2 md:right-8 z-30 p-3 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:bg-white/20 hover:scale-110 active:scale-95 transition-all flex"
-      >
-        <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
-      </button>
-    </div>
+      <AlertModal
+        isOpen={showRegistrationAlert}
+        onClose={() => setShowRegistrationAlert(false)}
+        title="Registration Closed"
+        message="Registration Closed"
+      />
+    </>
   );
 }
 
 import { createSlug } from "@/lib/utils";
 
-function CarouselCard({ event, index }: { event: Event; index: number }) {
+function CarouselCard({ event, index, disableClick, onDisabledClick }: { event: Event; index: number; disableClick: boolean; onDisabledClick?: () => void }) {
   const title = event.title || "Event";
 
-  return (
-    <Link
-      href={event.isOnline ? `/events/online/${createSlug(event.title)}` : `/events/mainstage/${createSlug(event.title)}`}
-      className="snap-center shrink-0 w-[80vw] md:w-[360px] h-[75%] md:h-[90%] mx-3 md:mx-6 relative group rounded-[var(--site-radius)] overflow-hidden cursor-pointer shadow-2xl ring-1 ring-white/10"
-    >
+  const CardContent = (
+    <>
       {/* Background Image with improved visibility */}
       <div className="absolute inset-0 overflow-hidden rounded-[var(--site-radius)] bg-gray-900">
         <img
@@ -169,6 +180,28 @@ function CarouselCard({ event, index }: { event: Event; index: number }) {
           </div>
         </div>
       </div>
+    </>
+  );
+
+  const containerClasses = "snap-center shrink-0 w-[80vw] md:w-[360px] h-[75%] md:h-[90%] mx-3 md:mx-6 relative group rounded-[var(--site-radius)] overflow-hidden cursor-pointer shadow-2xl ring-1 ring-white/10";
+
+  if (disableClick) {
+    return (
+      <div
+        className={containerClasses}
+        onClick={onDisabledClick}
+      >
+        {CardContent}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={event.isOnline ? `/events/online/${createSlug(event.title)}` : `/events/mainstage/${createSlug(event.title)}`}
+      className={containerClasses}
+    >
+      {CardContent}
     </Link>
   );
 }

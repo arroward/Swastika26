@@ -113,7 +113,7 @@ export default function MainstageEvents() {
                             <div className="text-white text-xl">Loading mainstage events...</div>
                         ) : (
                             events.length > 0 ? (
-                                <Event3DCarousel events={events} />
+                                <Event3DCarousel events={events} disableClick={true} />
                             ) : (
                                 <div className="text-center text-white/50 py-10">No mainstage events scheduled yet.</div>
                             )
