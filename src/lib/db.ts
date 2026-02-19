@@ -24,7 +24,7 @@ const getSafeConnectionString = (url: string) => {
 export const pool = new Pool({
   connectionString: getSafeConnectionString(process.env.DATABASE_URL),
   ssl: {
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
   },
   max: 10, // Standard pool size for PostgreSQL
   idleTimeoutMillis: 30000,
@@ -54,15 +54,19 @@ export async function sql<T extends QueryResultRow = any>(
       return res.rows;
     } catch (error: any) {
       const isNetworkError =
-        error.code === 'ETIMEDOUT' ||
-        error.code === 'ECONNRESET' ||
-        error.code === '57P01' || // administrator command: terminating connection due to administrator command
-        (error.message && error.message.includes('closed'));
+        error.code === "ETIMEDOUT" ||
+        error.code === "ECONNRESET" ||
+        error.code === "57P01" || // administrator command: terminating connection due to administrator command
+        (error.message && error.message.includes("closed"));
 
       if (isNetworkError && retries > 1) {
-        console.warn(`Database connection error (${error.code || 'unknown'}), retrying... (${retries - 1} attempts left)`);
+        console.warn(
+          `Database connection error (${error.code || "unknown"}), retrying... (${retries - 1} attempts left)`,
+        );
         retries--;
-        await new Promise(resolve => setTimeout(resolve, 1000 * (4 - retries))); // Exponential backoff: 1s, 2s, 3s
+        await new Promise((resolve) =>
+          setTimeout(resolve, 1000 * (4 - retries)),
+        ); // Exponential backoff: 1s, 2s, 3s
         continue;
       }
 
@@ -178,7 +182,7 @@ export const getEvents = unstable_cache(
     }
   },
   ["all_events"],
-  { revalidate: 60, tags: ["events"] }
+  { revalidate: 60, tags: ["events"] },
 );
 
 export async function getEventById(id: string): Promise<Event | null> {
@@ -245,7 +249,8 @@ export async function registerForEvent(registration: {
     // The previous implementation did this explicitly in the template string
     const teamMembersJson = JSON.stringify(registration.teamMembers || []);
 
-    const result = (await sql`
+    const result =
+      (await sql`
       INSERT INTO event_registrations (
         event_id, 
         full_name, 
@@ -292,7 +297,8 @@ export async function registerForEvent(registration: {
 // Admin authentication
 export async function getAdminByEmail(email: string) {
   try {
-    const result = (await sql`
+    const result =
+      (await sql`
       SELECT 
         id,
         email,
@@ -528,7 +534,8 @@ export async function assignEventToCoordinator(
 // Get event IDs assigned to an admin
 export async function getAdminEventIds(adminId: string): Promise<string[]> {
   try {
-    const result = (await sql`
+    const result =
+      (await sql`
       SELECT event_id
       FROM admin_events
       WHERE admin_id = ${adminId}
