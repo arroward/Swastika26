@@ -28,6 +28,7 @@ export default async function MainstageEventPage({ params }: PageProps) {
         redirect(`/events/online/${id}`);
     }
 
+    const isRegistrationClosed = true; // Set to true to disable form
     const isFullyBooked = event.registeredCount >= event.capacity;
     const percentageBooked = Math.round(
         (event.registeredCount / event.capacity) * 100,
@@ -278,7 +279,7 @@ export default async function MainstageEventPage({ params }: PageProps) {
 
                     {/* Registration Form Section */}
                     <div className="lg:col-span-3">
-                        {isFullyBooked ? (
+                        {isRegistrationClosed ? (
                             <div className="lg:sticky lg:top-6">
                                 <div className="relative bg-gradient-to-br from-red-900/10 to-black/40 backdrop-blur-xl rounded-xl md:rounded-2xl border border-red-500/10 p-6 md:p-8 shadow-2xl text-center group">
                                     {/* Hover glow effect */}
@@ -303,31 +304,6 @@ export default async function MainstageEventPage({ params }: PageProps) {
                                         <h2 className="text-xl md:text-2xl lg:text-3xl font-black bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent mb-2 md:mb-3">
                                             Registration Closed
                                         </h2>
-                                        <p className="text-white/70 mb-4 md:mb-6 text-xs md:text-base leading-relaxed">
-                                            Unfortunately, this event has reached its maximum
-                                            capacity. Registration is no longer available.
-                                        </p>
-                                        <div className="flex justify-center">
-                                            <Link
-                                                href="/events/mainstage"
-                                                className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white px-5 py-2.5 md:px-6 md:py-3 rounded-lg font-bold transition-all duration-300 border border-red-500/50 hover:border-red-400/80 group/btn shadow-lg hover:shadow-red-500/25 text-xs md:text-sm"
-                                            >
-                                                <svg
-                                                    className="w-3.5 h-3.5 md:w-4 md:h-4 transition-transform group-hover/btn:rotate-12"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth="2"
-                                                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                                                    />
-                                                </svg>
-                                                Browse Other Events
-                                            </Link>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
