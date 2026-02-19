@@ -8,7 +8,7 @@ interface AlertModalProps {
     isOpen: boolean;
     onClose: () => void;
     title: string;
-    message: string;
+    message?: string;
 }
 
 export default function AlertModal({ isOpen, onClose, title, message }: AlertModalProps) {
@@ -55,9 +55,11 @@ export default function AlertModal({ isOpen, onClose, title, message }: AlertMod
                             <h3 className="text-2xl font-black font-cinzel text-white mb-2 tracking-tight">
                                 {title}
                             </h3>
-                            <p className="text-white/60 font-jost text-sm mb-6">
-                                {message}
-                            </p>
+                            {message && (
+                                <p className="text-white/60 font-jost text-sm mb-6">
+                                    {message}
+                                </p>
+                            )}
 
                             {/* Action Button */}
                             <button

@@ -118,7 +118,6 @@ export default function Event3DCarousel({ events, disableClick = false }: Event3
         isOpen={showRegistrationAlert}
         onClose={() => setShowRegistrationAlert(false)}
         title="Registration Closed"
-        message="Registration Closed"
       />
     </>
   );
