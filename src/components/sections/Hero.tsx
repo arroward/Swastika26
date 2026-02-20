@@ -77,9 +77,9 @@ export default function Hero() {
             </div>
 
             {/* Countdown - Adjusted scaling and margins */}
-            <div className="w-full max-w-full md:max-w-[80vw] lg:max-w-[70vw] mx-auto scale-[0.95] md:scale-85 lg:scale-90 origin-center z-30 relative flex-shrink-0">
+            {/* <div className="w-full max-w-full md:max-w-[80vw] lg:max-w-[70vw] mx-auto scale-[0.95] md:scale-85 lg:scale-90 origin-center z-30 relative flex-shrink-0">
                 <Countdown />
-            </div>
+            </div> */}
 
             {/* Date/Subtitle */}
             <div className="text-center z-20 relative flex-shrink-0 pb-1">
